@@ -19,3 +19,27 @@ img{
     width: 150px;
     height: 150px;
 }
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+}
+#cookieCount {
+    font-size: 24px;
+    font-weight: bold;
+}
+#cookieButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+#cookieImage {
+    width: 100px;
+    height: 100px;
+}
+
+button{
+    
+}

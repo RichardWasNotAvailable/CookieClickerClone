@@ -1,11 +1,12 @@
-document.addEventListener("DOMContentLoaded", function () {
-    let cookieCount = 0;
 
-    const cookieCountDisplay = document.getElementById("cookieCount");
-    const cookieButton = document.getElementById("cookieButton");
+let cookieCount = 0;
 
-    cookieButton.addEventListener("click", function () {
-        cookieCount += 1;  // Adds 1 cookie per click
-        cookieCountDisplay.textContent = "Cookies: " + cookieCount;
-    });
-});
+
+const cookieCountDisplay = document.getElementById("cookieCount");
+const cookieButton = document.getElementById("cookieButton");
+
+function addACookie(){
+    cookieCount += 1;  // Adds 1 cookie per click
+    cookieCountDisplay.textContent = "Cookies: " + cookieCount;
+}
+

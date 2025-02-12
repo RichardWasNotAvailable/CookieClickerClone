@@ -1,45 +1,37 @@
-#game-board {
-    display: grid;
-    width: 500px;  /* Set a fixed width */
-    height: 500px; /* Set a fixed height */
-}
-
-/* Individual grid cell */
-.cell {
-    border: 1px solid #ddd;
-    background-color: white;
-}
-
-/* Hover effect for testing */
-.cell:hover {
-    background-color: lightgray;
-}
-
-img{
-    width: 150px;
-    height: 150px;
-}
-
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    margin-top: 50px;
 }
+
+@keyframes makeCookieSmaller {
+    from {transform: scale(1);}
+    to {transform: scale(0.8);}
+  }
+
+@keyframes makeCookieBigger{
+    from {transform: scale(1);}
+    to {transform: scale(1.2);}
+}
+
 #cookieCount {
     font-size: 24px;
     font-weight: bold;
 }
-#cookieButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-}
-#cookieImage {
-    width: 100px;
-    height: 100px;
+.CookieButton{
+    height: 200px;
+    width: 200px;
 }
 
-button{
-    
+.CookieButton:hover {
+    animation-name: makeCookieSmaller;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
+}
+
+.CookieButton:not(:hover){
+    animation-name: makeCookieBigger;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
 }

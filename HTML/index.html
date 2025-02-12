@@ -3,14 +3,32 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>cookie clicker</title>
+        <title>Cookie Clicker</title>
         <link rel="stylesheet" href="../CSS/style.css">
     </head>
     <body>
         <div>
             <p id="cookieCount">Cookies: 0</p>
-            <img src="../IMG/Cookie.png" onclick="addACookie()" class="CookieButton" alt="koekje">
-    </div>
-        <script src="../JS/cookieClick.js"></script>
+            <img id="cookieButton" src="../IMG/Cookie.png" onclick="addACookie()" class="CookieButton" alt="koekje">
+        </div>
+
+        <!-- Shop section -->
+        <div id="shop">
+            <h2>Shop</h2>
+            <div class="shop-item" id="autoClicker">
+                <p>Auto Clicker</p>
+                <p id="autoClickerPrice">Price: 10 Cookies</p>
+                <button onclick="buyItem('autoClicker')">Buy</button>
+            </div>
+            <div class="shop-item" id="cookieMultiplier">
+                <p>Cookie Multiplier</p>
+                <p id="cookieMultiplierPrice">Price: 50 Cookies</p>
+                <button onclick="buyItem('cookieMultiplier')">Buy</button>
+            </div>
+        </div>
+
+        <!-- Link to JS files -->
+        <script src="../JS/cookieClick.js"></script> <!-- Existing cookie click functionality -->
+        <script src="../JS/shopElement.js"></script> <!-- Shop logic -->
     </body>
 </html>

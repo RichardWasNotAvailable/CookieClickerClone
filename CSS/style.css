@@ -6,7 +6,7 @@ body {
 @keyframes makeCookieSmaller {
     from {transform: scale(1);}
     to {transform: scale(0.8);}
-  }
+}
 
 @keyframes makeCookieBigger{
     from {transform: scale(1);}
@@ -17,6 +17,7 @@ body {
     font-size: 24px;
     font-weight: bold;
 }
+
 .CookieButton{
     height: 200px;
     width: 200px;
@@ -34,4 +35,31 @@ body {
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
+}
+
+/* Shop Styles */
+#shop {
+    margin-top: 30px;
+}
+
+.shop-item {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+button {
+    padding: 5px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
 }

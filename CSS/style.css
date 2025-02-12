@@ -3,7 +3,6 @@ body {
     text-align: center;
 }
 
-<<<<<<< Updated upstream
 @keyframes makeCookieSmaller {
     from {transform: scale(1);}
     to {transform: scale(0.8);}
@@ -14,8 +13,6 @@ body {
     to {transform: scale(1.2);}
 }
 
-=======
->>>>>>> Stashed changes
 #cookieCount {
     font-size: 24px;
     font-weight: bold;

@@ -45,33 +45,39 @@ button:hover {
 }
 
 .shop-item {
+    cursor: pointer;
+    position: relative;
     background-color: #f5f5f5;
     border: 1px solid #ddd;
+    text-align: left;
     margin-bottom: 10px;
     border-radius: 20px;
     height: 6%;
-
     min-width: 200px;
-
 }
 
-
+.productImage{
+    width: 40px;
+    height: 40px;
+    margin-top: 2px;
+}
 
 .upgradeName{
-    position: absolute;
-    text-align: center;
-    font-size: 14px;
-
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    text-align: center;
-
+    font-size: 15px;
+    margin: 0;
+    padding: 0;
 }
 
 .upgradePrice{
-    text-align: right;
-    margin-right: 10%;
     font-size: 10px;
+    margin: 0;
+    padding: 5px;
+
+}
+
+.itemContent{
+    position: absolute;
+    display: inline-block;
+    top: 5px;
+    left: 50px;
 }

@@ -8,7 +8,6 @@
     </head>
     <body>
         <nav>
-            <nav>
             <p id="cookieCount">Cookies: 0</p>
             <img id="cookieButton" src="../IMG/Cookie.png" onclick="addACookie()" class="CookieButton" alt="koekje">
         </nav>
@@ -16,19 +15,27 @@
         <!-- Shop section -->
         <nav id="shop" class="shop">
             <h2>Shop</h2>
-            <nav class="shop-item" id="autoClicker" onclick="buyItem('autoClicker')">
-                <p class="upgradeName" >Auto Clicker</p>
-                <p class="upgradePrice" id="autoClickerPrice">Price: 10 Cookies</p>
-            </nav>
+
             <nav class="shop-item" id="cookieMultiplier" onclick="buyItem('cookieMultiplier')" >
-                <p class="upgradeName">Cookie Multiplier</p>
-                <p class="upgradePrice" id="cookieMultiplierPrice">50 Cookies</p>
+                <img class="productImage" src="../IMG/Muis.png" alt=""Een computermuis>
+                <nav class="itemContent">
+                    <p class="upgradeName" >Auto Clicker</p>
+                    <p class="upgradePrice" id="autoClickerPrice">Price: 10 Cookies</p>
+                </nav>
+            </nav>
+
+            <nav class="shop-item" id="cookieMultiplier" onclick="buyItem('cookieMultiplier')" >
+                <img class="productImage" src="../IMG/Cookie.png" alt="">
+                <nav class="itemContent">
+                    <p class="upgradeName">Cookie Multiplier</p>
+                    <p class="upgradePrice" id="cookieMultiplierPrice">50 Cookies</p>
+                </nav>
+
             </nav>
         </nav>
 
         <!-- Link to JS files -->
         <script src="../JS/cookieClick.js"></script> <!-- Existing cookie click functionality -->
         <script src="../JS/shopElement.js"></script> <!-- Shop logic -->
-        </nav>
     </body>
 </html>

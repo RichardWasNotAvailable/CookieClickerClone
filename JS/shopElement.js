@@ -37,9 +37,9 @@ function buyItem(item) {
             alert('Not enough cookies!');
         }
     } else if (item === 'cookieBaker') {
-        if (cookieCount >= cookieBakerPrice) {
+        if (cookieCount >= cookieBakerPrice){
             cookieCount -= cookieBakerPrice;
-            cookieBakers *= 2;  
+            cookieBakers *= 2;
             cookieCountDisplay.textContent = "Cookies: " + cookieCount;
 
             cookieBakerPrice = Math.floor(cookieBakerPrice * 2);

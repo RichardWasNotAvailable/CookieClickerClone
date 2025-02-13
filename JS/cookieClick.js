@@ -2,6 +2,7 @@
 let cookieCount = 0;
 let autoClickers = 0;
 let cookieMultiplier = 1;
+let cookieBakers = 1;
 
 const cookieCountDisplay = document.getElementById("cookieCount");
 

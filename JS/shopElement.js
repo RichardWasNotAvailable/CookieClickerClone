@@ -1,6 +1,7 @@
 // Initial prices
 let autoClickerPrice = 10;
 let cookieMultiplierPrice = 50;
+let cookieBakerPrice = 100;
 // Add a cookie with each click
 function addACookie() {
     cookieCount += cookieMultiplier;  // Add cookies based on multiplier
@@ -16,7 +17,7 @@ function buyItem(item) {
             cookieCountDisplay.textContent = "Cookies: " + cookieCount;
 
             // Increase the price of the autoClicker for the next purchase
-            autoClickerPrice = Math.floor(autoClickerPrice * 1.5); // Increase by 50%
+            autoClickerPrice = Math.floor(autoClickerPrice * 2); 
             updateShopPrices();  // Update the price display in the shop
 
             startAutoClicker();
@@ -30,25 +31,34 @@ function buyItem(item) {
             cookieCountDisplay.textContent = "Cookies: " + cookieCount;
 
             // Increase the price of the cookieMultiplier for the next purchase
-            cookieMultiplierPrice = Math.floor(cookieMultiplierPrice * 1.5); // Increase by 50%
+            cookieMultiplierPrice = Math.floor(cookieMultiplierPrice * 2);
+            updateShopPrices();  // Update the price display in the shop
+        } else {
+            alert('Not enough cookies!');
+        }
+    } else if (item === 'cookieBaker') {
+        if (cookieCount >= cookieBakerPrice) {
+            cookieCount -= cookieBakerPrice;
+            cookieBakers *= 2;  
+            cookieCountDisplay.textContent = "Cookies: " + cookieCount;
+
+            cookieBakerPrice = Math.floor(cookieBakerPrice * 2);
             updateShopPrices();  // Update the price display in the shop
         } else {
             alert('Not enough cookies!');
         }
     }
 }
-
-// Auto clicker function (adds cookies every second)
 function startAutoClicker() {
     setInterval(() => {
         cookieCount += autoClickers;
         cookieCountDisplay.textContent = "Cookies: " + cookieCount;
-    }, 1000);  // Adds cookies every 1 second
+    }, 2000);  // Adds a cookie every 2 seconds
 }
-
 // Update the prices displayed in the shop
 function updateShopPrices() {
     // Update the displayed price in the shop for each item
-    document.getElementById("autoClickerPrice").textContent = "Price: " + autoClickerPrice + " Cookies";
-    document.getElementById("cookieMultiplierPrice").textContent = "Price: " + cookieMultiplierPrice + " Cookies";
+    document.getElementById("autoClickerPrice").textContent = autoClickerPrice + " Cookies";
+    document.getElementById("cookieMultiplierPrice").textContent = cookieMultiplierPrice + " Cookies";
+    document.getElementById("cookieBakerPrice").textContent = cookieBakerPrice + " Cookies";
 }

@@ -27,11 +27,11 @@ function buyItem(item) {
     } else if (item === 'cookieMultiplier') {
         if (cookieCount >= cookieMultiplierPrice) {
             cookieCount -= cookieMultiplierPrice;
-            cookieMultiplier *= 2;  // Doubles the cookie multiplier
+            cookieMultiplier *= 152;  // Doubles the cookie multiplier
             cookieCountDisplay.textContent = "Cookies: " + cookieCount;
 
             // Increase the price of the cookieMultiplier for the next purchase
-            cookieMultiplierPrice = Math.floor(cookieMultiplierPrice * 2);
+            cookieMultiplierPrice = Math.floor(cookieMultiplierPrice * 152);
             updateShopPrices();  // Update the price display in the shop
         } else {
             alert('Not enough cookies!');
@@ -42,7 +42,7 @@ function buyItem(item) {
             cookieBakers *= 2;
             cookieCountDisplay.textContent = "Cookies: " + cookieCount;
 
-            cookieBakerPrice = Math.floor(cookieBakerPrice * 2);
+            cookieBakerPrice = Math.floor(cookieBakerPrice * 152);
             updateShopPrices();  // Update the price display in the shop
         } else {
             alert('Not enough cookies!');

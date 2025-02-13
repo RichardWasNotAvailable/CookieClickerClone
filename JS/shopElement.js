@@ -58,7 +58,7 @@ function startAutoClicker() {
 // Update the prices displayed in the shop
 function updateShopPrices() {
     // Update the displayed price in the shop for each item
-    document.getElementById("autoClickerPrice").textContent = autoClickerPrice + " Cookies";
-    document.getElementById("cookieMultiplierPrice").textContent = cookieMultiplierPrice + " Cookies";
-    document.getElementById("cookieBakerPrice").textContent = cookieBakerPrice + " Cookies";
+    document.getElementById("autoClickerPrice").textContent = "Price: " + autoClickerPrice + " Cookies";
+    document.getElementById("cookieMultiplierPrice").textContent = "Price: " + cookieMultiplierPrice + " Cookies";
+    document.getElementById("cookieBakerPrice").textContent = "Price: " + cookieBakerPrice + " Cookies";
 }

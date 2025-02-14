@@ -2,10 +2,10 @@
 let autoClickerPrice = 10;
 let cookieMultiplierPrice = 50;
 let cookieBakerPrice = 100;
-let cookieFactoryPrice = 500;  // Example price for cookie factory
+let cookieFactoryPrice = 10000; 
 let cookieMultiplier = 1;
 let cookieBakers = 1;
-let cookieFactory = 1;
+let cookieFactory = 0;
 let autoClickers = 0;
 let cookieCount = 0;  // Starting cookie count
 let cookieCountDisplay = document.getElementById("cookieCountDisplay"); // Assuming this is the element displaying cookies

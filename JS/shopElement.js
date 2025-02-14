@@ -2,10 +2,12 @@
 var autoClickerPrice = 10;
 let cookieMultiplierPrice = 50;
 let cookieBakerPrice = 100;
+let cookieFactoryPrice = 10000;
 var cookieCount = 0;
 var autoClickers = 0;
 var cookieMultiplier = 1;
 var cookieBakers = 0;
+var cookieFactory = 0
 
 // Reference to the cookie counter display
 let cookieCountDisplay = document.getElementById("cookieCount");
@@ -35,7 +37,9 @@ class Upgrade {
             } else if (this.priceVarName === "cookieBakerPrice") {
                 cookieBakerPrice = this.priceRef;
             }
-
+else if (this.priceVarName === "cookieFactoryPrice") {
+    cookieFactoryPrice = this.priceRef
+}
             updateShopPrices();
         } else {
             alert('Not enough cookies!');
@@ -52,6 +56,7 @@ function updateShopPrices() {
     document.getElementById("autoClickerPrice").textContent = "Price: " + autoClickerPrice + " Cookies";
     document.getElementById("cookieMultiplierPrice").textContent = "Price: " + cookieMultiplierPrice + " Cookies";
     document.getElementById("cookieBakerPrice").textContent = "Price: " + cookieBakerPrice + " Cookies";
+    document.getElementById("cookieFactoryPrice").textContent = "Price: " + cookieFactoryPrice + " Cookies";
 }
 
 function buyItem(item) {
@@ -66,7 +71,7 @@ function buyItem(item) {
         newUpgrade.buyUpgrade();
         cookieMultiplier++; 
     } else if (item === 'cookieBaker') {
-        newUpgrade = new Upgrade(cookieBakers, cookieBakerPrice, 152, 2, "cookieBakerPrice");
+        newUpgrade = new Upgrade(cookieBakers, cookieBakerPrice, 3.1, 2, "cookieBakerPrice");
         newUpgrade.buyUpgrade();
         cookieBakers++;
     }

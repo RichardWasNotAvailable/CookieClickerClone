@@ -1,13 +1,18 @@
+let cookieCount = 0;
+
 // Initial prices
-var autoClickerPrice = 10;
+let autoClickerPrice = 10;
+let autoClickers = 0;
+
 let cookieMultiplierPrice = 50;
-let cookieBakerPrice = 100;
-let cookieFactoryPrice = 10000;
-var cookieCount = 0;
-var autoClickers = 0;
-var cookieMultiplier = 1;
-var cookieBakers = 0;
-var cookieFactory = 0
+let cookieMultiplier = 1;
+
+let ovens = 0;
+let ovenPrice = 100;
+
+let cookieFactory = 0
+let cookieFactoryPrice = 10;
+
 
 // Reference to the cookie counter display
 let cookieCountDisplay = document.getElementById("cookieCount");
@@ -33,17 +38,27 @@ class Upgrade {
             if (this.priceVarName === "autoClickerPrice") {
                 autoClickerPrice *= this.priceFactor;
                 document.getElementById("autoClickerPrice").textContent = "Price: " + autoClickerPrice + " Cookies";
+                autoClickers += 1;
 
             } else if (this.priceVarName === "cookieMultiplierPrice") {
                 cookieMultiplierPrice = this.priceRef;
                 document.getElementById("cookieMultiplierPrice").textContent = "Price: " + cookieMultiplierPrice + " Cookies";
-            } else if (this.priceVarName === "ovenPrice") {
-                cookieBakerPrice = this.priceRef;
-                document.getElementById("ovenPrice").textContent = "Price: " + cookieBakerPrice + " Cookies";
+                cookieMultiplier += 1;
+            } else if (this.priceVarName === "cookieMultiplierPrice") {
+                ovenPrice = this.priceRef;
+                document.getElementById("cookieMultiplierPrice").textContent = "Price: " + ovenPrice + " Cookies";
+                cookieMultiplier += 1;
             }
-            else if (this.priceVarName === "cookieFactoryPrice") {
+            else if (this.priceVarName === "ovenPrice"){
+                cookieFactoryPrice = this.priceRef
+                document.getElementById("ovenPrice").textContent = "Price: " + cookieFactoryPrice + " Cookies";
+                ovens += 1;
+
+            }
+            else if (this.priceVarName === "cookieFactoryPrice"){
                 cookieFactoryPrice = this.priceRef
                 document.getElementById("cookieFactoryPrice").textContent = "Price: " + cookieFactoryPrice + " Cookies";
+                cookieFactory += 1;
             }
         } else {
             alert('Not enough cookies!');
@@ -62,19 +77,22 @@ function buyItem(item) {
     if (item === 'autoClicker') {
         newUpgrade = new Upgrade(autoClickers, autoClickerPrice, 3, 1, "autoClickerPrice");
         newUpgrade.buyUpgrade();
-        autoClickers++; // Make sure the global value increases
     } else if (item === 'cookieMultiplier') {
         newUpgrade = new Upgrade(cookieMultiplier, cookieMultiplierPrice, 2.5, 2, "cookieMultiplierPrice");
         newUpgrade.buyUpgrade();
-        cookieMultiplier++; 
     } else if (item === 'oven') {
-        newUpgrade = new Upgrade(cookieBakers, cookieBakerPrice, 3.1, 2, "ovenPrice");
+        newUpgrade = new Upgrade(ovens, ovenPrice, 3.1, 2, "ovenPrice");
         newUpgrade.buyUpgrade();
-        cookieBakers++;
+    }else if (item === "cookieFactory"){
+        newUpgrade = new Upgrade(cookieFactory, cookieFactoryPrice, 6,5, "cookieFactoryPrice");
+        newUpgrade.buyUpgrade();
     }
 }
 
 setInterval(() => {
     cookieCount += autoClickers;
+    cookieCount += ovens * 3;
+    cookieCount += cookieFactory * 10;
+
     cookieCountDisplay.textContent = "Cookies: " + cookieCount;
 }, 2000);

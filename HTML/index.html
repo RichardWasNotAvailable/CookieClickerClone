@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Cookie Clicker</title>
         <link rel="stylesheet" href="../CSS/style.css">
+
     </head>
     <body>
         <nav>
@@ -15,7 +16,7 @@
         <!-- Shop section -->
         <nav id="shop" class="shop">
             <h2>Shop</h2>
-
+            
             <nav class="shop-item" id="cookieMultiplier" onclick="buyItem('autoClicker')" >
                 <img class="productImage" src="../IMG/Muis.png" alt="Een computermuis">
                 <nav class="itemContent">
@@ -31,22 +32,29 @@
                     <p class="upgradePrice" id="cookieMultiplierPrice">Price: 50 Cookies</p>
                 </nav>
             </nav>
-            <nav class="shop-item" id="cookieBaker" onclick="buyItem('cookieBaker')">
+            <nav class="shop-item" id="oven" onclick="buyItem('oven')">
             <img  class="productImage" src="../IMG/cookieBaker.png" alt="Oven">
             <nav class="itemContent">
             <p class="upgradeName">Oven</p>
-            <p class="upgradePrice" id="cookieBakerPrice">Price: 100 Cookies</p>
-        </nav> 
-    </nav>
+            <p class="upgradePrice" id="ovenPrice">Price: 100 Cookies</p>
+            </nav> 
+        </nav>
+        <img  alt="">
             <nav class="shop-item" id="cookieFactory" onclick="buyItem('cookieFactory')">
-   <img src="../IMG/factory.png" alt="Fabriek" class="productImage">
-   <nav class="itemContent">
-    <p class="upgradeName">Factory</p>
-    <p class="upgradePrice" id="cookieFactoryPrice">Price: 10K Cookies</p>
-   </nav>
+        <img src="../IMG/factory.png" alt="Fabriek" class="productImage">
+        <nav class="itemContent">
+         <p class="upgradeName">Factory</p>
+         <p class="upgradePrice" id="cookieFactoryPrice">Price: 1000 Cookies</p>
+        </nav>
+         </nav>
     </nav>
-</nav>
-        <!-- Link to JS files -->
-        <script src="../JS/shopElement.js"></script>
+
+    <nav class="itemDisplayNav">
+        <nav id="ovenDisplay" class="itemDisplay"></nav>
+        <nav id="factoryDisplay" class="itemDisplay"></nav>
+        <nav id="planeDisplay" class="itemDisplay"></nav>
+    </nav>
+    <script src="../JS/shopElement.js"></script>
+
     </body>
 </html>

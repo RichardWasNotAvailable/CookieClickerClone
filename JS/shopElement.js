@@ -10,9 +10,11 @@ let cookieMultiplier = 1;
 let ovens = 0;
 let ovenPrice = 100;
 
-let cookieFactory = 0
+let cookieFactory = 0;
 let cookieFactoryPrice = 10;
 
+let cargoPlane = 0;
+let cargoPlanePrice = 100000;
 
 // Reference to the cookie counter display
 let cookieCountDisplay = document.getElementById("cookieCount");
@@ -59,6 +61,10 @@ class Upgrade {
                 cookieFactoryPrice = this.priceRef
                 document.getElementById("cookieFactoryPrice").textContent = "Price: " + cookieFactoryPrice + " Cookies";
                 cookieFactory += 1;
+            }
+            else if (this.priceVarName === "cargoPlane"){
+                cargoPlanePrice = this.priceRef
+                document.getElementById("cargoPlanePrice").textContent = "Price: " + cargoPlanePrice + " Cookies"
             }
         } else {
             alert('Not enough cookies!');

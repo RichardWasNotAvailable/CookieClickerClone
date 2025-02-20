@@ -28,7 +28,7 @@ let cookieCountDisplay = document.getElementById("cookieCount");
 
 // Ensure cookieCountDisplay exists before updating
 if (cookieCountDisplay) {
-    cookieCountDisplay.textContent = "Cookies: " + cookieCount;
+    cookieCountDisplay.textContent = "Cookies: " + formatNumber(cookieCount);
 }
 
 class Upgrade {
@@ -70,7 +70,7 @@ function buyItem(item) {
     } else if (item === 'cookieMultiplier') {
         newUpgrade = new Upgrade(1, 2);
     } else if (item === 'oven') {
-        newUpgrade = new Upgrade(2, 3.1);
+        newUpgrade = new Upgrade(2, 3);
     } else if (item === "cookieFactory") {
         newUpgrade = new Upgrade(3, 6);
     } else if (item === "cargoPlane") {
@@ -93,9 +93,24 @@ setInterval(() => {
 
 // Function to update UI
 function updateUI() {
-    cookieCountDisplay.textContent = "Cookies: " + cookieCount;
-    document.getElementById("autoClickerPrice").innerHTML = "Price: " + itemPrices[0] + " Cookies";
-    document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + itemPrices[1] + " Cookies";
-    document.getElementById("ovenPrice").innerHTML = "Price: " + itemPrices[2] + " Cookies";
-    document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + itemPrices[3] + "Cookies";
+    if (cookieCountDisplay) {
+        cookieCountDisplay.textContent = "Cookies: " + formatNumber(cookieCount);
+        
+        document.getElementById("autoClickerPrice").innerHTML = "Price: " + formatNumber(itemPrices[0]) + " Cookies";
+        document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + formatNumber(itemPrices[1]) + " Cookies";
+        document.getElementById("ovenPrice").innerHTML = "Price: " + formatNumber(itemPrices[2]) + " Cookies";
+        document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + formatNumber(itemPrices[3]) + " Cookies";
+        document.getElementById("cargoPlanePrice").innerHTML = "Price: " + formatNumber(itemPrices[4]) + " Cookies";
+    }
 }
+
+function formatNumber(num) {
+    if (num >= 1e18) return (num / 1e18).toFixed(2) + "S";  // Sextillions
+    if (num >= 1e15) return (num / 1e15).toFixed(2) + "Qi"; // Quintillions
+    if (num >= 1e12) return (num / 1e12).toFixed(2) + "Q";  // Quadrillions
+    if (num >= 1e9) return (num / 1e9).toFixed(2) + "B";    // Billions
+    if (num >= 1e6) return (num / 1e6).toFixed(2) + "M";    // Millions
+    if (num >= 1e3) return (num / 1e3).toFixed(1) + "K";    // Thousands
+    return num; // No formatting for small numbers
+}
+

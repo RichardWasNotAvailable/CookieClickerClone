@@ -32,8 +32,7 @@ class Upgrade {
             cookieCount -= itemPrices[this.itemID]; // subtracting cookies from price
             itemPrices[this.itemID] *= this.priceFactor; // increasing price
             itemValues[this.itemID] += 1; // giving the player the item(by adding one)
-            
-            alert(itemValues[0]);
+            updateShopPrices();
         }
     }
 }
@@ -68,3 +67,10 @@ setInterval(() => {
 
     cookieCountDisplay.textContent = "Cookies: " + cookieCount;
 }, 2000);
+
+function updateShopPrices(){
+    document.getElementById("autoClickerPrice").innerHTML = "Price: " + itemPrices[0] + " Cookies";
+    document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + itemPrices[1] + " Cookies";
+    document.getElementById("ovenPrice").innerHTML = "Price: " + itemPrices[2] + " Cookies";
+    document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + itemPrices[3] + " Cookies";
+}

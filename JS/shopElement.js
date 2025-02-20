@@ -48,9 +48,9 @@ function buyItem(item) {
     if (item === 'autoClicker') {
         newUpgrade = new Upgrade(0, 3);
     } else if (item === 'cookieMultiplier') {
-        newUpgrade = new Upgrade(1, 2.5);
+        newUpgrade = new Upgrade(1, 2);
     } else if (item === 'oven') {
-        newUpgrade = new Upgrade(2, 3.1);
+        newUpgrade = new Upgrade(2, 3);
     } else if (item === "cookieFactory") {
         newUpgrade = new Upgrade(3, 6);
     } else if (item === "cargoPlane") {

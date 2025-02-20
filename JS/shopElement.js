@@ -1,6 +1,11 @@
 let cookieCount = 0;
 
-let itemPrices = [10, 50, 100, 1000, 100000];
+let itemPrices = [
+    10, // autoClickers
+    50, // cookieMultiplier (starts at 1 to allow clicking to work)
+    100, // ovens
+    1000, // cookieFactory
+    100000];// cargoPlanes
 
 let itemValues = [ 
     0, // autoClickers
@@ -8,6 +13,14 @@ let itemValues = [
     0, // ovens
     0, // cookieFactory
     0  // cargoPlanes
+];
+
+const itemImages = [
+    "../IMG/Muis.png",
+    "../IMG/Cookie.png",
+    "../IMG/cookieBaker.png",
+    "../IMG/factory.png",
+    "../IMG/Airplane.png",
 ];
 
 // Reference to the cookie counter display
@@ -30,6 +43,14 @@ class Upgrade {
             itemPrices[this.itemID] *= this.priceFactor; // Increase price
             itemValues[this.itemID] += 1; // Increase item count
 
+            let displayImage = document.createElement("IMG"); 
+            displayImage.setAttribute('src', itemImages[this.itemID]);
+            displayImage.setAttribute('height', "100px");
+            displayImage.setAttribute('width', "100px");
+
+            let displayUpgradeParent =  document.getElementById('itemDisplayNav').children[this.itemID];
+            displayUpgradeParent.appendChild(displayImage);
+
             updateUI();
         } else {
             alert("Not enough cookies!");
@@ -44,11 +65,10 @@ function addACookie() {
 
 function buyItem(item) {
     let newUpgrade;
-
     if (item === 'autoClicker') {
         newUpgrade = new Upgrade(0, 3);
     } else if (item === 'cookieMultiplier') {
-        newUpgrade = new Upgrade(1, 2.5);
+        newUpgrade = new Upgrade(1, 2);
     } else if (item === 'oven') {
         newUpgrade = new Upgrade(2, 3.1);
     } else if (item === "cookieFactory") {
@@ -68,17 +88,14 @@ setInterval(() => {
     cookieCount += itemValues[2] * 5;  // Ovens
     cookieCount += itemValues[3] * 10; // Cookie Factories
     cookieCount += itemValues[4] * 50; // Cargo Planes
-
     updateUI();
 }, 2000);
 
 // Function to update UI
 function updateUI() {
-    if (cookieCountDisplay) {
-        cookieCountDisplay.textContent = "Cookies: " + cookieCount;
-        document.getElementById("autoClickerPrice").innerHTML = "Price: " + itemPrices[0] + " Cookies";
-        document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + itemPrices[1] + " Cookies";
-        document.getElementById("ovenPrice").innerHTML = "Price: " + itemPrices[2] + " Cookies";
-        document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + itemPrices[3] + " ookies";
-    }
+    cookieCountDisplay.textContent = "Cookies: " + cookieCount;
+    document.getElementById("autoClickerPrice").innerHTML = "Price: " + itemPrices[0] + " Cookies";
+    document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + itemPrices[1] + " Cookies";
+    document.getElementById("ovenPrice").innerHTML = "Price: " + itemPrices[2] + " Cookies";
+    document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + itemPrices[3] + "Cookies";
 }

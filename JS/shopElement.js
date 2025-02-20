@@ -1,4 +1,4 @@
-let cookieCount = 4095860;
+let cookieCount = 0;
 
 let itemPrices = [
     10, // autoClickers
@@ -120,6 +120,6 @@ function formatNumber(num) {
     if (num >= 1e12) return (num / 1e12).toFixed(2) + "Q";  // Quadrillions
     if (num >= 1e9) return (num / 1e9).toFixed(2) + "B";    // Billions
     if (num >= 1e6) return (num / 1e6).toFixed(2) + "M";    // Millions
-    if (num >= 1e3) return (num / 1e3).toFixed(1) + "K";    // Thousands
+    if (num >= 1e3) return (num / 1e3).toFixed(2) + "K";    // Thousands
     return num; // No formatting for small numbers
 }

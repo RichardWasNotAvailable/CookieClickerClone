@@ -1,70 +1,80 @@
 let cookieCount = 0;
 
-// Initial prices
-let autoClickers = 0;
-let cookieMultiplier = 1;
-let ovens = 0;
-let cookieFactory = 0;
+let itemPrices = [10, 50, 100, 1000, 100000];
 
-let itemPrices = [
-    10, 50, 100, 1000
-];
-
-let itemValues = [ // each 0 here is an item value
-    0, // autoclickers
-    1, // cookieMultiplier
+let itemValues = [ 
+    0, // autoClickers
+    1, // cookieMultiplier (starts at 1 to allow clicking to work)
     0, // ovens
-    0, // cookiefactory
+    0, // cookieFactory
+    0  // cargoPlanes
 ];
 
 // Reference to the cookie counter display
 let cookieCountDisplay = document.getElementById("cookieCount");
 
+// Ensure cookieCountDisplay exists before updating
+if (cookieCountDisplay) {
+    cookieCountDisplay.textContent = "Cookies: " + cookieCount;
+}
+
 class Upgrade {
     constructor(itemID, priceFactor) {
-        this.itemID = itemID; // Reference to the global variable (autoClickers, cookieMultiplier, etc.)
+        this.itemID = itemID;
         this.priceFactor = priceFactor;
     }
 
     buyUpgrade() {
-        //alert(cookieCount + "/" + itemPrices[this.itemID])
-        if (cookieCount >= itemPrices[this.itemID]){
-            cookieCount -= itemPrices[this.itemID]; // subtracting cookies from price
-            itemPrices[this.itemID] *= this.priceFactor; // increasing price
-            itemValues[this.itemID] += 1; // giving the player the item(by adding one)
-            
-            alert(itemValues[0]);
+        if (cookieCount >= itemPrices[this.itemID]) {
+            cookieCount -= itemPrices[this.itemID]; // Deduct cost
+            itemPrices[this.itemID] *= this.priceFactor; // Increase price
+            itemValues[this.itemID] += 1; // Increase item count
+
+            updateUI();
+        } else {
+            alert("Not enough cookies!");
         }
     }
 }
 
-function addACookie(){
-    cookieCount += cookieMultiplier;
-    cookieCountDisplay.textContent = "Cookies: " + cookieCount;
+function addACookie() {
+    cookieCount += itemValues[1]; // Use itemValues[1] for cookieMultiplier
+    updateUI();
 }
 
 function buyItem(item) {
     let newUpgrade;
 
-    if (item === 'autoClicker'){
+    if (item === 'autoClicker') {
         newUpgrade = new Upgrade(0, 3);
-        newUpgrade.buyUpgrade();
     } else if (item === 'cookieMultiplier') {
         newUpgrade = new Upgrade(1, 2.5);
-        newUpgrade.buyUpgrade();
     } else if (item === 'oven') {
         newUpgrade = new Upgrade(2, 3.1);
-        newUpgrade.buyUpgrade(ovens);
-    }else if (item === "cookieFactory"){
+    } else if (item === "cookieFactory") {
         newUpgrade = new Upgrade(3, 6);
+    } else if (item === "cargoPlane") {
+        newUpgrade = new Upgrade(4, 3);
+    }
+
+    if (newUpgrade) {
         newUpgrade.buyUpgrade();
     }
 }
 
+// Auto cookie generation every 2 seconds
 setInterval(() => {
-    cookieCount += itemValues[0];
-    cookieCount += itemValues[2] * 5;
-    cookieCount += itemValues[3] * 10;
+    cookieCount += itemValues[0];      // AutoClickers
+    cookieCount += itemValues[2] * 5;  // Ovens
+    cookieCount += itemValues[3] * 10; // Cookie Factories
+    cookieCount += itemValues[4] * 50; // Cargo Planes
 
-    cookieCountDisplay.textContent = "Cookies: " + cookieCount;
+    updateUI();
 }, 2000);
+
+// Function to update UI
+function updateUI() {
+    if (cookieCountDisplay) {
+        cookieCountDisplay.textContent = "Cookies: " + cookieCount;
+    }
+}

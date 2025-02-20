@@ -1,4 +1,4 @@
-let cookieCount = 0;
+let cookieCount = 4095860;
 
 let itemPrices = [
     10, // autoClickers
@@ -23,7 +23,7 @@ const itemImages = [
     "../IMG/Airplane.png",
 ];
 
-const maxItems = 12; // Set the maximum number of items to 12
+const maxItems = 12; // Prevents overflowing of the containers
 
 // Reference to the cookie counter display
 let cookieCountDisplay = document.getElementById("cookieCount");
@@ -34,36 +34,38 @@ if (cookieCountDisplay) {
 }
 
 class Upgrade {
-    constructor(itemID, priceFactor) {
+    constructor(itemID, priceFactor, itemImages) {
         this.itemID = itemID;
         this.priceFactor = priceFactor;
+        this.itemImages = itemImages;
     }
 
-    buyUpgrade() {
-        if (cookieCount >= itemPrices[this.itemID]) {
-            cookieCount -= itemPrices[this.itemID]; // Deduct cost
-            itemPrices[this.itemID] *= this.priceFactor; // Increase price
-            itemValues[this.itemID] += 1; // Increase item count
+   buyUpgrade() {
+    if (cookieCount >= itemPrices[this.itemID]) {
+        cookieCount -= itemPrices[this.itemID]; // Deduct cost
+        itemPrices[this.itemID] *= this.priceFactor; // Increase price
+        itemValues[this.itemID] += 1; // Increase item count
 
-            let displayUpgradeParent = document.getElementById('itemDisplayNav').children[this.itemID];
+        let displayUpgradeParent = document.getElementById('itemDisplayNav').children[this.itemID];
+        
+        // Check if the container has less than 12 items
+        if (displayUpgradeParent.children.length < maxItems) {
+            // Create a new image element
+            let displayImage = document.createElement("IMG"); 
+            displayImage.setAttribute('src', itemImages[this.itemID]); // Set the image source
+            displayImage.setAttribute('height', "100px"); // Set image height
+            displayImage.setAttribute('width', "100px");  // Set image width
             
-            // Check if the container has less than 12 items
-            if (displayUpgradeParent.children.length < maxItems) {
-                let displayImage = document.createElement("IMG"); 
-                displayImage.setAttribute('src', itemImages[this.itemID]);
-                displayImage.setAttribute('height', "100px");
-                displayImage.setAttribute('width', "100px");
-
-                displayUpgradeParent.appendChild(displayImage);
-            } else {
-                alert("Cannot add more items, container is full!");
-            }
-
-            updateUI();
-        } else {
-            alert("Not enough cookies!");
+            // Append the image to the container
+            displayUpgradeParent.appendChild(displayImage);
         }
+
+        // Update the UI to reflect the changes
+        updateUI();
+    } else {
+        alert("Not enough cookies!"); // Show alert if not enough cookies
     }
+}
 }
 
 function addACookie() {

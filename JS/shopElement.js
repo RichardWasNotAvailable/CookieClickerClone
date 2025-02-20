@@ -5,7 +5,7 @@ let itemPrices = [
     50, // cookieMultiplier (starts at 1 to allow clicking to work)
     100, // ovens
     1000, // cookieFactory
-    100000];// cargoPlanes
+    100000]; // cargoPlanes
 
 let itemValues = [ 
     0, // autoClickers
@@ -22,6 +22,8 @@ const itemImages = [
     "../IMG/factory.png",
     "../IMG/Airplane.png",
 ];
+
+const maxItems = 12; // Set the maximum number of items to 12
 
 // Reference to the cookie counter display
 let cookieCountDisplay = document.getElementById("cookieCount");
@@ -43,13 +45,19 @@ class Upgrade {
             itemPrices[this.itemID] *= this.priceFactor; // Increase price
             itemValues[this.itemID] += 1; // Increase item count
 
-            let displayImage = document.createElement("IMG"); 
-            displayImage.setAttribute('src', itemImages[this.itemID]);
-            displayImage.setAttribute('height', "100px");
-            displayImage.setAttribute('width', "100px");
+            let displayUpgradeParent = document.getElementById('itemDisplayNav').children[this.itemID];
+            
+            // Check if the container has less than 12 items
+            if (displayUpgradeParent.children.length < maxItems) {
+                let displayImage = document.createElement("IMG"); 
+                displayImage.setAttribute('src', itemImages[this.itemID]);
+                displayImage.setAttribute('height', "100px");
+                displayImage.setAttribute('width', "100px");
 
-            let displayUpgradeParent =  document.getElementById('itemDisplayNav').children[this.itemID];
-            displayUpgradeParent.appendChild(displayImage);
+                displayUpgradeParent.appendChild(displayImage);
+            } else {
+                alert("Cannot add more items, container is full!");
+            }
 
             updateUI();
         } else {
@@ -113,4 +121,3 @@ function formatNumber(num) {
     if (num >= 1e3) return (num / 1e3).toFixed(1) + "K";    // Thousands
     return num; // No formatting for small numbers
 }
-

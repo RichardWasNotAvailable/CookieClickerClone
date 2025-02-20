@@ -15,7 +15,7 @@ let cookieCountDisplay = document.getElementById("cookieCount");
 
 // Ensure cookieCountDisplay exists before updating
 if (cookieCountDisplay) {
-    cookieCountDisplay.textContent = "Cookies: " + cookieCount;
+    cookieCountDisplay.textContent = "Cookies: " + formatNumber(cookieCount);
 }
 
 class Upgrade {
@@ -75,10 +75,20 @@ setInterval(() => {
 // Function to update UI
 function updateUI() {
     if (cookieCountDisplay) {
-        cookieCountDisplay.textContent = "Cookies: " + cookieCount;
-        document.getElementById("autoClickerPrice").innerHTML = "Price: " + itemPrices[0] + " Cookies";
-        document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + itemPrices[1] + " Cookies";
-        document.getElementById("ovenPrice").innerHTML = "Price: " + itemPrices[2] + " Cookies";
-        document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + itemPrices[3] + " ookies";
+        cookieCountDisplay.textContent = "Cookies: " + formatNumber(cookieCount);
+        
+        document.getElementById("autoClickerPrice").innerHTML = "Price: " + formatNumber(itemPrices[0]) + " Cookies";
+        document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + formatNumber(itemPrices[1]) + " Cookies";
+        document.getElementById("ovenPrice").innerHTML = "Price: " + formatNumber(itemPrices[2]) + " Cookies";
+        document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + formatNumber(itemPrices[3]) + " Cookies";
+        document.getElementById("cargoPlanePrice").innerHTML = "Price: " + formatNumber(itemPrices[4]) + " Cookies";
     }
+}
+
+function formatNumber(num) {
+    if (num >= 1e12) return (num / 1e12).toFixed(2) + "T"; // Trillions
+    if (num >= 1e9) return (num / 1e9).toFixed(2) + "B";   // Billions
+    if (num >= 1e6) return (num / 1e6).toFixed(2) + "M";   // Millions
+    if (num >= 1e3) return (num / 1e3).toFixed(1) + "K";   // Thousands
+    return num; // No formatting for small numbers
 }

@@ -80,20 +80,13 @@ const upgrades = {
     cookieFactory: new Upgrade(3, 6),
     cargoPlane: new Upgrade(4, 3)
 };
-
-// Function to add a cookie when clicked
-function addACookie() {
-    cookieCount += itemValues[1]; // cookieMultiplier (itemValues[1] == 1)
-    updateUI();
-}
-
 // Function to handle buying an item (upgrade)
 function buyItem(item) {
     if (upgrades[item]) {
         upgrades[item].buyUpgrade();
     }
 }
-// Auto cookie generation every 2 seconds
+    // Auto cookie generation every 2 seconds
 setInterval(() => {
     cookieCount += itemValues[0];      // AutoClickers
     cookieCount += itemValues[2] * 5;  // Ovens

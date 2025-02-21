@@ -73,25 +73,26 @@ function addACookie() {
     updateUI();
 }
 
-function buyItem(item) {
-    let newUpgrade;
-    if (item === 'autoClicker') {
-        newUpgrade = new Upgrade(0, 3);
-    } else if (item === 'cookieMultiplier') {
-        newUpgrade = new Upgrade(1, 2);
-    } else if (item === 'oven') {
-        newUpgrade = new Upgrade(2, 3);
-    } else if (item === "cookieFactory") {
-        newUpgrade = new Upgrade(3, 6);
-    } else if (item === "cargoPlane") {
-        newUpgrade = new Upgrade(4, 3);
-    }
+const upgrades = {
+    autoClicker: new Upgrade(0, 3),
+    cookieMultiplier: new Upgrade(1, 2),
+    oven: new Upgrade(2, 3),
+    cookieFactory: new Upgrade(3, 6),
+    cargoPlane: new Upgrade(4, 3)
+};
 
-    if (newUpgrade) {
-        newUpgrade.buyUpgrade();
-    }
+// Function to add a cookie when clicked
+function addACookie() {
+    cookieCount += itemValues[1]; // cookieMultiplier (itemValues[1] == 1)
+    updateUI();
 }
 
+// Function to handle buying an item (upgrade)
+function buyItem(item) {
+    if (upgrades[item]) {
+        upgrades[item].buyUpgrade();
+    }
+}
 // Auto cookie generation every 2 seconds
 setInterval(() => {
     cookieCount += itemValues[0];      // AutoClickers

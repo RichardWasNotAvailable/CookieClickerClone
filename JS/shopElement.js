@@ -1,4 +1,4 @@
-let cookieCount = 0;
+let cookieCount = 5590;
 
 let itemPrices = [
     10, // autoClickers
@@ -23,15 +23,18 @@ const itemImages = [
     "../IMG/Airplane.png",
 ];
 
-const maxItems = 12; // Prevents overflowing of the containers
+const maxItems = 16; // Prevents overflowing of the containers
 
 // Reference to the cookie counter display
 let cookieCountDisplay = document.getElementById("cookieCount");
 
-// Ensure cookieCountDisplay exists before updating
-if (cookieCountDisplay) {
-    cookieCountDisplay.textContent = "Cookies: " + formatNumber(cookieCount);
-}
+document.addEventListener("DOMContentLoaded", function() {
+    let cookieCountDisplay = document.getElementById("cookieCount");
+    if (cookieCountDisplay) {
+        cookieCountDisplay.textContent = "Cookies: " + formatNumber(cookieCount);
+    }
+});
+
 
 
 class game{
@@ -71,8 +74,8 @@ class Upgrade {
                 // Create a new image element
                 let displayImage = document.createElement("IMG"); 
                 displayImage.setAttribute('src', itemImages[itemID]); // Set the image source
-                displayImage.setAttribute('height', "100px"); // Set image height
-                displayImage.setAttribute('width', "100px");  // Set image width
+                displayImage.setAttribute('height', "70px"); // Set image height
+                displayImage.setAttribute('width', "70px");  // Set image width
 
                 // Append the image to the container
                 displayUpgradeParent.appendChild(displayImage);
@@ -99,7 +102,18 @@ setInterval(() => {
 }, 2000);
 
 
-function formatNumber(num) {
+document.addEventListener("DOMContentLoaded", function() {
+    let cookieCountDisplay = document.getElementById("cookieCount");
+    if (cookieCountDisplay) {
+        console.log("cookieCountDisplay found:", cookieCountDisplay);
+        console.log("cookieCount:", cookieCount);
+        cookieCountDisplay.textContent = "Cookies: " + formatNumber(cookieCount);
+    } else {
+        console.log("cookieCountDisplay element not found!");
+    }
+});
+
+function formatNumber(num) { 
     if (num >= 1e18) return (num / 1e18).toFixed(2) + "S";  // Sextillions
     if (num >= 1e15) return (num / 1e15).toFixed(2) + "Qi"; // Quintillions
     if (num >= 1e12) return (num / 1e12).toFixed(2) + "Q";  // Quadrillions

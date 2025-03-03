@@ -33,80 +33,71 @@ if (cookieCountDisplay) {
     cookieCountDisplay.textContent = "Cookies: " + formatNumber(cookieCount);
 }
 
-class Upgrade {
-    constructor(itemID, priceFactor, itemImages) {
-        this.itemID = itemID;
-        this.priceFactor = priceFactor;
-        this.itemImages = itemImages;
+
+class game{
+    constructor() {
+        this.cookies = itemValues[0];
+        this.addACookie();
     }
 
-   buyUpgrade() {
-    if (cookieCount >= itemPrices[this.itemID]) {
-        cookieCount -= itemPrices[this.itemID]; // Deduct cost
-        itemPrices[this.itemID] *= this.priceFactor; // Increase price
-        itemValues[this.itemID] += 1; // Increase item count
-
-        let displayUpgradeParent = document.getElementById('itemDisplayNav').children[this.itemID];
-        
-        // Check if the container has less than 12 items
-        if (displayUpgradeParent.children.length < maxItems) {
-            // Create a new image element
-            let displayImage = document.createElement("IMG"); 
-            displayImage.setAttribute('src', itemImages[this.itemID]); // Set the image source
-            displayImage.setAttribute('height', "100px"); // Set image height
-            displayImage.setAttribute('width', "100px");  // Set image width
-            
-            // Append the image to the container
-            displayUpgradeParent.appendChild(displayImage);
-        }
-
-        // Update the UI to reflect the changes
-        updateUI();
-    } else {
-        alert("Not enough cookies!"); // Show alert if not enough cookies
-    }
-}
-}
-
-function addACookie() {
-    cookieCount += itemValues[1]; // Use itemValues[1] for cookieMultiplier
-    updateUI();
-}
-
-const upgrades = {
-    autoClicker: new Upgrade(0, 3),
-    cookieMultiplier: new Upgrade(1, 2),
-    oven: new Upgrade(2, 3),
-    cookieFactory: new Upgrade(3, 6),
-    cargoPlane: new Upgrade(4, 3)
-};
-// Function to handle buying an item (upgrade)
-function buyItem(item) {
-    if (upgrades[item]) {
-        upgrades[item].buyUpgrade();
-    }
-}
-    // Auto cookie generation every 2 seconds
-setInterval(() => {
-    cookieCount += itemValues[0];      // AutoClickers
-    cookieCount += itemValues[2] * 5;  // Ovens
-    cookieCount += itemValues[3] * 10; // Cookie Factories
-    cookieCount += itemValues[4] * 50; // Cargo Planes
-    updateUI();
-}, 2000);
-
-// Function to update UI
-function updateUI() {
-    if (cookieCountDisplay) {
+    updateUI() {
         cookieCountDisplay.textContent = "Cookies: " + formatNumber(cookieCount);
-        
         document.getElementById("autoClickerPrice").innerHTML = "Price: " + formatNumber(itemPrices[0]) + " Cookies";
         document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + formatNumber(itemPrices[1]) + " Cookies";
         document.getElementById("ovenPrice").innerHTML = "Price: " + formatNumber(itemPrices[2]) + " Cookies";
         document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + formatNumber(itemPrices[3]) + " Cookies";
         document.getElementById("cargoPlanePrice").innerHTML = "Price: " + formatNumber(itemPrices[4]) + " Cookies";
     }
+
+    addACookie() { // if the user clicked on a cookie manually
+        cookieCount += itemValues[1]; // Use itemValues[1] for cookieMultiplier
+        this.updateUI();
+    }
+    
 }
+
+class Upgrade {
+
+   buyUpgrade(itemID, priceFactor) {
+        if (cookieCount >= itemPrices[itemID]) {
+            cookieCount -= itemPrices[itemID]; // Deduct cost
+            itemPrices[itemID] = Math.floor(itemPrices[itemID] * priceFactor); // Increase price
+            itemValues[itemID] += 1; // Increase item count
+
+            let displayUpgradeParent = document.getElementById('itemDisplayNav').children[itemID];
+
+            // Check if the container has less than 12 items
+            if (displayUpgradeParent.children.length < maxItems) {
+                // Create a new image element
+                let displayImage = document.createElement("IMG"); 
+                displayImage.setAttribute('src', itemImages[itemID]); // Set the image source
+                displayImage.setAttribute('height', "100px"); // Set image height
+                displayImage.setAttribute('width', "100px");  // Set image width
+
+                // Append the image to the container
+                displayUpgradeParent.appendChild(displayImage);
+            }
+
+            // Update the UI to reflect the changes
+            game.updateUI();
+        } else {
+            alert("Not enough cookies!"); // Show alert if not enough cookies
+        }
+    }
+}
+
+let Game = new game();
+let newUpgrade = new Upgrade();
+
+    // Auto cookie generation every 2 seconds
+setInterval(() => {
+    cookieCount += itemValues[0];      // AutoClickers
+    cookieCount += itemValues[2] * 5;  // Ovens
+    cookieCount += itemValues[3] * 10; // Cookie Factories
+    cookieCount += itemValues[4] * 50; // Cargo Planes
+    Game.updateUI();
+}, 2000);
+
 
 function formatNumber(num) {
     if (num >= 1e18) return (num / 1e18).toFixed(2) + "S";  // Sextillions

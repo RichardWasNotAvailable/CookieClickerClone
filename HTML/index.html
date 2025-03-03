@@ -10,43 +10,44 @@
     <body>
         <nav>
             <p id="cookieCount">Cookies: 0</p>
-            <img id="cookieButton" src="../IMG/Cookie.png" onclick="addACookie()" class="CookieButton" alt="koekje">
-        </nav>    
+            <img id="cookieButton" src="../IMG/Cookie.png" class="CookieButton" onclick="Game.addACookie()" alt="koekje">
+        </nav>
 
         <!-- Shop section -->
         <nav id="shop" class="shop">
             <h2>Shop</h2>
             
-            <nav class="shop-item" id="cookieMultiplier" onclick="buyItem('autoClicker')" >
+            <nav class="shop-item" id="autoClicker" onclick="newUpgrade.buyUpgrade(0,1.3)" >
                 <img class="productImage" src="../IMG/Muis.png" alt="Een computermuis">
                 <nav class="itemContent">
                     <p class="upgradeName" >Auto Clicker</p>
                     <p class="upgradePrice" id="autoClickerPrice">Price: 10 Cookies</p>
+                    <p class="itemAmount" id="autoClickerCount">0</p>
                 </nav>
             </nav>
 
-            <nav class="shop-item" id="cookieMultiply" onclick="buyItem('cookieMultiplier')" >
+            <nav class="shop-item" id="cookieMultiply" onclick="newUpgrade.buyUpgrade(1,1.5)" >
                 <img class="productImage" src="../IMG/Cookie.png" alt="">
                 <nav class="itemContent">
                     <p class="upgradeName">Cookie Multiplier</p>
                     <p class="upgradePrice" id="cookieMultiplierPrice">Price: 50 Cookies</p>
                 </nav>
             </nav>
-            <nav class="shop-item" id="oven" onclick="buyItem('oven')">
+            <nav class="shop-item" id="oven" onclick="newUpgrade.buyUpgrade(2,1.5)">
             <img  class="productImage" src="../IMG/cookieBaker.png" alt="Oven">
             <nav class="itemContent">
             <p class="upgradeName">Oven</p>
             <p class="upgradePrice" id="ovenPrice">Price: 100 Cookies</p>
             </nav> 
         </nav>
-            <nav class="shop-item" id="cookieFactory" onclick="buyItem('cookieFactory')">
+            <nav class="shop-item" id="cookieFactory" onclick="newUpgrade.buyUpgrade(3,1.5)">
         <img src="../IMG/factory.png" alt="Fabriek" class="productImage">
         <nav class="itemContent">
          <p class="upgradeName">Factory</p>
          <p class="upgradePrice" id="cookieFactoryPrice">Price: 1000 Cookies</p>
         </nav>
          </nav>
-         <nav class="shop-item" id="cargoPlane" onclick="buyItem('cargoPlane')">
+         <nav class="shop-item" id="cargoPlane" onclick="newUpgrade.buyUpgrade(4,1.5)">
             <img src="../IMG/airplane.png" alt="Vliegtuig" class="productImage">
             <nav class="itemContent">
              <p class="upgradeName">Cargo Plane</p>
@@ -55,7 +56,6 @@
              </nav>
     </nav>
     <nav id="itemDisplayNav" class="itemDisplayNav">
-        
         <nav id="autoclickerDisplay" class="itemDisplay"></nav>
         <nav id="multiplierDisplay" class="itemDisplay"></nav>
         <nav id="ovenDisplay" class="itemDisplay"></nav>

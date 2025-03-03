@@ -90,16 +90,15 @@ let Game = new game();
 let newUpgrade = new Upgrade();
 
     // Auto cookie generation every 2 seconds
-setInterval(() => {
-    cookieCount += itemValues[0];      // AutoClickers
-    cookieCount += itemValues[2] * 5;  // Ovens
-    cookieCount += itemValues[3] * 10; // Cookie Factories
-    cookieCount += itemValues[4] * 50; // Cargo Planes
-    Game.updateUI();
-}, 2000);
+    setInterval(() => {
+        cookieCount += itemValues[0];      // AutoClickers
+        cookieCount += itemValues[2] * 5;  // Ovens
+        cookieCount += itemValues[3] * 10; // Cookie Factories
+        cookieCount += itemValues[4] * 50; // Cargo Planes
+        Game.updateUI();  // Call updateUI from the instance, not the class
+    }, 2000);
 
-
-function formatNumber(num) {
+function formatNumber(num){
     if (num >= 1e18) return (num / 1e18).toFixed(2) + "S";  // Sextillions
     if (num >= 1e15) return (num / 1e15).toFixed(2) + "Qi"; // Quintillions
     if (num >= 1e12) return (num / 1e12).toFixed(2) + "Q";  // Quadrillions

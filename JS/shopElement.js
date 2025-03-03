@@ -79,7 +79,7 @@ class Upgrade {
             }
 
             // Update the UI to reflect the changes
-            game.updateUI();
+            Game.updateUI();
         } else {
             alert("Not enough cookies!"); // Show alert if not enough cookies
         }

@@ -1,4 +1,4 @@
-let cookieCount = 0;
+let cookieCount = -1;
 
 let itemPrices = [
     10, // autoClickers
@@ -23,7 +23,7 @@ const itemImages = [
     "../IMG/Airplane.png",
 ];
 
-const maxItems = 12; // Prevents overflowing of the containers
+const maxItems = 16; // Prevents overflowing of the containers
 
 // Reference to the cookie counter display
 let cookieCountDisplay = document.getElementById("cookieCount");
@@ -71,8 +71,8 @@ class Upgrade {
                 // Create a new image element
                 let displayImage = document.createElement("IMG"); 
                 displayImage.setAttribute('src', itemImages[itemID]); // Set the image source
-                displayImage.setAttribute('height', "100px"); // Set image height
-                displayImage.setAttribute('width', "100px");  // Set image width
+                displayImage.setAttribute('height', "70px"); // Set image height
+                displayImage.setAttribute('width', "70px");  // Set image width
 
                 // Append the image to the container
                 displayUpgradeParent.appendChild(displayImage);

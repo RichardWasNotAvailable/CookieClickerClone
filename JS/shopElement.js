@@ -1,78 +1,34 @@
-let cookieCount = -1;
+let cookieCount = 0;
 
-let itemPrices = [
-    10, // autoClickers
-    50, // cookieMultiplier (starts at 1 to allow clicking to work)
-    100, // ovens
-    1000, // cookieFactory
-    100000]; // cargoPlanes
+class Upgrade{
+    price;
+    value;
+    imageurl;
+    priceFactor;
 
-let itemValues = [ 
-    0, // autoClickers
-    1, // cookieMultiplier (starts at 1 to allow clicking to work)
-    0, // ovens
-    0, // cookieFactory
-    0  // cargoPlanes
-];
-
-const itemImages = [
-    "../IMG/Muis.png",
-    "../IMG/Cookie.png",
-    "../IMG/cookieBaker.png",
-    "../IMG/factory.png",
-    "../IMG/Airplane.png",
-];
-
-const maxItems = 16; // Prevents overflowing of the containers
-
-// Reference to the cookie counter display
-let cookieCountDisplay = document.getElementById("cookieCount");
-
-// Ensure cookieCountDisplay exists before updating
-if (cookieCountDisplay) {
-    cookieCountDisplay.textContent = "Cookies: " + formatNumber(cookieCount);
-}
-
-
-class game{
-    constructor() {
-        this.cookies = itemValues[0];
-        this.addACookie();
+    constructor(price, value, imgurl, priceFactor, displayParent){
+        this.price = price;
+        this.value = value;
+        this.imageurl= imgurl;
+        this.priceFactor = priceFactor;
+        this.displayParent = displayParent;
     }
 
-    updateUI() {
-        cookieCountDisplay.textContent = "Cookies: " + formatNumber(cookieCount);
-        document.getElementById("autoClickerPrice").innerHTML = "Price: " + formatNumber(itemPrices[0]) + " Cookies";
-        document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + formatNumber(itemPrices[1]) + " Cookies";
-        document.getElementById("ovenPrice").innerHTML = "Price: " + formatNumber(itemPrices[2]) + " Cookies";
-        document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + formatNumber(itemPrices[3]) + " Cookies";
-        document.getElementById("cargoPlanePrice").innerHTML = "Price: " + formatNumber(itemPrices[4]) + " Cookies";
-    }
+    buyUpgrade() {
+        if (cookieCount >= this.price){
+            cookieCount -= this.price; // Deduct cost
+            this.price = Math.floor(this.price * this.priceFactor); // Increase price
+            this.value += 1; // Increase item count
 
-    addACookie() { // if the user clicked on a cookie manually
-        cookieCount += itemValues[1]; // Use itemValues[1] for cookieMultiplier
-        this.updateUI();
-    }
-    
-}
-
-class Upgrade {
-
-   buyUpgrade(itemID, priceFactor) {
-        if (cookieCount >= itemPrices[itemID]) {
-            cookieCount -= itemPrices[itemID]; // Deduct cost
-            itemPrices[itemID] = Math.floor(itemPrices[itemID] * priceFactor); // Increase price
-            itemValues[itemID] += 1; // Increase item count
-
-            let displayUpgradeParent = document.getElementById('itemDisplayNav').children[itemID];
+            let displayUpgradeParent = document.getElementById(this.displayParent);
 
             // Check if the container has less than 12 items
             if (displayUpgradeParent.children.length < maxItems) {
                 // Create a new image element
                 let displayImage = document.createElement("IMG"); 
-                displayImage.setAttribute('src', itemImages[itemID]); // Set the image source
-                displayImage.setAttribute('height', "70px"); // Set image height
-                displayImage.setAttribute('width', "70px");  // Set image width
+                displayImage.setAttribute('src', this.imageurl); // Set the image source
+                displayImage.setAttribute('height', "100px"); // Set image height
+                displayImage.setAttribute('width', "100px");  // Set image width
 
                 // Append the image to the container
                 displayUpgradeParent.appendChild(displayImage);
@@ -86,15 +42,43 @@ class Upgrade {
     }
 }
 
-let Game = new game();
-let newUpgrade = new Upgrade();
+let upgradeList = [
+    new Upgrade(10, 0, "../IMG/Muis.png",1.3, "autoclickerDisplay"), // autoclickers
+    new Upgrade(50, 1, "../IMG/Cookie.png",1.5, "multiplierDisplay"), // cookie_multiplier
+    new Upgrade(100, 0, "../IMG/cookieBaker.png",1.5, "ovenDisplay"), // ovens
+    new Upgrade(1000, 0, "../IMG/factory.png",1.5, "factoryDisplay"), // factories
+    new Upgrade(100000, 0, "../IMG/Airplane.png",1.5, "planeDisplay"), // airplanes
+]
 
+const maxItems = 12; // Prevents overflowing of the containers
+
+// Reference to the cookie counter display
+let cookieCountDisplay = document.getElementById("cookieCount");
+
+class game{
+
+    updateUI() {
+        cookieCountDisplay.textContent = "Cookies: " + formatNumber(cookieCount);
+        document.getElementById("autoClickerPrice").innerHTML = "Price: " + formatNumber(upgradeList[0].price) + " Cookies";
+        document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + formatNumber(upgradeList[1].price) + " Cookies";
+        document.getElementById("ovenPrice").innerHTML = "Price: " + formatNumber(upgradeList[2].price) + " Cookies";
+        document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + formatNumber(upgradeList[3].price) + " Cookies";
+        document.getElementById("cargoPlanePrice").innerHTML = "Price: " + formatNumber(upgradeList[4].price) + " Cookies";
+    }
+
+    addACookie() { // if the user clicked on a cookie manually
+        cookieCount += upgradeList[1].value;
+        this.updateUI();
+    }
+}
+
+let Game = new game();
     // Auto cookie generation every 2 seconds
     setInterval(() => {
-        cookieCount += itemValues[0];      // AutoClickers
-        cookieCount += itemValues[2] * 5;  // Ovens
-        cookieCount += itemValues[3] * 10; // Cookie Factories
-        cookieCount += itemValues[4] * 50; // Cargo Planes
+        cookieCount += upgradeList[0].value;      // AutoClickers
+        cookieCount += upgradeList[2].value * 5;  // Ovens
+        cookieCount += upgradeList[3].value * 10; // Cookie Factories
+        cookieCount += upgradeList[4].value * 50; // Cargo Planes
         Game.updateUI();  // Call updateUI from the instance, not the class
     }, 2000);
 

@@ -18,7 +18,7 @@
         <nav id="shop" class="shop">
             <h2>Shop</h2>
             
-            <nav class="shop-item" id="autoClicker" onclick="newUpgrade.buyUpgrade(0,1.3)" >
+            <nav class="shop-item" id="autoClicker" onclick="upgradeList[0].buyUpgrade()" >
                 <img class="productImage" src="../IMG/Muis.png" alt="Een computermuis">
                 <nav class="itemContent">
                     <p class="upgradeName" >Auto Clicker</p>
@@ -26,14 +26,14 @@
                 </nav>
             </nav>
 
-            <nav class="shop-item" id="cookieMultiply" onclick="newUpgrade.buyUpgrade(1,1.5)" >
+            <nav class="shop-item" id="cookieMultiply" onclick="upgradeList[1].buyUpgrade()" >
                 <img class="productImage" src="../IMG/Cookie.png" alt="">
                 <nav class="itemContent">
                     <p class="upgradeName">Cookie Multiplier</p>
                     <p class="upgradePrice" id="cookieMultiplierPrice">Price: 50 Cookies</p>
                 </nav>
             </nav>
-            <nav class="shop-item" id="oven" onclick="newUpgrade.buyUpgrade(2,1.5)">
+            <nav class="shop-item" id="oven" onclick="newUpgrade.buyUpgrade()">
             <img  class="productImage" src="../IMG/cookieBaker.png" alt="Oven">
             <nav class="itemContent">
             <p class="upgradeName">Oven</p>

@@ -27,8 +27,8 @@ class Upgrade{
                 // Create a new image element
                 let displayImage = document.createElement("IMG"); 
                 displayImage.setAttribute('src', this.imageurl); // Set the image source
-                displayImage.setAttribute('height', "100px"); // Set image height
-                displayImage.setAttribute('width', "100px");  // Set image width
+                displayImage.setAttribute('height', "70px"); // Set image height
+                displayImage.setAttribute('width', "70px");  // Set image width
 
                 // Append the image to the container
                 displayUpgradeParent.appendChild(displayImage);

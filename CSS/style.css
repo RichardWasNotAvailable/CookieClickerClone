@@ -23,12 +23,8 @@ font-size: 1.5rem;
     width: 200px;
     transition: transform .3s ease-out;
     display: block;
-    margin: auto;
-}
-
-.CookieButton:hover {
-    transform: scale(0.8);
-}
+    margin: auto;display: flex;
+    justify-content: center;}
 
 .shop{
     position: fixed;

@@ -4,14 +4,20 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Cookie Clicker</title>
-        <link rel="stylesheet" href="../CSS/style.css">
+        <link rel="stylesheet" href="CSS/style.css">
         <link rel="icon" type="image/x-icon" href="/IMG/Cookie.png">
 
     </head>
     <body>
+
+        <nav class="topBar">
+            <p>Shop</p class="shopButton">
+            <p>upgrades </p class="upgradeButton">
+        </nav>
+
         <nav>
             <p id="cookieCount">Cookies: 0</p>
-            <img id="cookieButton" src="../IMG/Cookie.png" class="CookieButton" onclick="Game.addACookie()" alt="koekje">
+            <img id="cookieButton" src="IMG/Cookie.png" class="CookieButton" onclick="Game.addACookie()" alt="koekje">
         </nav>
 
         <!-- Shop section -->
@@ -19,7 +25,7 @@
             <h2>Shop</h2>
             
             <nav class="shop-item" id="autoClicker" onclick="upgradeList[0].buyUpgrade()" >
-                <img class="productImage" src="../IMG/Muis.png" alt="Een computermuis">
+                <img class="productImage" src="IMG/Muis.png" alt="Een computermuis">
                 <nav class="itemContent">
                     <p class="upgradeName" >Auto Clicker</p>
                     <p class="upgradePrice" id="autoClickerPrice">Price: 10 Cookies</p>
@@ -27,28 +33,28 @@
             </nav>
 
             <nav class="shop-item" id="cookieMultiply" onclick="upgradeList[1].buyUpgrade()" >
-                <img class="productImage" src="../IMG/Cookie.png" alt="">
+                <img class="productImage" src="IMG/Cookie.png" alt="">
                 <nav class="itemContent">
                     <p class="upgradeName">Cookie Multiplier</p>
                     <p class="upgradePrice" id="cookieMultiplierPrice">Price: 50 Cookies</p>
                 </nav>
             </nav>
             <nav class="shop-item" id="oven" onclick="upgradeList[2].buyUpgrade()">
-            <img  class="productImage" src="../IMG/cookieBaker.png" alt="Oven">
+            <img  class="productImage" src="IMG/cookieBaker.png" alt="Oven">
             <nav class="itemContent">
             <p class="upgradeName">Oven</p>
             <p class="upgradePrice" id="ovenPrice">Price: 100 Cookies</p>
             </nav> 
         </nav>
             <nav class="shop-item" id="cookieFactory" onclick="upgradeList[3].buyUpgrade()">
-        <img src="../IMG/factory.png" alt="Fabriek" class="productImage">
+        <img src="IMG/factory.png" alt="Fabriek" class="productImage">
         <nav class="itemContent">
          <p class="upgradeName">Factory</p>
          <p class="upgradePrice" id="cookieFactoryPrice">Price: 1000 Cookies</p>
         </nav>
          </nav>
          <nav class="shop-item" id="cargoPlane" onclick="upgradeList[4].buyUpgrade()">
-            <img src="../IMG/airplane.png" alt="Vliegtuig" class="productImage">
+            <img src="IMG/airplane.png" alt="Vliegtuig" class="productImage">
             <nav class="itemContent">
              <p class="upgradeName">Cargo Plane</p>
              <p class="upgradePrice" id="cargoPlanePrice">Price: 100K Cookies</p>
@@ -62,7 +68,7 @@
         <nav id="factoryDisplay" class="itemDisplay"></nav>
         <nav id="planeDisplay" class="itemDisplay"></nav>
     </nav>
-    <script src="../JS/shopElement.js"></script>
+    <script src="JS/shopElement.js"></script>
 
     </body>
 </html>

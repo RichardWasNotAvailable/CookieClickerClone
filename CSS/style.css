@@ -7,15 +7,15 @@ body{
     font-size: 24px;
     font-weight: bold;
     margin-left: 2.5rem;
-font-family: Verdana, Geneva, Tahoma, sans-serif;
-display: flex;
-justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+    justify-content: center;
 }
 
 h2{
-text-align: center;
-font-family: Verdana, Geneva, Tahoma, sans-serif;
-font-size: 1.5rem;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.5rem;
 }
 
 .CookieButton{
@@ -24,7 +24,12 @@ font-size: 1.5rem;
     transition: transform .3s ease-out;
     display: block;
     margin: auto;display: flex;
-    justify-content: center;}
+    justify-content: center;
+}
+
+.CookieButton:hover {
+    transform: scale(0.8);
+}
 
 .shop{
     position: fixed;
@@ -66,7 +71,6 @@ font-size: 1.5rem;
     font-size: 10px;
     margin: 0;
     padding: 5px;
-
 }
 
 .itemContent{
@@ -74,12 +78,6 @@ font-size: 1.5rem;
     display: inline-block;
     top: 5px;
     left: 50px;
-}
-
-.itemAmount{
-    margin-left: 100%;
-    margin: 0;
-    padding: 0;
 }
 
 .itemDisplayNav{
@@ -90,7 +88,6 @@ font-size: 1.5rem;
     height: 80%;
     margin-top: 10%;
     z-index: -1;
-
 
     display: flex;
     flex-direction: column;
@@ -107,4 +104,16 @@ font-size: 1.5rem;
     padding: 10px;
     z-index: 3;
     background-color: lightseagreen;
+}
+
+.topBar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: .8;
+    width: 30%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }

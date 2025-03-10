@@ -56,9 +56,17 @@ const maxItems = 16; // Prevents overflowing of the containers
 let cookieCountDisplay = document.getElementById("cookieCount");
 
 class game{
-
+    formatNumber(num){
+        if (num >= 1e18) return (num / 1e18).toFixed(2) + "S";  // Sextillions
+        if (num >= 1e15) return (num / 1e15).toFixed(2) + "Qi"; // Quintillions
+        if (num >= 1e12) return (num / 1e12).toFixed(2) + "Q";  // Quadrillions
+        if (num >= 1e9) return (num / 1e9).toFixed(2) + "B";    // Billions
+        if (num >= 1e6) return (num / 1e6).toFixed(2) + "M";    // Millions
+        if (num >= 1e3) return (num / 1e3).toFixed(2) + "K";    // Thousands
+        return num; // No formatting for small numbers
+    }
     updateUI() {
-        cookieCountDisplay.textContent = "Cookies: " + formatNumber(cookieCount);
+        cookieCountDisplay.textContent = "Cookies: " + this.formatNumber(cookieCount);
         document.getElementById("autoClickerPrice").innerHTML = "Price: " + formatNumber(upgradeList[0].price) + " Cookies";
         document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + formatNumber(upgradeList[1].price) + " Cookies";
         document.getElementById("ovenPrice").innerHTML = "Price: " + formatNumber(upgradeList[2].price) + " Cookies";
@@ -66,6 +74,7 @@ class game{
         document.getElementById("cargoPlanePrice").innerHTML = "Price: " + formatNumber(upgradeList[4].price) + " Cookies";
     }
 
+    
     addACookie() { // if the user clicked on a cookie manually
         cookieCount += upgradeList[1].value;
         this.updateUI();
@@ -81,13 +90,3 @@ let Game = new game();
         cookieCount += upgradeList[4].value * 50; // Cargo Planes
         Game.updateUI();  // Call updateUI from the instance, not the class
     }, 2000);
-
-function formatNumber(num){
-    if (num >= 1e18) return (num / 1e18).toFixed(2) + "S";  // Sextillions
-    if (num >= 1e15) return (num / 1e15).toFixed(2) + "Qi"; // Quintillions
-    if (num >= 1e12) return (num / 1e12).toFixed(2) + "Q";  // Quadrillions
-    if (num >= 1e9) return (num / 1e9).toFixed(2) + "B";    // Billions
-    if (num >= 1e6) return (num / 1e6).toFixed(2) + "M";    // Millions
-    if (num >= 1e3) return (num / 1e3).toFixed(2) + "K";    // Thousands
-    return num; // No formatting for small numbers
-}

@@ -50,7 +50,7 @@ let upgradeList = [
     new Upgrade(100000, 0, "../IMG/Airplane.png",1.5, "planeDisplay"), // airplanes
 ]
 
-const maxItems = 12; // Prevents overflowing of the containers
+const maxItems = 16; // Prevents overflowing of the containers
 
 // Reference to the cookie counter display
 let cookieCountDisplay = document.getElementById("cookieCount");

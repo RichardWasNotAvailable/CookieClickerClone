@@ -107,3 +107,12 @@ margin-right: 2rem;
     z-index: 3;
     background-color: lightseagreen;
 }
+.shopButton{
+    width: 100px;
+}
+@media screen and (max-width: 1018px) {
+    .upgradeName, .upgradePrice {
+      width: 100%;
+      display: none !important;
+    }
+  }

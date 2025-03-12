@@ -40,6 +40,7 @@ h2{
     
     position: fixed;
     background-color: darkcyan;
+    visibility: hidden;
 }
 
 .shop-item {
@@ -116,4 +117,6 @@ h2{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    background-color: gray;
+    opacity: .5;
 }

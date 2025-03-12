@@ -54,7 +54,6 @@ const maxItems = 16; // Prevents overflowing of the containers
 let cookieCountDisplay = document.getElementById("cookieCount");
 
 class game{
-
     updateUI() {
         cookieCountDisplay.textContent = "Cookies: " + this.formatNumber(cookieCount);
         document.getElementById("autoClickerPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[0].price) + " Cookies";
@@ -78,13 +77,27 @@ class game{
         cookieCount += upgradeList[1].value;
         this.updateUI();
     }
+}
 
-    openMenu(menuId){
+class menu{
 
+    constructor(menuId){
+        this.menuId = menuId;
+        this.menuItem = document.getElementById(this.menuId);
+    }
+    
+    openUpgradesMenu(){
+        if (this.menuItem.style.visibility == "hidden"){
+            this.menuItem.style.visibility = 'visible';
+        }else{
+            this.menuItem.style.visibility = 'hidden';
+        }
     }
 }
 
 let Game = new game();
+let Menu = new menu("shop");
+
 // Auto cookie generation every 2 seconds
 setInterval(() => {
     cookieCount += upgradeList[0].value;      // AutoClickers

@@ -41,7 +41,7 @@ class Upgrade{
 }
 
 let upgradeList = [
-    new Upgrade(10, 0, "IMG/Muis.png",1.3, "autoclickerDisplay"), // autoclickers
+    new Upgrade(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay"), // autoclickers
     new Upgrade(50, 1, "IMG/Cookie.png",1.5, "multiplierDisplay"), // cookie_multiplier
     new Upgrade(100, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay"), // ovens
     new Upgrade(1000, 0, "IMG/factory.png",1.5, "factoryDisplay"), // factories
@@ -56,11 +56,11 @@ let cookieCountDisplay = document.getElementById("cookieCount");
 class game{
     updateUI() {
         cookieCountDisplay.textContent = "Cookies: " + this.formatNumber(cookieCount);
-        document.getElementById("autoClickerPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[0].price) + " Cookies";
-        document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[1].price) + " Cookies";
-        document.getElementById("ovenPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[2].price) + " Cookies";
-        document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[3].price) + " Cookies";
-        document.getElementById("cargoPlanePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[4].price) + " Cookies";
+        document.getElementById("autoClickerPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[0].price);
+        document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[1].price);
+        document.getElementById("ovenPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[2].price);
+        document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[3].price);
+        document.getElementById("cargoPlanePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[4].price);
     }
 
     formatNumber(num){

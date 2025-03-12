@@ -87,10 +87,10 @@ class menu{
     }
     
     openUpgradesMenu(){
-        if (this.menuItem.style.visibility == "hidden"){
-            this.menuItem.style.visibility = 'visible';
-        }else{
+        if (this.menuItem.style.visibility == "visible"){
             this.menuItem.style.visibility = 'hidden';
+        }else{
+            this.menuItem.style.visibility = 'visible';
         }
     }
 }

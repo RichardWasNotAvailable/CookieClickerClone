@@ -65,17 +65,13 @@ h2{
 margin-right: 2rem;
     padding: 0;
     padding-left: 5px;
-    display: flex;
-    padding-left: 11vh;
-    margin-top: 0.1rem;
-    font-size: 75%;
 }
 
 .upgradePrice{
-    display: flex;
-    padding-left: 11vh;
-    margin-top: 0.1rem;
     font-size: 75%;
+    margin: 0;
+margin-right: 2rem;
+    padding: 5px;
 
 }
 
@@ -114,7 +110,7 @@ margin-right: 2rem;
 .shopButton{
     width: 100px;
 }
-@media screen and (max-width: 1195px) {
+@media screen and (max-width: 1018px) {
     .upgradeName, .upgradePrice {
       width: 100%;
       display: none !important;

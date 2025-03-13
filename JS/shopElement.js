@@ -73,11 +73,11 @@ class game{
         document.getElementById("cargoPlanePrice").innerHTML = "Price: " + this.formatNumber(shopList[4].price);
 
         // Upgrades Prices
-        document.getElementById("goldenMousePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[0].price);
-        document.getElementById("StroopwafflePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[1].price);
-        document.getElementById("SuperOvenPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[2].price);
-        document.getElementById("ElectricFactoryPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[3].price);
-        document.getElementById("BigcargoPlanePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[4].price);
+        document.getElementById("goldenMousePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[5].price);
+        document.getElementById("StroopwafflePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[6].price);
+        document.getElementById("SuperOvenPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[7].price);
+        document.getElementById("ElectricFactoryPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[8].price);
+        document.getElementById("BigcargoPlanePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[9].price);
     }
 
     formatNumber(num){
@@ -125,10 +125,10 @@ setInterval(() => {
     cookieCount += shopList[3].value * 10;  // Cookie Factories
     cookieCount += shopList[4].value * 50;  // Cargo Planes
 
-    cookieCount += upgradeList[0].value * 1.2;  // Golden Mouse
-    cookieCount += upgradeList[2].value * 1.3;  // Super Oven
-    cookieCount += upgradeList[3].value * 2;    //  Electric Factories
-    cookieCount += upgradeList[4].value * 2.1;  // Bigger Cargo Plane
+    cookieCount += upgradeList[5].value * 1.2;  // Golden Mouse
+    cookieCount += upgradeList[7].value * 1.3;  // Super Oven
+    cookieCount += upgradeList[8].value * 2;    //  Electric Factories
+    cookieCount += upgradeList[9].value * 2.1;  // Bigger Cargo Plane
 
     Game.updateUI();  // Call updateUI from the instance, not the class
 }, 2000);

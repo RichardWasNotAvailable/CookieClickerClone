@@ -22,7 +22,7 @@ class Upgrade{
 
             let displayUpgradeParent = document.getElementById(this.displayParentId);
 
-            // Check if the container has less than 12 items
+            // Check if the container has less than 16 items
             if (displayUpgradeParent.children.length < maxItems) {
                 // Create a new image element
                 let displayImage = document.createElement("IMG"); 
@@ -40,12 +40,20 @@ class Upgrade{
     }
 }
 
-let upgradeList = [
+let shopList = [
     new Upgrade(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay"), // autoclickers
     new Upgrade(50, 1, "IMG/Cookie.png",1.5, "multiplierDisplay"), // cookie_multiplier
     new Upgrade(100, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay"), // ovens
     new Upgrade(1000, 0, "IMG/factory.png",1.5, "factoryDisplay"), // factories
     new Upgrade(100000, 0, "IMG/Airplane.png",1.5, "planeDisplay"), // airplanes
+]
+
+let upgradeList = [
+    new Upgrade(500, 0, "IMG/Muis.png",1.5, "autoclickerDisplay"), // golden_mouse
+    new Upgrade(2500, 1, "IMG/Cookie.png",1.5, "multiplierDisplay"), // stroopwaffles
+    new Upgrade(20000, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay"), // super_ovens
+    new Upgrade(100000, 0, "IMG/factory.png",1.5, "factoryDisplay"), // electric_factories
+    new Upgrade(150000, 0, "IMG/Airplane.png",1.5, "planeDisplay"), // big_cargo_planes
 ]
 
 const maxItems = 16; // Prevents overflowing of the containers
@@ -56,11 +64,20 @@ let cookieCountDisplay = document.getElementById("cookieCount");
 class game{
     updateUI() {
         cookieCountDisplay.textContent = "Cookies: " + this.formatNumber(cookieCount);
-        document.getElementById("autoClickerPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[0].price);
-        document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[1].price);
-        document.getElementById("ovenPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[2].price);
-        document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[3].price);
-        document.getElementById("cargoPlanePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[4].price);
+
+        // Shop Prices
+        document.getElementById("autoClickerPrice").innerHTML = "Price: " + this.formatNumber(shopList[0].price);
+        document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + this.formatNumber(shopList[1].price);
+        document.getElementById("ovenPrice").innerHTML = "Price: " + this.formatNumber(shopList[2].price);
+        document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + this.formatNumber(shopList[3].price);
+        document.getElementById("cargoPlanePrice").innerHTML = "Price: " + this.formatNumber(shopList[4].price);
+
+        // Upgrades Prices
+        document.getElementById("goldenMousePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[0].price);
+        document.getElementById("StroopwafflePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[1].price);
+        document.getElementById("SuperOvenPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[2].price);
+        document.getElementById("ElectricFactoryPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[3].price);
+        document.getElementById("BigcargoPlanePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[4].price);
     }
 
     formatNumber(num){
@@ -74,7 +91,7 @@ class game{
     }
 
     addACookie() { // if the user clicked on a cookie manually
-        cookieCount += upgradeList[1].value;
+        cookieCount += shopList[1].value;
         this.updateUI();
     }
 }
@@ -86,7 +103,7 @@ class menu{
         this.menuItem = document.getElementById(this.menuId);
     }
     
-    openUpgradesMenu(){
+    openShopMenu(){
         if (this.menuItem.style.visibility == "visible"){
             this.menuItem.style.visibility = 'hidden';
         }else{
@@ -100,9 +117,15 @@ let Menu = new menu("shop");
 
 // Auto cookie generation every 2 seconds
 setInterval(() => {
-    cookieCount += upgradeList[0].value;      // AutoClickers
-    cookieCount += upgradeList[2].value * 5;  // Ovens
-    cookieCount += upgradeList[3].value * 10; // Cookie Factories
-    cookieCount += upgradeList[4].value * 50; // Cargo Planes
+    cookieCount += shopList[0].value;       // AutoClickers
+    cookieCount += shopList[2].value * 5;   // Ovens
+    cookieCount += shopList[3].value * 10;  // Cookie Factories
+    cookieCount += shopList[4].value * 50;  // Cargo Planes
+
+    cookieCount += upgradeList[0].value * 1.2;  // Golden Mouse
+    cookieCount += upgradeList[2].value * 1.3;  // Super Oven
+    cookieCount += upgradeList[3].value * 2;    //  Electric Factories
+    cookieCount += upgradeList[4].value * 2.1;  // Bigger Cargo Plane
+
     Game.updateUI();  // Call updateUI from the instance, not the class
 }, 2000);

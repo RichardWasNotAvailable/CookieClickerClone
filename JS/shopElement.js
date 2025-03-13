@@ -101,14 +101,17 @@ class menu{
     constructor(menuId){
         this.menuId = menuId;
         this.menuItem = document.getElementById(this.menuId);
+        this.menuIsOpen = false;
     }
-    
+
     openShopMenu(){
-        if (this.menuItem.style.visibility == "visible"){
-            this.menuItem.style.visibility = 'hidden';
+        
+        if (this.menuIsOpen == false){
+            this.menuItem.style.width = "20%";
         }else{
-            this.menuItem.style.visibility = 'visible';
+            this.menuItem.style.width = "0";
         }
+        this.menuIsOpen = !this.menuIsOpen;
     }
 }
 

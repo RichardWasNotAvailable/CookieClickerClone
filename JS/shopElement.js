@@ -1,4 +1,5 @@
 let cookieCount = 0;
+let cps = 0;
 
 class Upgrade{
     price;
@@ -73,11 +74,12 @@ class game{
         document.getElementById("cargoPlanePrice").innerHTML = "Price: " + this.formatNumber(shopList[4].price);
 
         // Upgrades Prices
-        document.getElementById("goldenMousePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[5].price);
-        document.getElementById("StroopwafflePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[6].price);
-        document.getElementById("SuperOvenPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[7].price);
-        document.getElementById("ElectricFactoryPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[8].price);
-        document.getElementById("BigcargoPlanePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[9].price);
+        document.getElementById("goldenMousePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[0].price);
+        document.getElementById("StroopwafflePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[1].price);
+        document.getElementById("SuperOvenPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[2].price);
+        document.getElementById("ElectricFactoryPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[3].price);
+        document.getElementById("BigcargoPlanePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[4].price);
+        
     }
 
     formatNumber(num){
@@ -108,8 +110,11 @@ class menu{
         
         if (this.menuIsOpen == false){
             this.menuItem.style.width = "20%";
+            document.getElementById("itemDisplayNav").style.width = "80%"
+
         }else{
             this.menuItem.style.width = "0";
+            document.getElementById("itemDisplayNav").style.width = "100%"
         }
         this.menuIsOpen = !this.menuIsOpen;
     }
@@ -125,10 +130,10 @@ setInterval(() => {
     cookieCount += shopList[3].value * 10;  // Cookie Factories
     cookieCount += shopList[4].value * 50;  // Cargo Planes
 
-    cookieCount += upgradeList[5].value * 10  // Golden Mouse
-    cookieCount += upgradeList[7].value * 30;  // Super Oven
-    cookieCount += upgradeList[8].value * 50;    //  Electric Factories
-    cookieCount += upgradeList[9].value * 100;  // Bigger Cargo Plane
+    cookieCount += upgradeList[0].value * 10  // Golden Mouse
+    cookieCount += upgradeList[2].value * 30;  // Super Oven
+    cookieCount += upgradeList[3].value * 50;    //  Electric Factories
+    cookieCount += upgradeList[4].value * 100;  // Bigger Cargo Plane
 
     Game.updateUI();  // Call updateUI from the instance, not the class
 }, 2000);

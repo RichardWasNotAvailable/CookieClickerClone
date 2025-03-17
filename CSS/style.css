@@ -86,14 +86,13 @@ h3{
     margin-right: 2rem;
     padding-left: 5px;
     display: flex;
-    padding-left: 1vh;
     margin-top: 0.1rem;
     font-size: 75%;
 }
 
 .upgradePrice{
     display: flex;
-    padding-left: 15vh;
+    padding-left: 20vh;
     font-size: 75%;
 }
 
@@ -107,10 +106,10 @@ h3{
 .itemDisplayNav {
     position: absolute;
     left: 0;
-    top: 40%;
+    bottom: 0;
     min-width: 100px;
     width: 100%;
-    height: 39%; /* Adjust height to test scrolling */
+    height: 40%;
     margin-top: 10%;
 
     overflow-x: hidden;
@@ -118,6 +117,7 @@ h3{
     background-color: deepskyblue;
 
     display: block; /* Let items stack naturally */
+    transition: .5s;
 }
 
 .itemDisplay {
@@ -125,12 +125,9 @@ h3{
     width: 100%;
     height: 80px;
     margin-bottom: 20px;
-
     box-sizing: border-box; /* Ensures padding doesn’t collapse height */
-    border: 1px solid black; /* Visual debugging */
+    border: 1px solid black;
 }
-
-
 
 .shopButton{
     position: static;

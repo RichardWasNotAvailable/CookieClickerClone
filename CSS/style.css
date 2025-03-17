@@ -12,7 +12,7 @@ h2{
 h3{
     text-align: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 0.8rem;  
+    font-size: 0.8rem;
 }
 #cookieCount {
     position: relative;
@@ -38,7 +38,7 @@ h3{
 }
 
 .CookieButton:hover {
-    transform: scale(0.8);
+    transform: scale(1.1);
 }
 
 .cookieNav{
@@ -69,11 +69,9 @@ h3{
     position: relative;
     background-color: #f5f5f5;
     border: 1px solid #ddd;
-    text-align: left;
     margin-bottom: 10px;
     border-radius: 20px;
     height: 6%;
-    transition: 0.3s;
 }
 
 .productImage{
@@ -81,40 +79,42 @@ h3{
     margin-top: 2px;
 }
 
-.upgradeName{
+.upgradeName {
     font-size: 75%;
-    margin-right: 2rem;
     padding-left: 5px;
     display: flex;
-    margin-top: 0.1rem;
-    font-size: 75%;
 }
 
-.upgradePrice{
-    display: flex;
-    padding-left: 20vh;
+.upgradePrice {
     font-size: 75%;
+    margin-right: 10%;
+    margin-left: auto; /* Pushes it to the right */
+    z-index: 100;
 }
 
-.itemContent{
+.itemContent {
     position: absolute;
-    display: inline-block;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     top: 5px;
-    left: 50px;
+    left: 20%;
+    height: 100%;
+    width: 80%;
 }
 
 .itemDisplayNav {
     position: absolute;
     left: 0;
     bottom: 0;
-    min-width: 100px;
     width: 100%;
     height: 40%;
     margin-top: 10%;
 
-    overflow-x: hidden;
+    overflow-x: auto;
     overflow-y: auto; /* Enables scrolling */
     background-color: deepskyblue;
+    white-space:nowrap;
 
     display: block; /* Let items stack naturally */
     transition: .5s;
@@ -122,11 +122,10 @@ h3{
 
 .itemDisplay {
     background-color: khaki;
-    width: 100%;
+    min-width: 100%;
+    width: auto;
     height: 80px;
     margin-bottom: 20px;
-    box-sizing: border-box; /* Ensures padding doesn’t collapse height */
-    border: 1px solid black;
 }
 
 .shopButton{
@@ -135,7 +134,7 @@ h3{
     cursor: pointer;
 }
 
-@media screen and (max-width: 1195px) {
+@media screen and (max-width: 600px) {
     .upgradeName, .upgradePrice {
       width: 100%;
       display: none !important;

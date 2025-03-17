@@ -1,5 +1,4 @@
 let cookieCount = 0;
-let cps = 0;
 
 class Upgrade{
     price;
@@ -50,12 +49,12 @@ let shopList = [
 ]
 
 let upgradeList = [
-    new Upgrade(500, 0, "IMG/GoudenMuis.png",1.5, "goldenautoclickerDisplay"), // golden_mouse
-    new Upgrade(2500, 1, "IMG/stroopwafel.png",1.5, "stroopwaffleDisplay"), // stroopwaffles
-    new Upgrade(20000, 0, "IMG/SupercookieBaker.png",1.5, "superovenDisplay"), // super_ovens
-    new Upgrade(100000, 0, "IMG/Electricfactory.png",1.5, "elecfactoryDisplay"), // electric_factories
-    new Upgrade(150000, 0, "IMG/BiggerCargoAirplane.png",1.5, "bplaneDisplay"), // big_cargo_planes
-]
+    new Upgrade(500, 0, "IMG/Muis.png",1.5, "autoclickerDisplay"), // golden_mouse
+    new Upgrade(2500, 1, "IMG/Cookie.png",1.5, "multiplierDisplay"), // stroopwaffles
+    new Upgrade(20000, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay"), // super_ovens
+    new Upgrade(100000, 0, "IMG/factory.png",1.5, "factoryDisplay"), // electric_factories
+    new Upgrade(150000, 0, "IMG/Airplane.png",1.5, "planeDisplay"), // big_cargo_planes
+];
 
 const maxItems = 16; // Prevents overflowing of the containers
 
@@ -65,7 +64,6 @@ let cookieCountDisplay = document.getElementById("cookieCount");
 class game{
     updateUI() {
         cookieCountDisplay.textContent = "Cookies: " + this.formatNumber(cookieCount);
-
         // Shop Prices
         document.getElementById("autoClickerPrice").innerHTML = "Price: " + this.formatNumber(shopList[0].price);
         document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + this.formatNumber(shopList[1].price);
@@ -77,9 +75,8 @@ class game{
         document.getElementById("goldenMousePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[0].price);
         document.getElementById("StroopwafflePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[1].price);
         document.getElementById("SuperOvenPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[2].price);
-        document.getElementById("ElectricFactoryPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[3].price);
+        document.getElementById("EletricFactoryPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[3].price);
         document.getElementById("BigcargoPlanePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[4].price);
-        
     }
 
     formatNumber(num){
@@ -99,24 +96,23 @@ class game{
 }
 
 class menu{
-
     constructor(menuId){
         this.menuId = menuId;
         this.menuItem = document.getElementById(this.menuId);
         this.menuIsOpen = false;
     }
 
-    openShopMenu(){
+    openShopMenu(){// opens and closes the menu depending on menuIsOpen
         
         if (this.menuIsOpen == false){
-            this.menuItem.style.width = "20%";
-            document.getElementById("itemDisplayNav").style.width = "80%"
+            this.menuItem.style.width = "20%"; // opening the menu
+            document.getElementById("itemDisplayNav").style.width = "80%";
 
         }else{
-            this.menuItem.style.width = "0";
-            document.getElementById("itemDisplayNav").style.width = "100%"
+            this.menuItem.style.width = "0"; // closing the menu
+            document.getElementById("itemDisplayNav").style.width = "100%";
         }
-        this.menuIsOpen = !this.menuIsOpen;
+        this.menuIsOpen = !this.menuIsOpen; // switching menu to open or closed
     }
 }
 

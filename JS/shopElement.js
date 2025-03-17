@@ -49,11 +49,11 @@ let shopList = [
 ]
 
 let upgradeList = [
-    new Upgrade(500, 0, "IMG/Muis.png",1.5, "autoclickerDisplay"), // golden_mouse
-    new Upgrade(2500, 1, "IMG/Cookie.png",1.5, "multiplierDisplay"), // stroopwaffles
-    new Upgrade(20000, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay"), // super_ovens
-    new Upgrade(100000, 0, "IMG/factory.png",1.5, "factoryDisplay"), // electric_factories
-    new Upgrade(150000, 0, "IMG/Airplane.png",1.5, "planeDisplay"), // big_cargo_planes
+    new Upgrade(500, 0, "IMG/GoudenMuis.png",1.5, "goldenautoclickerDisplay"), // golden_mouse
+    new Upgrade(2500, 1, "IMG/stroopwafel.png",1.5, "stroopwaffleDisplay"), // stroopwaffles
+    new Upgrade(20000, 0, "IMG/SupercookieBaker.png",1.5, "superovenDisplay"), // super_ovens
+    new Upgrade(100000, 0, "IMG/Electricfactory.png",1.5, "elecfactoryDisplay"), // electric_factories
+    new Upgrade(150000, 0, "IMG/BiggerCargoAirplane.png",1.5, "bplaneDisplay"), // big_cargo_planes
 ]
 
 const maxItems = 16; // Prevents overflowing of the containers
@@ -125,10 +125,10 @@ setInterval(() => {
     cookieCount += shopList[3].value * 10;  // Cookie Factories
     cookieCount += shopList[4].value * 50;  // Cargo Planes
 
-    cookieCount += upgradeList[5].value * 1.2;  // Golden Mouse
-    cookieCount += upgradeList[7].value * 1.3;  // Super Oven
-    cookieCount += upgradeList[8].value * 2;    //  Electric Factories
-    cookieCount += upgradeList[9].value * 2.1;  // Bigger Cargo Plane
+    cookieCount += upgradeList[5].value * 10  // Golden Mouse
+    cookieCount += upgradeList[7].value * 30;  // Super Oven
+    cookieCount += upgradeList[8].value * 50;    //  Electric Factories
+    cookieCount += upgradeList[9].value * 100;  // Bigger Cargo Plane
 
     Game.updateUI();  // Call updateUI from the instance, not the class
 }, 2000);

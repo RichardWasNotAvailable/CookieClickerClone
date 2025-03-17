@@ -15,7 +15,7 @@ class Upgrade{
         this.displayParentId = displayParentId;
     }
 
-    buyUpgrade() {
+    buyItem() {
         if (cookieCount >= this.price){ // if the user has enough cookies
             cookieCount -= this.price; // Deduct cost
             this.price = Math.floor(this.price * this.priceFactor); // Increase price
@@ -38,9 +38,9 @@ class Upgrade{
         } else {
             alert("Not enough cookies!"); // Show alert if not enough cookies
         }
-    }
-}
-
+            }
+         
+        }
 let shopList = [
     new Upgrade(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay"), // autoclickers
     new Upgrade(50, 1, "IMG/Cookie.png",1.5, "multiplierDisplay"), // cookie_multiplier

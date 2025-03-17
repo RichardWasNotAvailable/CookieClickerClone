@@ -1,4 +1,5 @@
 let cookieCount = 0;
+let cps = 0;
 
 class Upgrade{
     price;
@@ -108,8 +109,11 @@ class menu{
         
         if (this.menuIsOpen == false){
             this.menuItem.style.width = "20%";
+            document.getElementById("itemDisplayNav").style.width = "80%"
+
         }else{
             this.menuItem.style.width = "0";
+            document.getElementById("itemDisplayNav").style.width = "100%"
         }
         this.menuIsOpen = !this.menuIsOpen;
     }

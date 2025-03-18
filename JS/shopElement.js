@@ -16,28 +16,25 @@ class Upgrade{
 
     buyItem() {
         if (cookieCount >= this.price){ // if the user has enough cookies
-            cookieCount -= this.price; // Deduct cost
+            this.cookieCount -= this.price; // Deduct cost
             this.price = Math.floor(this.price * this.priceFactor); // Increase price
             this.value += 1; // Increase item count
 
             let displayUpgradeParent = document.getElementById(this.displayParentId);
 
-            // Check if the container has less than 16 items
-            if (displayUpgradeParent.children.length < maxItems) {
-                // Create a new image element
-                let displayImage = document.createElement("IMG"); 
-                displayImage.setAttribute('src', this.imageurl); // Set the image source
-                displayImage.setAttribute('height', "100%"); // Set image height
-                // Append the image to the container
-                displayUpgradeParent.appendChild(displayImage);
-            }
+            // Create a new image element
+            let displayImage = document.createElement("IMG"); 
+            displayImage.setAttribute('src', this.imageurl); // Set the image source
+            displayImage.setAttribute('height', "100%"); // Set image height
+            // Append the image to the container
+            displayUpgradeParent.appendChild(displayImage);
 
             // Update the UI to reflect the changes
             Game.updateUI();
         } else {
             alert("Not enough cookies!"); // Show alert if not enough cookies
         }
-            }
+    }
          
         }
 let shopList = [
@@ -56,8 +53,6 @@ let upgradeList = [
     new Upgrade(150000, 0, "IMG/Airplane.png",1.5, "planeDisplay"), // big_cargo_planes
 ];
 
-const maxItems = 16; // Prevents overflowing of the containers
-
 // Reference to the cookie counter display
 let cookieCountDisplay = document.getElementById("cookieCount");
 
@@ -75,7 +70,7 @@ class game{
         document.getElementById("goldenMousePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[0].price);
         document.getElementById("StroopwafflePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[1].price);
         document.getElementById("SuperOvenPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[2].price);
-        document.getElementById("EletricFactoryPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[3].price);
+        document.getElementById("ElectricFactoryPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[3].price);
         document.getElementById("BigcargoPlanePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[4].price);
     }
 
@@ -92,6 +87,16 @@ class game{
     addACookie() { // if the user clicked on a cookie manually
         cookieCount += shopList[1].value;
         this.updateUI();
+    }
+
+    updateImage(displayId, newImageUrl){
+        let imageDisplay = document.getElementById(displayId);
+        let displayChildren = imageDisplay.childNodes;
+
+        for (let i=0; i < displayChildren.length; i++){ // looping through each image
+            console.log(i);
+            displayChildren[i].setAttribute('src', newImageUrl);
+        }
     }
 }
 

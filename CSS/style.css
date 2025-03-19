@@ -108,12 +108,13 @@ h3{
     left: 0;
     bottom: 0;
     height: 40%;
+    width: 100%;
     margin-top: 10%;
 
     overflow-x: auto;
     overflow-y: auto; /* Enables scrolling */
     background-color: deepskyblue;
-    white-space:nowrap;
+    white-space: nowrap;
 
     display: block; /* Let items stack naturally */
     transition: .5s;
@@ -121,8 +122,7 @@ h3{
 
 .itemDisplay {
     background-color: khaki;
-    min-width: 100%;
-    width: auto;
+    width: 100vw; /* Always matches the viewport width */
     height: 80px;
     margin-bottom: 20px;
 }

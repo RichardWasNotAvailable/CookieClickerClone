@@ -36,7 +36,7 @@ class Upgrade{
         }
     }
          
-        }
+}
 let shopList = [
     new Upgrade(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay"), // autoclickers
     new Upgrade(50, 1, "IMG/Cookie.png",1.5, "multiplierDisplay"), // cookie_multiplier
@@ -72,6 +72,13 @@ class game{
         document.getElementById("SuperOvenPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[2].price);
         document.getElementById("ElectricFactoryPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[3].price);
         document.getElementById("BigcargoPlanePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[4].price);
+
+        // adjusting the itemsDisplays width to match with scrolling of parent
+        let displayNavWidth = document.getElementById("itemDisplayNav").scrollWidth;
+        let items = document.querySelectorAll(".itemDisplay");
+        items.forEach(item => {
+            item.style.width = `${displayNavWidth}px`; // Set each item's width to match
+        });
     }
 
     formatNumber(num){
@@ -94,7 +101,6 @@ class game{
         let displayChildren = imageDisplay.childNodes;
 
         for (let i=0; i < displayChildren.length; i++){ // looping through each image
-            console.log(i);
             displayChildren[i].setAttribute('src', newImageUrl);
         }
     }

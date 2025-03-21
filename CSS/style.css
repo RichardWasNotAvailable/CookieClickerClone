@@ -41,6 +41,10 @@ h3{
     transform: scale(1.1);
 }
 
+.CookieButton:active {
+    transform: scale(.9);
+  }
+
 .cookieNav{
     width: 40%;
     position: absolute;

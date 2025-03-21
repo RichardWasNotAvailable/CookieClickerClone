@@ -6,43 +6,47 @@ class Upgrade{
     imageurl;
     priceFactor;
 
-    constructor(price, value, imgurl, priceFactor, displayParentId){
+    constructor(price, value, imgurl, priceFactor, displayParentId, saveName){
         this.price = price;
         this.value = value;
         this.imageurl= imgurl;
         this.priceFactor = priceFactor;
         this.displayParentId = displayParentId;
+        this.saveName = saveName;
     }
 
     buyItem() {
         if (cookieCount >= this.price){ // if the user has enough cookies
-            this.cookieCount -= this.price; // Deduct cost
+            cookieCount -= this.price; // Deduct cost
             this.price = Math.floor(this.price * this.priceFactor); // Increase price
-            this.value += 1; // Increase item count
+            this.loadItem(1); // adding one of the item bought and displaying it
+            Game.updateUI();
+            Game.saveGame(this.saveName, this.value);
+        } else {
+            alert("Not enough cookies!"); // Show alert if not enough cookies
+        }
+    }
 
+    loadItem(amountToAdd){ // methods that loads items and displays them
+        for (let i=0; i < amountToAdd; i++){ // loading each item
             let displayUpgradeParent = document.getElementById(this.displayParentId);
-
             // Create a new image element
-            let displayImage = document.createElement("IMG"); 
+            let displayImage = document.createElement("IMG");
             displayImage.setAttribute('src', this.imageurl); // Set the image source
             displayImage.setAttribute('height', "100%"); // Set image height
             // Append the image to the container
             displayUpgradeParent.appendChild(displayImage);
-
-            // Update the UI to reflect the changes
-            Game.updateUI();
-        } else {
-            alert("Not enough cookies!"); // Show alert if not enough cookies
+            this.value += 1;
         }
     }
          
 }
 let shopList = [
-    new Upgrade(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay"), // autoclickers
-    new Upgrade(50, 1, "IMG/Cookie.png",1.5, "multiplierDisplay"), // cookie_multiplier
-    new Upgrade(100, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay"), // ovens
-    new Upgrade(1000, 0, "IMG/factory.png",1.5, "factoryDisplay"), // factories
-    new Upgrade(100000, 0, "IMG/Airplane.png",1.5, "planeDisplay"), // airplanes
+    new Upgrade(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay", 'autoclickers'), // autoclickers
+    new Upgrade(50, 1, "IMG/Cookie.png",1.5, "multiplierDisplay", 'multiplier'), // cookie_multiplier
+    new Upgrade(100, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay", 'ovens'), // ovens
+    new Upgrade(1000, 0, "IMG/factory.png",1.5, "factoryDisplay", 'factories'), // factories
+    new Upgrade(100000, 0, "IMG/Airplane.png",1.5, "planeDisplay", 'airplanes'), // airplanes
 ]
 
 let upgradeList = [
@@ -57,6 +61,31 @@ let upgradeList = [
 let cookieCountDisplay = document.getElementById("cookieCount");
 
 class game{
+
+    saveGame(name, amount){
+        localStorage.setItem(name, amount);
+    }
+
+    loadGame(){
+        // loading the cookies
+        let loadedCookies = localStorage.getItem("cookies");
+        if (loadedCookies != null){
+            cookieCount = parseInt(loadedCookies);
+        }
+
+        // loading the items
+        let itemNumber = 0;
+        shopList.forEach(itemType => {
+            let itemName = itemType.saveName;
+            if (localStorage.getItem(itemName)){
+                let itemCount = localStorage.getItem(itemName); // getting the items from the local storage
+                shopList[itemNumber].loadItem(itemCount); // calling the method that loads the correct amount of items into the game
+            }
+            itemNumber += 1;
+        });
+
+     }
+
     updateUI() {
         cookieCountDisplay.textContent = "Cookies: " + this.formatNumber(cookieCount);
         // Shop Prices
@@ -130,6 +159,8 @@ class menu{
 let Game = new game();
 let Menu = new menu("shop");
 
+Game.loadGame();
+
 // Auto cookie generation every 2 seconds
 setInterval(() => {
     cookieCount += shopList[0].value;       // AutoClickers
@@ -142,5 +173,6 @@ setInterval(() => {
     cookieCount += upgradeList[3].value * 50;    //  Electric Factories
     cookieCount += upgradeList[4].value * 100;  // Bigger Cargo Plane
 
+    Game.saveGame('cookies', cookieCount);
     Game.updateUI();  // Call updateUI from the instance, not the class
 }, 2000);

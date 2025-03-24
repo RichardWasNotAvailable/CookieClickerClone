@@ -19,9 +19,13 @@ class Upgrade{
         if (cookieCount >= this.price){ // if the user has enough cookies
             cookieCount -= this.price; // Deduct cost
             this.price = Math.floor(this.price * this.priceFactor); // Increase price
+
             this.loadItem(1); // adding one of the item bought and displaying it
-            Game.updateUI();
-            Game.saveGame(this.saveName, this.value);
+            Game.updateUI(); // updating the ui
+            Game.saveGame(this.saveName, this.value); // saving the bought item
+
+            console.log(this.saveName + "price", this.price);
+            Game.saveGame(this.saveName + "price", this.price); // saving new itemPrice
         } else {
             alert("Not enough cookies!"); // Show alert if not enough cookies
         }
@@ -74,16 +78,29 @@ class game{
         }
 
         // loading the items
-        let itemNumber = 0;
+        let itemCounter = 0;
         shopList.forEach(itemType => {
             let itemName = itemType.saveName;
             if (localStorage.getItem(itemName)){
                 let itemCount = localStorage.getItem(itemName); // getting the items from the local storage
-                shopList[itemNumber].loadItem(itemCount); // calling the method that loads the correct amount of items into the game
+                shopList[itemCounter].loadItem(itemCount); // calling the method that loads the correct amount of items into the game
             }
-            itemNumber += 1;
+            itemCounter += 1;
         });
 
+        // loading the item prices
+        let priceCounter = 0
+        shopList.forEach(itemType => {
+            let priceName = itemType.saveName + "price";
+            if (localStorage.getItem(priceName)){
+                let itemPrice = localStorage.getItem(priceName); // getting the items from the local storage
+
+                console.log(priceName);
+                console.log(itemPrice);
+                shopList[priceCounter].price = itemPrice;
+            }
+            priceCounter += 1;
+        });
      }
 
     updateUI() {

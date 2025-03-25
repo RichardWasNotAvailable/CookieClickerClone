@@ -1,6 +1,6 @@
 let cookieCount = 0;
 
-class Upgrade{
+class Shop{
     price;
     value;
     imageurl;
@@ -33,32 +33,38 @@ class Upgrade{
 
     loadItem(amountToAdd){ // methods that loads items and displays them
         for (let i=0; i < amountToAdd; i++){ // loading each item
-            let displayUpgradeParent = document.getElementById(this.displayParentId);
+            let displayShopParent = document.getElementById(this.displayParentId);
             // Create a new image element
             let displayImage = document.createElement("IMG");
             displayImage.setAttribute('src', this.imageurl); // Set the image source
             displayImage.setAttribute('height', "100%"); // Set image height
             // Append the image to the container
-            displayUpgradeParent.appendChild(displayImage);
+            displayShopParent.appendChild(displayImage);
             this.value += 1;
         }
-    }
-         
+    }     
 }
+
+class ItemUpgrades extends Shop {
+    constructor(price, value, imgurl, priceFactor, displayParentId, saveName) {
+        super(price, value, imgurl, priceFactor, displayParentId, saveName);
+    }
+}
+
 let shopList = [
-    new Upgrade(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay", 'autoclickers'), // autoclickers
-    new Upgrade(50, 1, "IMG/Cookie.png",1.5, "multiplierDisplay", 'multiplier'), // cookie_multiplier
-    new Upgrade(100, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay", 'ovens'), // ovens
-    new Upgrade(1000, 0, "IMG/factory.png",1.5, "factoryDisplay", 'factories'), // factories
-    new Upgrade(100000, 0, "IMG/Airplane.png",1.5, "planeDisplay", 'airplanes'), // airplanes
+    new Shop(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay", 'autoclickers'), // autoclickers
+    new Shop(50, 1, "IMG/Cookie.png",1.5, "multiplierDisplay", 'multiplier'), // cookie_multiplier
+    new Shop(100, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay", 'ovens'), // ovens
+    new Shop(1000, 0, "IMG/factory.png",1.5, "factoryDisplay", 'factories'), // factories
+    new Shop(100000, 0, "IMG/Airplane.png",1.5, "planeDisplay", 'airplanes'), // airplanes
 ]
 
 let upgradeList = [
-    new Upgrade(500, 0, "IMG/Muis.png",1.5, "autoclickerDisplay"), // golden_mouse
-    new Upgrade(2500, 1, "IMG/Cookie.png",1.5, "multiplierDisplay"), // stroopwaffles
-    new Upgrade(20000, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay"), // super_ovens
-    new Upgrade(100000, 0, "IMG/factory.png",1.5, "factoryDisplay"), // electric_factories
-    new Upgrade(150000, 0, "IMG/Airplane.png",1.5, "planeDisplay"), // big_cargo_planes
+    new ItemUpgrades(500, 0, "IMG/Muis.png",1.5, "autoclickerDisplay"), // golden_mouse
+    new ItemUpgrades(2500, 1, "IMG/Cookie.png",1.5, "multiplierDisplay"), // stroopwaffles
+    new ItemUpgrades(20000, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay"), // super_ovens
+    new ItemUpgrades(100000, 0, "IMG/factory.png",1.5, "factoryDisplay"), // electric_factories
+    new ItemUpgrades(150000, 0, "IMG/Airplane.png",1.5, "planeDisplay"), // big_cargo_planes
 ];
 
 // Reference to the cookie counter display
@@ -94,9 +100,6 @@ class game{
             let priceName = itemType.saveName + "price";
             if (localStorage.getItem(priceName)){
                 let itemPrice = localStorage.getItem(priceName); // getting the items from the local storage
-
-                console.log(priceName);
-                console.log(itemPrice);
                 shopList[priceCounter].price = itemPrice;
             }
             priceCounter += 1;
@@ -112,7 +115,7 @@ class game{
         document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + this.formatNumber(shopList[3].price);
         document.getElementById("cargoPlanePrice").innerHTML = "Price: " + this.formatNumber(shopList[4].price);
 
-        // Upgrades Prices
+        // Shops Prices
         document.getElementById("goldenMousePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[0].price);
         document.getElementById("StroopwafflePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[1].price);
         document.getElementById("SuperOvenPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[2].price);
@@ -185,9 +188,9 @@ setInterval(() => {
     cookieCount += shopList[3].value * 10;  // Cookie Factories
     cookieCount += shopList[4].value * 50;  // Cargo Planes
 
-    cookieCount += upgradeList[0].value * 10  // Golden Mouse
-    cookieCount += upgradeList[2].value * 30;  // Super Oven
-    cookieCount += upgradeList[3].value * 50;    //  Electric Factories
+    cookieCount += upgradeList[0].value * 10     // Golden Mouse
+    cookieCount += upgradeList[2].value * 30;   // Super Oven
+    cookieCount += upgradeList[3].value * 50;   //  Electric Factories
     cookieCount += upgradeList[4].value * 100;  // Bigger Cargo Plane
 
     Game.saveGame('cookies', cookieCount);

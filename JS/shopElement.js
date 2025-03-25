@@ -1,18 +1,20 @@
+console.log("Cheated cookies are awful! ඞ")
 let cookieCount = 0;
 
-class Upgrade{
+class Shop{
     price;
-    value;
+    itemCount;
     imageurl;
     priceFactor;
 
-    constructor(price, value, imgurl, priceFactor, displayParentId, saveName){
+    constructor(price, itemCount, imgurl, priceFactor, displayParentId, saveName,value){
         this.price = price;
-        this.value = value;
+        this.itemCount = itemCount;
         this.imageurl= imgurl;
         this.priceFactor = priceFactor;
         this.displayParentId = displayParentId;
         this.saveName = saveName;
+        this.value = value;
     }
 
     buyItem() {
@@ -22,7 +24,7 @@ class Upgrade{
 
             this.loadItem(1); // adding one of the item bought and displaying it
             Game.updateUI(); // updating the ui
-            Game.saveGame(this.saveName, this.value); // saving the bought item
+            Game.saveGame(this.saveName, this.itemCount); // saving the bought item
 
             console.log(this.saveName + "price", this.price);
             Game.saveGame(this.saveName + "price", this.price); // saving new itemPrice
@@ -33,32 +35,38 @@ class Upgrade{
 
     loadItem(amountToAdd){ // methods that loads items and displays them
         for (let i=0; i < amountToAdd; i++){ // loading each item
-            let displayUpgradeParent = document.getElementById(this.displayParentId);
+            let displayShopParent = document.getElementById(this.displayParentId);
             // Create a new image element
             let displayImage = document.createElement("IMG");
             displayImage.setAttribute('src', this.imageurl); // Set the image source
             displayImage.setAttribute('height', "100%"); // Set image height
             // Append the image to the container
-            displayUpgradeParent.appendChild(displayImage);
-            this.value += 1;
+            displayShopParent.appendChild(displayImage);
+            this.itemCount += 1;
         }
-    }
-         
+    }     
 }
+
+class ItemUpgrades extends Shop {
+    constructor(price, itemCount, imgurl, priceFactor, displayParentId, saveName) {
+        super(price, itemCount, imgurl, priceFactor, displayParentId, saveName);
+    }
+}
+
 let shopList = [
-    new Upgrade(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay", 'autoclickers'), // autoclickers
-    new Upgrade(50, 1, "IMG/Cookie.png",1.5, "multiplierDisplay", 'multiplier'), // cookie_multiplier
-    new Upgrade(100, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay", 'ovens'), // ovens
-    new Upgrade(1000, 0, "IMG/factory.png",1.5, "factoryDisplay", 'factories'), // factories
-    new Upgrade(100000, 0, "IMG/Airplane.png",1.5, "planeDisplay", 'airplanes'), // airplanes
+    new Shop(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay", 'autoclickers',1), // autoclickers
+    new Shop(50, 1, "IMG/Cookie.png",1.5, "multiplierDisplay", 'multiplier',1), // cookie_multiplier
+    new Shop(100, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay", 'ovens',5), // ovens
+    new Shop(1000, 0, "IMG/factory.png",1.5, "factoryDisplay", 'factories',100), // factories
+    new Shop(100000, 0, "IMG/Airplane.png",1.5, "planeDisplay", 'airplanes',250), // airplanes
 ]
 
 let upgradeList = [
-    new Upgrade(500, 0, "IMG/Muis.png",1.5, "autoclickerDisplay"), // golden_mouse
-    new Upgrade(2500, 1, "IMG/Cookie.png",1.5, "multiplierDisplay"), // stroopwaffles
-    new Upgrade(20000, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay"), // super_ovens
-    new Upgrade(100000, 0, "IMG/factory.png",1.5, "factoryDisplay"), // electric_factories
-    new Upgrade(150000, 0, "IMG/Airplane.png",1.5, "planeDisplay"), // big_cargo_planes
+    new ItemUpgrades(500, 0, "IMG/Muis.png",1.5, "autoclickerDisplay"), // golden_mouse
+    new ItemUpgrades(2500, 1, "IMG/Cookie.png",1.5, "multiplierDisplay"), // stroopwaffles
+    new ItemUpgrades(20000, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay"), // super_ovens
+    new ItemUpgrades(100000, 0, "IMG/factory.png",1.5, "factoryDisplay"), // electric_factories
+    new ItemUpgrades(150000, 0, "IMG/Airplane.png",1.5, "planeDisplay"), // big_cargo_planes
 ];
 
 // Reference to the cookie counter display
@@ -94,9 +102,6 @@ class game{
             let priceName = itemType.saveName + "price";
             if (localStorage.getItem(priceName)){
                 let itemPrice = localStorage.getItem(priceName); // getting the items from the local storage
-
-                console.log(priceName);
-                console.log(itemPrice);
                 shopList[priceCounter].price = itemPrice;
             }
             priceCounter += 1;
@@ -138,7 +143,7 @@ class game{
     }
 
     addACookie() { // if the user clicked on a cookie manually
-        cookieCount += shopList[1].value;
+        cookieCount += shopList[1].itemCount;
         this.updateUI();
     }
 
@@ -180,15 +185,15 @@ Game.loadGame();
 
 // Auto cookie generation every 2 seconds
 setInterval(() => {
-    cookieCount += shopList[0].value;       // AutoClickers
-    cookieCount += shopList[2].value * 5;   // Ovens
-    cookieCount += shopList[3].value * 10;  // Cookie Factories
-    cookieCount += shopList[4].value * 50;  // Cargo Planes
+    cookieCount += shopList[0].itemCount;       // AutoClickers
+    cookieCount += shopList[2].itemCount * shopList[2].value;// Ovens
+    cookieCount += shopList[3].itemCount * shopList[3].value;  // Cookie Factories
+    cookieCount += shopList[4].itemCount * shopList[4].value;  // Cargo Planes
 
-    cookieCount += upgradeList[0].value * 10  // Golden Mouse
-    cookieCount += upgradeList[2].value * 30;  // Super Oven
-    cookieCount += upgradeList[3].value * 50;    //  Electric Factories
-    cookieCount += upgradeList[4].value * 100;  // Bigger Cargo Plane
+    cookieCount += upgradeList[0].itemCount * 10     // Golden Mouse
+    cookieCount += upgradeList[2].itemCount * 30;   // Super Oven
+    cookieCount += upgradeList[3].itemCount * 50;   //  Electric Factories
+    cookieCount += upgradeList[4].itemCount * 100;  // Bigger Cargo Plane
 
     Game.saveGame('cookies', cookieCount);
     Game.updateUI();  // Call updateUI from the instance, not the class

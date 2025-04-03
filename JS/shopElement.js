@@ -1,3 +1,7 @@
+console.log("Cheated cookies are awful! ඞ")
+
+let cookieCount = 0;
+
 class Shop{
     price;
     itemCount;
@@ -15,8 +19,8 @@ class Shop{
     }
 
     buyItem() {
-        if (Game.cookieCount >= this.price){ // if the user has enough cookies
-            Game.cookieCount -= this.price; // Deduct cost
+        if (cookieCount >= this.price){ // if the user has enough cookies
+            cookieCount -= this.price; // Deduct cost
             this.price = Math.floor(this.price * this.priceFactor); // Increase price
 
             this.loadItem(1); // adding one of the item bought and displaying it
@@ -45,10 +49,29 @@ class Shop{
 }
 
 class ItemUpgrades extends Shop {
-    constructor(price, itemCount, imgurl, priceFactor, displayParentId, saveName) {
-        super(price, itemCount, imgurl, priceFactor, displayParentId, saveName);
+    constructor(price, itemCount, imgurl, priceFactor, displayParentId, saveName,value) {
+        super(price, itemCount, imgurl, priceFactor, displayParentId, saveName,value);
     }
-}
+
+    buyUpgrade() {
+        if (cookieCount >= this.price) {
+            cookieCount -= this.price;
+            this.itemCount += 1;  // Increment the count of this upgrade
+            this.price = Math.floor(this.price * this.priceFactor); // Increase price
+    
+            // Update the image only when the first upgrade is bought
+            if (this.itemCount === 1) {
+                Game.updateImage(this.displayParentId, this.imageurl);
+            }
+    
+            Game.updateUI(); // Update UI
+            Game.saveGame(this.saveName, this.itemCount); // Save bought item
+            Game.saveGame(this.saveName + "price", this.price); // Save new item price
+        } else {
+            alert("Not enough cookies!"); // Show alert if not enough cookies
+        }
+    }
+}    
 
 let shopList = [
     new Shop(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay", 'autoclickers',1), // autoclickers
@@ -59,21 +82,17 @@ let shopList = [
 ]
 
 let upgradeList = [
-    new ItemUpgrades(500, 0, "IMG/Muis.png",1.5, "autoclickerDisplay"), // golden_mouse
-    new ItemUpgrades(2500, 1, "IMG/Cookie.png",1.5, "multiplierDisplay"), // stroopwaffles
-    new ItemUpgrades(20000, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay"), // super_ovens
-    new ItemUpgrades(100000, 0, "IMG/factory.png",1.5, "factoryDisplay"), // electric_factories
-    new ItemUpgrades(150000, 0, "IMG/Airplane.png",1.5, "planeDisplay"), // big_cargo_planes
+    new ItemUpgrades(500, 0, "IMG/GoudenMuis.png",1.5, "autoclickerDisplay", "goldenMouse", 10), // golden_mouse
+    new ItemUpgrades(2500, 1, "IMG/stroopwafel.png",1.5, "multiplierDisplay", "stroopwaffle", 5), // stroopwaffles
+    new ItemUpgrades(20000, 0, "IMG/SupercookieBaker.png",1.5, "ovenDisplay", "superOven", 30), // super_ovens
+    new ItemUpgrades(100000, 0, "IMG/Electricfactory.png",1.5, "factoryDisplay", "electricFactory", 50), // electric_factories
+    new ItemUpgrades(150000, 0, "IMG/BiggerCargoAirplane.png",1.5, "planeDisplay", "bigCargoPlane", 100), // big_cargo_planes
 ];
 
 // Reference to the cookie counter display
 let cookieCountDisplay = document.getElementById("cookieCount");
 
 class game{
-
-    constructor(cookies){
-        this.cookieCount = cookies;
-    }
 
     saveGame(name, amount){
         localStorage.setItem(name, amount);
@@ -83,32 +102,34 @@ class game{
         // loading the cookies
         let loadedCookies = localStorage.getItem("cookies");
         if (loadedCookies != null){
-            this.cookieCount = parseInt(loadedCookies);
+            cookieCount = parseInt(loadedCookies);
         }
 
         // loading the items
         let itemCounter = 0;
         shopList.forEach(itemType => {
             let itemName = itemType.saveName;
-            let priceName = itemType.saveName + 'price';
             if (localStorage.getItem(itemName)){
                 let itemCount = localStorage.getItem(itemName); // getting the items from the local storage
                 shopList[itemCounter].loadItem(itemCount); // calling the method that loads the correct amount of items into the game
             }
-
-            if (localStorage.getItem(priceName)){
-                let itemPrice = localStorage.getItem(priceName); // getting the items from the local storage
-                shopList[itemCounter].price = itemPrice;
-            }
             itemCounter += 1;
-
         });
 
         // loading the item prices
+        let priceCounter = 0
+        shopList.forEach(itemType => {
+            let priceName = itemType.saveName + "price";
+            if (localStorage.getItem(priceName)){
+                let itemPrice = localStorage.getItem(priceName); // getting the items from the local storage
+                shopList[priceCounter].price = itemPrice;
+            }
+            priceCounter += 1;
+        });
      }
 
     updateUI() {
-        cookieCountDisplay.textContent = "Cookies: " + this.formatNumber(this.cookieCount);
+        cookieCountDisplay.textContent = "Cookies: " + this.formatNumber(cookieCount);
         // Shop Prices
         document.getElementById("autoClickerPrice").innerHTML = "Price: " + this.formatNumber(shopList[0].price);
         document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + this.formatNumber(shopList[1].price);
@@ -142,7 +163,7 @@ class game{
     }
 
     addACookie() { // if the user clicked on a cookie manually
-        Game.cookieCount += shopList[1].itemCount;
+        cookieCount += shopList[1].itemCount;
         this.updateUI();
     }
 
@@ -177,23 +198,23 @@ class menu{
     }
 }
 
-let Game = new game(0);
+let Game = new game();
 let Menu = new menu("shop");
 
 Game.loadGame();
 
 // Auto cookie generation every 2 seconds
 setInterval(() => {
-    Game.cookieCount += shopList[0].itemCount;       // AutoClickers
-    Game.cookieCount += shopList[2].itemCount * shopList[2].value;// Ovens
-    Game.cookieCount += shopList[3].itemCount * shopList[3].value;  // Cookie Factories
-    Game.cookieCount += shopList[4].itemCount * shopList[4].value;  // Cargo Planes
+    cookieCount += shopList[0].itemCount;       // AutoClickers
+    cookieCount += shopList[2].itemCount * shopList[2].value;// Ovens
+    cookieCount += shopList[3].itemCount * shopList[3].value;  // Cookie Factories
+    cookieCount += shopList[4].itemCount * shopList[4].value;  // Cargo Planes
 
-    Game.cookieCount += upgradeList[0].itemCount * 10     // Golden Mouse
-    Game.cookieCount += upgradeList[2].itemCount * 30;   // Super Oven
-    Game.cookieCount += upgradeList[3].itemCount * 50;   //  Electric Factories
-    Game.cookieCount += upgradeList[4].itemCount * 100;  // Bigger Cargo Plane
+    cookieCount += upgradeList[0].itemCount * 10     // Golden Mouse
+    cookieCount += upgradeList[2].itemCount * 30;   // Super Oven
+    cookieCount += upgradeList[3].itemCount * 50;   //  Electric Factories
+    cookieCount += upgradeList[4].itemCount * 100;  // Bigger Cargo Plane
 
-    Game.saveGame('cookies', Game.cookieCount);
+    Game.saveGame('cookies', cookieCount);
     Game.updateUI();  // Call updateUI from the instance, not the class
 }, 2000);

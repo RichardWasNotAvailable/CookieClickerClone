@@ -1,3 +1,7 @@
+console.log("Cheated cookies are awful! ඞ")
+
+let cookieCount = 0;
+
 class Shop{
     price;
     itemCount;
@@ -45,10 +49,29 @@ class Shop{
 }
 
 class ItemUpgrades extends Shop {
-    constructor(price, itemCount, imgurl, priceFactor, displayParentId, saveName) {
-        super(price, itemCount, imgurl, priceFactor, displayParentId, saveName);
+    constructor(price, itemCount, imgurl, priceFactor, displayParentId, saveName,value) {
+        super(price, itemCount, imgurl, priceFactor, displayParentId, saveName,value);
     }
-}
+
+    buyUpgrade() {
+        if (cookieCount >= this.price) {
+            cookieCount -= this.price;
+            this.itemCount += 1;  // Increment the count of this upgrade
+            this.price = Math.floor(this.price * this.priceFactor); // Increase price
+    
+            // Update the image only when the first upgrade is bought
+            if (this.itemCount === 1) {
+                Game.updateImage(this.displayParentId, this.imageurl);
+            }
+    
+            Game.updateUI(); // Update UI
+            Game.saveGame(this.saveName, this.itemCount); // Save bought item
+            Game.saveGame(this.saveName + "price", this.price); // Save new item price
+        } else {
+            alert("Not enough cookies!"); // Show alert if not enough cookies
+        }
+    }
+}    
 
 let shopList = [
     new Shop(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay", 'autoclickers',1), // autoclickers
@@ -59,11 +82,11 @@ let shopList = [
 ]
 
 let upgradeList = [
-    new ItemUpgrades(500, 0, "IMG/Muis.png",1.5, "autoclickerDisplay"), // golden_mouse
-    new ItemUpgrades(2500, 1, "IMG/Cookie.png",1.5, "multiplierDisplay"), // stroopwaffles
-    new ItemUpgrades(20000, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay"), // super_ovens
-    new ItemUpgrades(100000, 0, "IMG/factory.png",1.5, "factoryDisplay"), // electric_factories
-    new ItemUpgrades(150000, 0, "IMG/Airplane.png",1.5, "planeDisplay"), // big_cargo_planes
+    new ItemUpgrades(500, 0, "IMG/GoudenMuis.png",1.5, "autoclickerDisplay", "goldenMouse", 10), // golden_mouse
+    new ItemUpgrades(2500, 1, "IMG/stroopwafel.png",1.5, "multiplierDisplay", "stroopwaffle", 5), // stroopwaffles
+    new ItemUpgrades(20000, 0, "IMG/SupercookieBaker.png",1.5, "ovenDisplay", "superOven", 30), // super_ovens
+    new ItemUpgrades(100000, 0, "IMG/Electricfactory.png",1.5, "factoryDisplay", "electricFactory", 50), // electric_factories
+    new ItemUpgrades(150000, 0, "IMG/BiggerCargoAirplane.png",1.5, "planeDisplay", "bigCargoPlane", 100), // big_cargo_planes
 ];
 
 // Reference to the cookie counter display

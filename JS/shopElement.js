@@ -58,8 +58,10 @@ class ItemUpgrades extends Shop {
             this.price = Math.floor(this.price * this.priceFactor); // Increase price
     
             // Update the image only when the first upgrade is bought
-            Game.updateImage(this.displayParentId, this.imageurl);
-            
+     {
+                Game.updateImage(this.displayParentId, this.imageurl);
+            }
+    
             Game.updateUI(); // Update UI
             Game.saveGame(this.saveName, this.itemCount); // Save bought item
             Game.saveGame(this.saveName + "price", this.price); // Save new item price

@@ -60,7 +60,7 @@ class ItemUpgrades extends Shop {
             this.price = Math.floor(this.price * this.priceFactor); // Increase price
     
             // Update the image only when the first upgrade is bought
-            if (this.itemCount === 1) {
+     {
                 Game.updateImage(this.displayParentId, this.imageurl);
             }
     
@@ -93,8 +93,8 @@ let upgradeList = [
 let cookieCountDisplay = document.getElementById("cookieCount");
 
 class game{
-
-    saveGame(name, amount){
+  
+saveGame(name, amount){
         localStorage.setItem(name, amount);
     }
 
@@ -107,14 +107,17 @@ class game{
 
         // loading the items
         let itemCounter = 0;
-        shopList.forEach(itemType => {
-            let itemName = itemType.saveName;
-            if (localStorage.getItem(itemName)){
-                let itemCount = localStorage.getItem(itemName); // getting the items from the local storage
-                shopList[itemCounter].loadItem(itemCount); // calling the method that loads the correct amount of items into the game
-            }
-            itemCounter += 1;
-        });
+[...shopList, ...upgradeList].forEach(itemType => {  // Combine both lists
+    let itemName = itemType.saveName;
+    let savedItemCount = localStorage.getItem(itemName);
+    
+    if (savedItemCount !== null) {
+        itemType.itemCount = parseInt(savedItemCount);
+        itemType.loadItem(parseInt(savedItemCount));
+    }
+
+    itemCounter += 1;
+});
 
         // loading the item prices
         let priceCounter = 0
@@ -209,12 +212,6 @@ setInterval(() => {
     cookieCount += shopList[2].itemCount * shopList[2].value;// Ovens
     cookieCount += shopList[3].itemCount * shopList[3].value;  // Cookie Factories
     cookieCount += shopList[4].itemCount * shopList[4].value;  // Cargo Planes
-
-    cookieCount += upgradeList[0].itemCount * 10     // Golden Mouse
-    cookieCount += upgradeList[2].itemCount * 30;   // Super Oven
-    cookieCount += upgradeList[3].itemCount * 50;   //  Electric Factories
-    cookieCount += upgradeList[4].itemCount * 100;  // Bigger Cargo Plane
-
     Game.saveGame('cookies', cookieCount);
     Game.updateUI();  // Call updateUI from the instance, not the class
 }, 2000);

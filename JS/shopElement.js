@@ -52,16 +52,15 @@ class ItemUpgrades extends Shop {
 
     buyUpgrade() {
 
-        if (cookieCount >= this.price) {
-            cookieCount -= this.price;
+        if (Game.cookieCount >= this.price) {
+            Game.cookieCount -= this.price;
             this.itemCount += 1;  // Increment the count of this upgrade
             this.price = Math.floor(this.price * this.priceFactor); // Increase price
     
             // Update the image only when the first upgrade is bought
-     {
-                Game.updateImage(this.displayParentId, this.imageurl);
-            }
-    
+     
+            Game.updateImage(this.displayParentId, this.imageurl);
+
             Game.updateUI(); // Update UI
             Game.saveGame(this.saveName, this.itemCount); // Save bought item
             Game.saveGame(this.saveName + "price", this.price); // Save new item price
@@ -104,7 +103,7 @@ class game{
         // loading the cookies
         let loadedCookies = localStorage.getItem("cookies");
         if (loadedCookies != null){
-            cookieCount = parseInt(loadedCookies);
+            this.cookieCount = parseInt(loadedCookies);
         }
 
         // loading the items
@@ -116,7 +115,7 @@ class game{
                 let itemCount = localStorage.getItem(itemName); // getting the items from the local storage
                 shopList[itemCounter].loadItem(itemCount); // calling the method that loads the correct amount of items into the game
             }
-
+            // loading 
             let priceName = itemType.saveName + "price";
             if (localStorage.getItem(priceName)){
                 let itemPrice = localStorage.getItem(priceName); // getting the items from the local storage

@@ -46,28 +46,32 @@ class Shop{
 }
 
 class ItemUpgrades extends Shop {
-    constructor(price, itemCount, imgurl, priceFactor, displayParentId, saveName,value) {
-        super(price, itemCount, imgurl, priceFactor, displayParentId, saveName,value);
+    constructor(price, itemCount, imgurl, priceFactor, displayParentId, saveName, value, targetShop) {
+        super(price, itemCount, imgurl, priceFactor, displayParentId, saveName, value);
+        this.targetShop = targetShop;
     }
 
     buyUpgrade() {
         if (Game.cookieCount >= this.price) {
             Game.cookieCount -= this.price;
-            this.itemCount += 1;  // Increment the count of this upgrade
-            this.price = Math.floor(this.price * this.priceFactor); // Increase price
-    
-            // Update the image only when the first upgrade is bought
-     
+            this.itemCount += 1;
+            this.price = Math.floor(this.price * this.priceFactor);
+
             Game.updateImage(this.displayParentId, this.imageurl);
 
-            Game.updateUI(); // Update UI
-            Game.saveGame(this.saveName, this.itemCount); // Save bought item
-            Game.saveGame(this.saveName + "price", this.price); // Save new item price
+            if (this.itemCount === 1 && this.targetShop) {
+                this.targetShop.value = this.value;
+                console.log(`Upgraded ${this.targetShop.saveName} value to ${this.value}`);
+            }
+
+            Game.updateUI();
+            Game.saveGame(this.saveName, this.itemCount);
+            Game.saveGame(this.saveName + "price", this.price);
         } else {
-            alert("Not enough cookies!"); // Show alert if not enough cookies
+            alert("Not enough cookies!");
         }
     }
-}    
+}   
 
 let shopList = [
     new Shop(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay", 'autoclickers',1), // autoclickers
@@ -78,12 +82,13 @@ let shopList = [
 ]
 
 let upgradeList = [
-    new ItemUpgrades(500, 0, "IMG/GoudenMuis.png",1.5, "autoclickerDisplay", "goldenMouse", 10), // golden_mouse
-    new ItemUpgrades(2500, 1, "IMG/stroopwafel.png",1.5, "multiplierDisplay", "stroopwaffle", 5), // stroopwaffles
-    new ItemUpgrades(20000, 0, "IMG/SupercookieBaker.png",1.5, "ovenDisplay", "superOven", 30), // super_ovens
-    new ItemUpgrades(100000, 0, "IMG/Electricfactory.png",1.5, "factoryDisplay", "electricFactory", 50), // electric_factories
-    new ItemUpgrades(150000, 0, "IMG/BiggerCargoAirplane.png",1.5, "planeDisplay", "bigCargoPlane", 100), // big_cargo_planes
+    new ItemUpgrades(500, 0, "IMG/GoudenMuis.png", 1.5, "autoclickerDisplay", "goldenMouse", 10, shopList[0]),
+    new ItemUpgrades(2500, 1, "IMG/stroopwafel.png", 1.5, "multiplierDisplay", "stroopwaffle", 5, shopList[1]),
+    new ItemUpgrades(20000, 0, "IMG/SupercookieBaker.png", 1.5, "ovenDisplay", "superOven", 30, shopList[2]),
+    new ItemUpgrades(100000, 0, "IMG/Electricfactory.png", 1.5, "factoryDisplay", "electricFactory", 50, shopList[3]),
+    new ItemUpgrades(150000, 0, "IMG/BiggerCargoAirplane.png", 1.5, "planeDisplay", "bigCargoPlane", 100, shopList[4]),
 ];
+
 
 // Reference to the cookie counter display
 let cookieCountDisplay = document.getElementById("cookieCount");
@@ -215,12 +220,11 @@ Game.loadGame();
 
 // Auto cookie generation every 2 seconds
 setInterval(() => {
-    console.log(shopList[0].itemCount);
-    Game.cookieCount += shopList[0].itemCount;       // AutoClickers
-    Game.cookieCount += shopList[2].itemCount * shopList[2].value;// Ovens
-    Game.cookieCount += shopList[3].itemCount * shopList[3].value;  // Cookie Factories
-    Game.cookieCount += shopList[4].itemCount * shopList[4].value;  // Cargo Planes
+    Game.cookieCount += shopList[0].itemCount * shopList[0].value; // AutoClickers
+    Game.cookieCount += shopList[2].itemCount * shopList[2].value; // Ovens
+    Game.cookieCount += shopList[3].itemCount * shopList[3].value; // Cookie Factories
+    Game.cookieCount += shopList[4].itemCount * shopList[4].value; // Cargo Planes
 
     Game.saveGame('cookies', Game.cookieCount);
-    Game.updateUI();  // Call updateUI from the instance, not the class
+    Game.updateUI();
 }, 2000);

@@ -51,7 +51,6 @@ class ItemUpgrades extends Shop {
     }
 
     buyUpgrade() {
-
         if (Game.cookieCount >= this.price) {
             Game.cookieCount -= this.price;
             this.itemCount += 1;  // Increment the count of this upgrade
@@ -121,7 +120,6 @@ class game{
                 let itemPrice = localStorage.getItem(priceName); // getting the items from the local storage
                 shopList[itemCounter].price = itemPrice;
             }
-
             itemCounter += 1;
         });
      }
@@ -161,8 +159,9 @@ class game{
     }
 
     addACookie() { // if the user clicked on a cookie manually
-        cookieCount += shopList[1].itemCount;
+        this.cookieCount += shopList[1].itemCount;
         this.updateUI();
+        this.makeCookieFall(); // makes a falling cookie
     }
 
     updateImage(displayId, newImageUrl){
@@ -172,6 +171,19 @@ class game{
         for (let i=0; i < displayChildren.length; i++){ // looping through each image
             displayChildren[i].setAttribute('src', newImageUrl);
         }
+    }
+
+    makeCookieFall(){
+        let fallingCookie = document.createElement("img");
+        fallingCookie.src = "IMG/Cookie.png";
+        fallingCookie.classList.add("falling-cookie");
+
+        // Position the cookie at the mouse click location
+        fallingCookie.style.left = `${event.clientX - 25}px`;
+        fallingCookie.style.top = `${event.clientY - 25}px`;
+        document.body.appendChild(fallingCookie);
+        // Remove the cookie after animation ends
+        setTimeout(() => fallingCookie.remove(), 1000);
     }
 }
 

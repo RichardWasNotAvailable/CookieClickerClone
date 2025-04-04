@@ -82,11 +82,11 @@ let shopList = [
 ]
 
 let upgradeList = [
-    new ItemUpgrades(500, 0, "IMG/GoudenMuis.png", 1.5, "autoclickerDisplay", "goldenMouse", 10, shopList[0]),
-    new ItemUpgrades(2500, 1, "IMG/stroopwafel.png", 1.5, "multiplierDisplay", "stroopwaffle", 5, shopList[1]),
-    new ItemUpgrades(20000, 0, "IMG/SupercookieBaker.png", 1.5, "ovenDisplay", "superOven", 30, shopList[2]),
-    new ItemUpgrades(100000, 0, "IMG/Electricfactory.png", 1.5, "factoryDisplay", "electricFactory", 50, shopList[3]),
-    new ItemUpgrades(150000, 0, "IMG/BiggerCargoAirplane.png", 1.5, "planeDisplay", "bigCargoPlane", 100, shopList[4]),
+    new ItemUpgrades(500, 0, "IMG/GoudenMuis.png", 1.5, "autoclickerDisplay", "goldenMouse", 2, shopList[0]),
+    new ItemUpgrades(2500, 1, "IMG/stroopwafel.png", 1.5, "multiplierDisplay", "stroopwaffle", 2.5, shopList[1]),
+    new ItemUpgrades(20000, 0, "IMG/SupercookieBaker.png", 1.5, "ovenDisplay", "superOven", 2.5, shopList[2]),
+    new ItemUpgrades(100000, 0, "IMG/Electricfactory.png", 1.5, "factoryDisplay", "electricFactory", 2.5, shopList[3]),
+    new ItemUpgrades(150000, 0, "IMG/BiggerCargoAirplane.png", 1.5, "planeDisplay", "bigCargoPlane", 5, shopList[4]),
 ];
 
 

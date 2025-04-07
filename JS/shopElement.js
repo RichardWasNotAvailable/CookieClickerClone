@@ -4,8 +4,11 @@ class Shop{
     itemCount;
     imageurl;
     priceFactor;
+    upgradeTier;
+    upgradedIMG;
 
-    constructor(price, itemCount, imgurl, priceFactor, displayParentId, saveName,value){
+
+    constructor(price, itemCount, imgurl, priceFactor, displayParentId, saveName,value, upgradeTier, upgradedIMG){
         this.price = price;
         this.itemCount = itemCount;
         this.imageurl= imgurl;
@@ -13,6 +16,8 @@ class Shop{
         this.displayParentId = displayParentId;
         this.saveName = saveName;
         this.value = value;
+        this.upgradeTier = upgradeTier;
+        this.upgradedIMG = upgradedIMG;
     }
 
     buyItem() {
@@ -56,9 +61,6 @@ class ItemUpgrades extends Shop {
             Game.cookieCount -= this.price;
             this.itemCount += 1;
             this.price = Math.floor(this.price * this.priceFactor);
-
-            Game.updateImage(this.displayParentId, this.imageurl);
-
             if (this.itemCount === 1 && this.targetShop) {
                 this.targetShop.value = this.value;
                 console.log(`Upgraded ${this.targetShop.saveName} value to ${this.value}`);
@@ -82,11 +84,11 @@ let shopList = [
 ]
 
 let upgradeList = [
-    new ItemUpgrades(500, 0, "IMG/GoudenMuis.png", 1.5, "autoclickerDisplay", "goldenMouse", 2, shopList[0]),
-    new ItemUpgrades(2500, 1, "IMG/stroopwafel.png", 1.5, "multiplierDisplay", "stroopwaffle", 2.5, shopList[1]),
-    new ItemUpgrades(20000, 0, "IMG/SupercookieBaker.png", 1.5, "ovenDisplay", "superOven", 2.5, shopList[2]),
-    new ItemUpgrades(100000, 0, "IMG/Electricfactory.png", 1.5, "factoryDisplay", "electricFactory", 2.5, shopList[3]),
-    new ItemUpgrades(150000, 0, "IMG/BiggerCargoAirplane.png", 1.5, "planeDisplay", "bigCargoPlane", 5, shopList[4]),
+    new ItemUpgrades(500, 0, "IMG/GoudenMuis.png", 150000, "autoclickerDisplay", "goldenMouse", 2, shopList[0]),
+    new ItemUpgrades(2500, 1, "IMG/stroopwafel.png", 150000, "multiplierDisplay", "stroopwaffle", 2.5, shopList[1]),
+    new ItemUpgrades(20000, 0, "IMG/SupercookieBaker.png", 150000, "ovenDisplay", "superOven", 2.5, shopList[2]),
+    new ItemUpgrades(100000, 0, "IMG/Electricfactory.png", 150000,"factoryDisplay", "electricFactory", 2.5, shopList[3]),
+    new ItemUpgrades(150000, 0, "IMG/BiggerCargoAirplane.png", 150000, "planeDisplay", "bigCargoPlane", 5, shopList[4]),
 ];
 
 
@@ -237,9 +239,9 @@ class menu{
         this.menuIsOpen = !this.menuIsOpen; // switching menu to open or closed
     }
 }
-
 let Game = new game(0);
 let Menu = new menu("shop");
+let UpgradesMenu = new menu("upgradesMenu");
 
 Game.loadGame();
 

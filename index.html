@@ -11,12 +11,13 @@
     <body>
 
         <img src="IMG/shop.png" alt="knop om upgrades te kopen" class="shopButton" id="shopButton" onclick="Menu.openShopMenu()">
+        <img src="IMG/upgrades.png" alt="Knop op je gekochte upgrades te bekijken" class="boughtUpgradesButton" id="boughtUpgradesButton" onclick="UpgradesMenu.openShopMenu()">
         <nav class="cookieNav">
             <p id="cookieCount">Cookies: 0</p>
             <p id="CPSCounter" class="CPSCounter">per second: 0</p>
             <img id="cookieButton" src="IMG/Cookie.png" class="CookieButton" onclick="Game.addACookie()" alt="koekje">
         </nav>
-
+    <nav class="upgradesMenu" id="upgradesMenu"></nav>
         <!-- Shop section -->
         <nav id="shop" class="shop">
             <h2>Shop</h2>
@@ -46,7 +47,7 @@
             <nav class="shop-item" id="cookieFactory" onclick="shopList[3].buyItem()">
         <img src="IMG/factory.png" alt="Fabriek" class="productImage">
         <nav class="itemContent">
-         <p class="upgradeName">Factory</p>
+         <p class="upgradeName">Factory (with Child labor)</p>
          <p class="upgradePrice" id="cookieFactoryPrice">Price: 1000</p>
         </nav>
          </nav>
@@ -84,7 +85,7 @@
                  <nav class="shop-item" id="EletricFactory" onclick="upgradeList[3].buyUpgrade()">
                     <img src="IMG/Electricfactory.png" alt="EletricFactory" class="productImage">
                     <nav class="itemContent">
-                        <p class="upgradeName">Electric Factory</p>
+                        <p class="upgradeName">Factory (without Child Labor) </p>
                         <p class="upgradePrice" id="ElectricFactoryPrice">Price: 100000</p>
                     </nav>
                  </nav>
@@ -96,7 +97,6 @@
                     </nav>
                  </nav>
              </nav>
-
     <nav id="itemDisplayNav" class="itemDisplayNav">
         <nav id="autoclickerDisplay" class="itemDisplay"></nav>
         <nav id="multiplierDisplay" class="itemDisplay"></nav>
@@ -105,6 +105,5 @@
         <nav id="planeDisplay" class="itemDisplay"></nav>
     </nav>
     <script src="JS/shopElement.js"></script>
-
     </body>
 </html>

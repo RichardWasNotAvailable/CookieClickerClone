@@ -139,19 +139,28 @@ h3{
     transition: .5s;
 }
 
+.upgradesMenu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 0;
+
+    overflow-x: auto;
+    overflow-y: auto; /* Enables scrolling */
+    background-color: firebrick;
+    white-space: nowrap;
+
+    display: block; /* Let items stack naturally */
+    transition: .5s;
+}
+
 .itemDisplay {
     background-color: khaki;
     width: 100vw; /* Always matches the viewport width */
     height: 80px;
     margin-bottom: 20px;
 }
-
-.shopButton{
-    position: static;
-    width: 8%;
-    cursor: pointer;
-}
-
 @media screen and (max-width: 800px) {
     .upgradeName {
       width: 100%;
@@ -304,6 +313,17 @@ h3{
 }
 
 .shopButton{
+    position: static;
+    width: 8%;
+    cursor: pointer;
+}
+.boughtUpgradesButton{
+    position: static;
+    width: 8%;
+    cursor: pointer;
+}
+
+#boughtUpgradesButton{
     position: static;
     width: 8%;
     cursor: pointer;

@@ -74,11 +74,11 @@ class ItemUpgrades extends Shop {
 }   
 
 let shopList = [
-    new Shop(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay", 'autoclickers',1), // autoclickers
-    new Shop(50, 1, "IMG/Cookie.png",1.5, "multiplierDisplay", 'multiplier',1), // cookie_multiplier
-    new Shop(100, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay", 'ovens',5), // ovens
-    new Shop(1000, 0, "IMG/factory.png",1.5, "factoryDisplay", 'factories',100), // factories
-    new Shop(100000, 0, "IMG/Airplane.png",1.5, "planeDisplay", 'airplanes',250), // airplanes
+    new Shop(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay", 'autoclickers',1,0), // autoclickers
+    new Shop(50, 1, "IMG/Cookie.png",1.5, "multiplierDisplay", 'multiplier',1,0), // cookie_multiplier
+    new Shop(100, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay", 'ovens',5,0), // ovens
+    new Shop(1000, 0, "IMG/factory.png",1.5, "factoryDisplay", 'factories',100,0), // factories
+    new Shop(100000, 0, "IMG/Airplane.png",1.5, "planeDisplay", 'airplanes',250,0), // airplanes
 ]
 
 let upgradeList = [
@@ -108,6 +108,8 @@ class game{
         let loadedCookies = localStorage.getItem("cookies");
         if (loadedCookies != null){
             this.cookieCount = parseInt(loadedCookies);
+        }else{
+            this.cookieCount = 0;
         }
 
         // loading the items
@@ -130,20 +132,20 @@ class game{
      }
 
     updateUI() {
-        cookieCountDisplay.textContent = "Cookies: " + this.formatNumber(Game.cookieCount);
+        cookieCountDisplay.textContent = "Cookies: " + formatNumber(Game.cookieCount);
         // Shop Prices
-        document.getElementById("autoClickerPrice").innerHTML = "Price: " + this.formatNumber(shopList[0].price);
-        document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + this.formatNumber(shopList[1].price);
-        document.getElementById("ovenPrice").innerHTML = "Price: " + this.formatNumber(shopList[2].price);
-        document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + this.formatNumber(shopList[3].price);
-        document.getElementById("cargoPlanePrice").innerHTML = "Price: " + this.formatNumber(shopList[4].price);
+        document.getElementById("autoClickerPrice").innerHTML = "Price: " + formatNumber(shopList[0].price);
+        document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + formatNumber(shopList[1].price);
+        document.getElementById("ovenPrice").innerHTML = "Price: " + formatNumber(shopList[2].price);
+        document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + formatNumber(shopList[3].price);
+        document.getElementById("cargoPlanePrice").innerHTML = "Price: " + formatNumber(shopList[4].price);
 
         // Shops Prices
-        document.getElementById("goldenMousePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[0].price);
-        document.getElementById("StroopwafflePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[1].price);
-        document.getElementById("SuperOvenPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[2].price);
-        document.getElementById("ElectricFactoryPrice").innerHTML = "Price: " + this.formatNumber(upgradeList[3].price);
-        document.getElementById("BigcargoPlanePrice").innerHTML = "Price: " + this.formatNumber(upgradeList[4].price);
+        document.getElementById("goldenMousePrice").innerHTML = "Price: " + formatNumber(upgradeList[0].price);
+        document.getElementById("StroopwafflePrice").innerHTML = "Price: " + formatNumber(upgradeList[1].price);
+        document.getElementById("SuperOvenPrice").innerHTML = "Price: " + formatNumber(upgradeList[2].price);
+        document.getElementById("ElectricFactoryPrice").innerHTML = "Price: " + formatNumber(upgradeList[3].price);
+        document.getElementById("BigcargoPlanePrice").innerHTML = "Price: " + formatNumber(upgradeList[4].price);
 
         // adjusting the itemsDisplays width to match with scrolling of parent
         let displayNavWidth = document.getElementById("itemDisplayNav").scrollWidth;
@@ -151,16 +153,14 @@ class game{
         items.forEach(item => {
             item.style.width = `${displayNavWidth}px`; // Set each item's width to match
         });
-    }
 
-    formatNumber(num){
-        if (num >= 1e18) return (num / 1e18).toFixed(2) + "S";  // Sextillions
-        if (num >= 1e15) return (num / 1e15).toFixed(2) + "Qi"; // Quintillions
-        if (num >= 1e12) return (num / 1e12).toFixed(2) + "Q";  // Quadrillions
-        if (num >= 1e9) return (num / 1e9).toFixed(2) + "B";    // Billions
-        if (num >= 1e6) return (num / 1e6).toFixed(2) + "M";    // Millions
-        if (num >= 1e3) return (num / 1e3).toFixed(2) + "K";    // Thousands
-        return num; // No formatting for small numbers
+        let CPSCounter = 0;
+        shopList.forEach(itemType => {
+            CPSCounter += itemType.itemCount * itemType.value; // calculating the CPS
+        })
+        document.getElementById('CPSCounter').innerHTML = "per second: " + formatNumber(CPSCounter);// updating the CPSCounter
+
+
     }
 
     addACookie() { // if the user clicked on a cookie manually
@@ -169,7 +169,9 @@ class game{
         this.makeCookieFall(); // makes a falling cookie
     }
 
-    updateImage(displayId, newImageUrl){
+    updateImage(displayId, newImageUrl){ // method that replaces all images in an display, 
+        // displayId is the ID of the parent of the images
+        // newImageUrl is the Url of the Image you want to replace the old ones with
         let imageDisplay = document.getElementById(displayId);
         let displayChildren = imageDisplay.childNodes;
 
@@ -178,7 +180,7 @@ class game{
         }
     }
 
-    makeCookieFall(){
+    makeCookieFall(){ // method that makes a small falling cookie if you click on the big cookie
         let fallingCookie = document.createElement("img");
         fallingCookie.src = "IMG/Cookie.png";
         fallingCookie.classList.add("falling-cookie");
@@ -189,6 +191,29 @@ class game{
         document.body.appendChild(fallingCookie);
         // Remove the cookie after animation ends
         setTimeout(() => fallingCookie.remove(), 1000);
+    }
+
+    spawnGoldenCookie(){ // method that makes golden cookies  spawn
+        let randomNumber = Math.floor(Math.random() * 100) + 1; // random number from 1 to 100
+        if (randomNumber != 2){
+            let goldenCookie = document.createElement("img");
+            goldenCookie.classList.add("goldenCookie");
+            goldenCookie.src = "IMG/Cookie.png";
+            goldenCookie.style.left = Math.floor(Math.random() * 100) + 1 + '%'; // randomizing the cookies position
+            goldenCookie.style.top = Math.floor(Math.random() * 100) + 1 + '%';
+            document.body.appendChild(goldenCookie);
+
+            // adding cookies if the user clicks on the golden cookie
+            goldenCookie.onclick = this.cookieCount += Math.floor(this.cookieCount * 1.5);
+
+            goldenCookie.onclick = this.addCookies;
+
+            setTimeout(() => goldenCookie.remove(), 3000);
+        }
+    }
+
+    activateGoldenCookie(){
+        this.cookieCount += this.cookieCount * 1.5;
     }
 }
 
@@ -218,6 +243,16 @@ let Menu = new menu("shop");
 
 Game.loadGame();
 
+function formatNumber(num){
+    if (num >= 1e18) return (num / 1e18).toFixed(2) + "S";  // Sextillions
+    if (num >= 1e15) return (num / 1e15).toFixed(2) + "Qi"; // Quintillions
+    if (num >= 1e12) return (num / 1e12).toFixed(2) + "Q";  // Quadrillions
+    if (num >= 1e9) return (num / 1e9).toFixed(2) + "B";    // Billions
+    if (num >= 1e6) return (num / 1e6).toFixed(2) + "M";    // Millions
+    if (num >= 1e3) return (num / 1e3).toFixed(2) + "K";    // Thousands
+    return num; // No formatting for small numbers
+}
+
 // Auto cookie generation every 2 seconds
 setInterval(() => {
     Game.cookieCount += shopList[0].itemCount * shopList[0].value; // AutoClickers
@@ -227,4 +262,5 @@ setInterval(() => {
 
     Game.saveGame('cookies', Game.cookieCount);
     Game.updateUI();
+    //Game.spawnGoldenCookie();
 }, 2000);

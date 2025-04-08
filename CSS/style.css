@@ -360,3 +360,47 @@ h3{
     0% { transform: translateY(0); opacity: 1; }
     100% { transform: translateY(200px); opacity: 0; }
 }
+
+.statItem{
+    height: 10%;
+    width: 100px;
+        display: flex;
+    position: static;
+}
+
+#goldenMouseStat{
+    font-size: 75%;
+    padding-left: 6rem;
+    margin-top: -50px;
+    display: flex;
+    position: absolute;
+}
+#stroopwafelStat{
+    font-size: 75%;
+    padding-left: 6rem;
+    margin-top: -50px;
+    display: flex;
+    position: absolute;
+}
+#superOvenStat{
+    font-size: 75%;
+    padding-left: 6rem;
+    margin-top: -50px;
+    display: flex;
+    position: absolute;
+}
+
+#electricFactoryStat{
+    font-size: 75%;
+    padding-left: 6rem;
+    margin-top: -35px;
+    display: flex;
+    position: absolute;
+}
+#bigCargoPlaneStat{
+    font-size: 75%;
+    padding-left: 7rem;
+    margin-top: -65px;
+    display: flex;
+    position: absolute;
+}

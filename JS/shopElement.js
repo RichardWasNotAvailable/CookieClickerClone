@@ -61,11 +61,11 @@ class ItemUpgrades extends Shop {
             Game.cookieCount -= this.price;
             this.itemCount += 1;
             this.price = Math.floor(this.price * this.priceFactor);
-            if (this.itemCount === 1 && this.targetShop) {
-                this.targetShop.value = this.value;
-                console.log(`Upgraded ${this.targetShop.saveName} value to ${this.value}`);
-            }
-
+    
+            // Update the stats display for this specific upgrade
+            this.updateUpgradeStats();
+    
+            // Update UI and save progress
             Game.updateUI();
             Game.saveGame(this.saveName, this.itemCount);
             Game.saveGame(this.saveName + "price", this.price);
@@ -73,7 +73,22 @@ class ItemUpgrades extends Shop {
             alert("Not enough cookies!");
         }
     }
-}   
+
+    updateUpgradeStats() {
+        // Update only the specific upgrade stat, not all
+        if (this.saveName === "goldenMouse") {
+            document.getElementById("goldenMouseStat").textContent = `Golden Mouse: ${this.itemCount}`;
+        } else if (this.saveName === "stroopwafel") {
+            document.getElementById("stroopwafelStat").textContent = `Stroopwafel:  ${this.itemCount}`;
+        } else if (this.saveName === "superOven") {
+            document.getElementById("superOvenStat").textContent = `Super Oven:  ${this.itemCount}`;
+        } else if (this.saveName === "electricFactory") {
+            document.getElementById("electricFactoryStat").textContent = `Electric Factory:  ${this.itemCount}`;
+        } else if (this.saveName === "bigCargoPlane") {
+            document.getElementById("bigCargoPlaneStat").textContent = `Big Cargo Plane:  ${this.itemCount}`;
+        }
+    }
+}    
 
 let shopList = [
     new Shop(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay", 'autoclickers',1,0), // autoclickers
@@ -105,33 +120,43 @@ class game{
         localStorage.setItem(name, amount);
     }
 
-    loadGame(){
+    loadGame() {
         // loading the cookies
         let loadedCookies = localStorage.getItem("cookies");
-        if (loadedCookies != null){
+        if (loadedCookies != null) {
             this.cookieCount = parseInt(loadedCookies);
-        }else{
+        } else {
             this.cookieCount = 0;
         }
-
+    
         // loading the items
         let itemCounter = 0;
-
+    
         shopList.forEach(itemType => {
             let itemName = itemType.saveName;
-            if (localStorage.getItem(itemName)){
-                let itemCount = localStorage.getItem(itemName); // getting the items from the local storage
+            if (localStorage.getItem(itemName)) {
+                let itemCount = localStorage.getItem(itemName); // getting the items from local storage
                 shopList[itemCounter].loadItem(itemCount); // calling the method that loads the correct amount of items into the game
             }
-            // loading 
+    
+            // loading item prices
             let priceName = itemType.saveName + "price";
-            if (localStorage.getItem(priceName)){
-                let itemPrice = localStorage.getItem(priceName); // getting the items from the local storage
+            if (localStorage.getItem(priceName)) {
+                let itemPrice = localStorage.getItem(priceName); // getting the items from local storage
                 shopList[itemCounter].price = itemPrice;
             }
             itemCounter += 1;
         });
-     }
+    
+        // Update the upgrades stats after loading game data
+        if (localStorage.getItem('goldenMouse','stroopwaffle', 'superOven', 'electricFactory', 'bigCargoPlane')) {
+            let goldenMouseCount = localStorage.getItem('goldenMouse');
+            let StroopwafelCount = localStorage.getItem('stroopwaffle')
+            document.getElementById("goldenMouseStat").textContent = `Golden Mouse: ${goldenMouseCount}`;
+            document.getElementById("stroopwafelStat").textContent = `Stroopwafel:  ${StroopwafelCount}`;
+        }
+    }
+    
 
     updateUI() {
         cookieCountDisplay.textContent = "Cookies: " + formatNumber(Game.cookieCount);

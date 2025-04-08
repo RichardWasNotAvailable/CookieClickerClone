@@ -64,12 +64,11 @@ class ItemUpgrades extends Shop {
             if (this.itemCount === 1 && this.targetShop) {
                 this.targetShop.value = this.value;
                 console.log(`Upgraded ${this.targetShop.saveName} value to ${this.value}`);
+
+                Game.saveGame(this.targetShop.saveName + "value", this.targetShop.value);
             }
 
             Game.updateUI();
-            Game.saveGame(this.savename + 'value');
-            Game.saveGame(this.saveName, this.itemCount);
-            Game.saveGame(this.saveName + "price", this.price);
         } else {
             alert("Not enough cookies!");
         }
@@ -130,6 +129,15 @@ class game{
                 let itemPrice = localStorage.getItem(priceName); // getting the items from the local storage
                 shopList[itemCounter].price = itemPrice;
             }
+
+            let itemValueName = itemType.saveName + "value";
+            console.log(itemValueName);
+
+            if (localStorage.getItem(itemValueName)){
+                let itemValue = localStorage.getItem(itemValueName);
+                shopList[itemCounter].value = itemValue;
+            }
+
             itemCounter += 1;
         });
      }
@@ -216,8 +224,8 @@ class game{
     }
 
     activateGoldenCookie(){
-        this.cookieCount *= 1.5;
-        Math.floor(this.cookieCount);
+        this.cookieCount *= 1.5;0
+        Math.floor(this.cookieCount); // rounding the cookiecount to a whole number
         this.updateUI;
     }
 }

@@ -67,6 +67,7 @@ class ItemUpgrades extends Shop {
             }
 
             Game.updateUI();
+            Game.saveGame(this.savename + 'value');
             Game.saveGame(this.saveName, this.itemCount);
             Game.saveGame(this.saveName + "price", this.price);
         } else {
@@ -161,8 +162,6 @@ class game{
             CPSCounter += itemType.itemCount * itemType.value; // calculating the CPS
         })
         document.getElementById('CPSCounter').innerHTML = "per second: " + formatNumber(CPSCounter);// updating the CPSCounter
-
-
     }
 
     addACookie() { // if the user clicked on a cookie manually
@@ -197,25 +196,29 @@ class game{
 
     spawnGoldenCookie(){ // method that makes golden cookies  spawn
         let randomNumber = Math.floor(Math.random() * 100) + 1; // random number from 1 to 100
-        if (randomNumber != 2){
+        if (randomNumber == 43){ // 43 is just a random number I selected. If the random number is 2 it spawn a a golden cookie
             let goldenCookie = document.createElement("img");
             goldenCookie.classList.add("goldenCookie");
-            goldenCookie.src = "IMG/Cookie.png";
+            goldenCookie.src = "IMG/GoldenCookie.png";
             goldenCookie.style.left = Math.floor(Math.random() * 100) + 1 + '%'; // randomizing the cookies position
             goldenCookie.style.top = Math.floor(Math.random() * 100) + 1 + '%';
             document.body.appendChild(goldenCookie);
 
             // adding cookies if the user clicks on the golden cookie
-            goldenCookie.onclick = this.cookieCount += Math.floor(this.cookieCount * 1.5);
 
-            goldenCookie.onclick = this.addCookies;
+            goldenCookie.onclick = () => {
+                this.activateGoldenCookie(); // this = your main game object
+                goldenCookie.remove(); // remove it right after click
+            };
 
             setTimeout(() => goldenCookie.remove(), 3000);
         }
     }
 
     activateGoldenCookie(){
-        this.cookieCount += this.cookieCount * 1.5;
+        this.cookieCount *= 1.5;
+        Math.floor(this.cookieCount);
+        this.updateUI;
     }
 }
 
@@ -264,5 +267,5 @@ setInterval(() => {
 
     Game.saveGame('cookies', Game.cookieCount);
     Game.updateUI();
-    //Game.spawnGoldenCookie();
+    Game.spawnGoldenCookie();
 }, 2000);

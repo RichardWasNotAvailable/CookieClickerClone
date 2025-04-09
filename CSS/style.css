@@ -14,7 +14,7 @@ h3{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 0.8rem;
 }
-#cookieCount {
+#cookieCount{
     position: relative;
     font-size: 24px;
     font-weight: bold;
@@ -46,7 +46,7 @@ h3{
     justify-content: center;
 }
 
-.CookieButton:hover {
+.CookieButton:hover{
     transform: scale(1.1);
 }
 
@@ -89,7 +89,6 @@ h3{
 
 .shop-item:hover{
     background-color: gray;
-
 }
 
 .productImage{
@@ -218,7 +217,7 @@ h3{
 
 .CookieButton:active {
     transform: scale(.9);
-  }
+}
 
 .cookieNav{
     width: 40%;
@@ -255,7 +254,6 @@ h3{
 
 .shop-item:hover{
     background-color: gray;
-
 }
 
 .productImage{

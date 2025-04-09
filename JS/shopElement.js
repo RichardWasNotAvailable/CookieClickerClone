@@ -66,11 +66,14 @@ class ItemUpgrades extends Shop {
             this.updateUpgradeStats();
     
             // Update UI and save progress
-            if (this.itemCount === 1 && this.targetShop) {
-                this.targetShop.value = this.value;
+            if (this.itemCount === 1 && this.targetShop){
+                this.targetShop.value *= 1.5;
                 console.log(`Upgraded ${this.targetShop.saveName} value to ${this.value}`);
 
-                Game.saveGame(this.targetShop.saveName + "value", this.targetShop.value);
+                Game.saveGame(this.targetShop.saveName + "value", this.targetShop.value); // saving the increased value
+                Game.saveGame(this.saveName + "price", this.price); // saving the upgrade price
+
+                console.log("saving " + this.price);
             }
 
             Game.updateUI();
@@ -134,33 +137,38 @@ class game{
             this.cookieCount = 0;
         }
     
-        // loading the items
-        let itemCounter = 0;
-    
-        shopList.forEach(itemType => {
-            let itemName = itemType.saveName;
-            if (localStorage.getItem(itemName)) {
-                let itemCount = localStorage.getItem(itemName); // getting the items from local storage
-                shopList[itemCounter].loadItem(itemCount); // calling the method that loads the correct amount of items into the game
-            }
-    
-            // loading item prices
-            let priceName = itemType.saveName + "price";
-            if (localStorage.getItem(priceName)) {
-                let itemPrice = localStorage.getItem(priceName); // getting the items from local storage
-                shopList[itemCounter].price = itemPrice;
-            }
-
-            let itemValueName = itemType.saveName + "value";
-            console.log(itemValueName);
-
-            if (localStorage.getItem(itemValueName)){
-                let itemValue = localStorage.getItem(itemValueName);
-                shopList[itemCounter].value = itemValue;
-            }
-
-            itemCounter += 1;
+        shopList.forEach((itemType, index) => {
+            const item = shopList[index];
+            const keys = [
+                { suffix: '', method: 'loadItem', parse: true },       // item count
+                { suffix: 'price', property: 'price' },                 // price
+                { suffix: 'value', property: 'value' }                  // Itemvalue
+            ];
+        
+            keys.forEach(({ suffix, method, property, parse }) => {
+                const key = itemType.saveName + suffix; // define the key
+                const storedValue = localStorage.getItem(key);
+        
+                if (storedValue !== null) { // if the value is found
+                    if (method) {
+                        item[method](parse ? parseInt(storedValue) : storedValue); 
+                    } else if (property) {
+                        item[property] = parse ? parseInt(storedValue) : storedValue;
+                    }
+                }
+            });
         });
+
+        // loading the upgradePrices
+        upgradeList.forEach((upgrade,index) => {
+            console.log("searching " + upgrade.saveName + "price" );
+
+            const upgradePrice = localStorage.getItem(upgrade.saveName + "price");
+            if (upgradePrice !== null){
+                console.log("loading " + upgradePrice );
+                upgrade.price = upgradePrice;
+            }
+        })
     
         // Update the upgrades stats after loading game data
         if (localStorage.getItem('goldenMouse','stroopwaffle', 'superOven', 'electricFactory', 'bigCargoPlane')) {
@@ -233,8 +241,8 @@ class game{
     }
 
     spawnGoldenCookie(){ // method that makes golden cookies  spawn
-        let randomNumber = Math.floor(Math.random() * 100) + 1; // random number from 1 to 100
-        if (randomNumber == 43){ // 43 is just a random number I selected. If the random number is 2 it spawn a a golden cookie
+        let randomNumber = Math.floor(Math.random() * 50) + 1; // random number from 1 to 100
+        if (randomNumber == 2){ // 43 is just a random number I selected. If the random number is 2 it spawn a a golden cookie
             let goldenCookie = document.createElement("img");
             goldenCookie.classList.add("goldenCookie");
             goldenCookie.src = "IMG/GoldenCookie.png";

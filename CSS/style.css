@@ -133,7 +133,7 @@ h3{
     overflow-y: auto; /* Enables scrolling */
     background-color: deepskyblue;
     white-space: nowrap;
-
+z-index: 100;
     display: block; /* Let items stack naturally */
     transition: .5s;
 }
@@ -144,9 +144,6 @@ h3{
     right: 0;
     height: 100%;
     width: 0;
-
-    overflow-x: auto;
-    overflow-y: auto; /* Enables scrolling */
     background-color: firebrick;
     white-space: nowrap;
 
@@ -366,39 +363,10 @@ h3{
     position: static;
 }
 
-#goldenMouseStat{
+#goldenMouseStat, #stroopwafelStat, #superOvenStat , #electricFactoryStat, #bigCargoPlaneStat{
     font-size: 75%;
     padding-left: 6rem;
     margin-top: -50px;
-    display: flex;
-    position: absolute;
-}
-#stroopwafelStat{
-    font-size: 75%;
-    padding-left: 6rem;
-    margin-top: -50px;
-    display: flex;
-    position: absolute;
-}
-#superOvenStat{
-    font-size: 75%;
-    padding-left: 6rem;
-    margin-top: -50px;
-    display: flex;
-    position: absolute;
-}
-
-#electricFactoryStat{
-    font-size: 75%;
-    padding-left: 6rem;
-    margin-top: -35px;
-    display: flex;
-    position: absolute;
-}
-#bigCargoPlaneStat{
-    font-size: 75%;
-    padding-left: 7rem;
-    margin-top: -65px;
     display: flex;
     position: absolute;
 }

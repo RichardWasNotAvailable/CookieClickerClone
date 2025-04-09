@@ -176,6 +176,9 @@ class game{
             let StroopwafelCount = localStorage.getItem('stroopwaffle')
             document.getElementById("goldenMouseStat").textContent = `Golden Mouse: ${goldenMouseCount}`;
             document.getElementById("stroopwafelStat").textContent = `Stroopwafel:  ${StroopwafelCount}`;
+            document.getElementById("superOvenStat").textContent = `Super Ovens:    ${SuperOvensCount}`;
+            document.getElementById("electricFactoryStat").textContent = `Electric Factories:    ${electricFactoryCount}`;
+            document.getElementById("bigCargoPlaneStat").textContent = `Big Cargo Plane:    ${bigCargoPlaneCount}`;
         }
     }
     

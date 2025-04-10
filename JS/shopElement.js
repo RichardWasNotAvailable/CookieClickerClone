@@ -61,26 +61,27 @@ class ItemUpgrades extends Shop {
             Game.cookieCount -= this.price;
             this.itemCount += 1;
             this.price = Math.floor(this.price * this.priceFactor);
-    
+        
             // Update the stats display for this specific upgrade
             this.updateUpgradeStats();
-    
+        
             // Update UI and save progress
-            if (this.itemCount === 1 && this.targetShop){
+            if (this.itemCount === 1 && this.targetShop) {
                 this.targetShop.value *= 1.5;
                 console.log(`Upgraded ${this.targetShop.saveName} value to ${this.value}`);
-
                 Game.saveGame(this.targetShop.saveName + "value", this.targetShop.value); // saving the increased value
-                Game.saveGame(this.saveName + "price", this.price); // saving the upgrade price
-
-                console.log("saving " + this.price);
             }
-
+    
+            // Save upgrade data (count and price)
+            Game.saveGame(this.saveName, this.itemCount); // saving the itemCount
+            Game.saveGame(this.saveName + "price", this.price); // saving the upgrade price
+    
             Game.updateUI();
         } else {
             alert("Not enough cookies!");
         }
     }
+    
 
     updateUpgradeStats() {
         // Update only the specific upgrade stat, not all
@@ -136,13 +137,13 @@ class game{
         } else {
             this.cookieCount = 0;
         }
-    
+        
         shopList.forEach((itemType, index) => {
             const item = shopList[index];
             const keys = [
                 { suffix: '', method: 'loadItem', parse: true },       // item count
                 { suffix: 'price', property: 'price' },                 // price
-                { suffix: 'value', property: 'value' }                  // Itemvalue
+                { suffix: 'value', property: 'value' }                  // Item value
             ];
         
             keys.forEach(({ suffix, method, property, parse }) => {
@@ -158,36 +159,37 @@ class game{
                 }
             });
         });
-
-        // loading the upgradePrices
-       // Load upgrade counts and update UI
-upgradeList.forEach((upgrade, index) => {
-    let count = localStorage.getItem(upgrade.saveName);
-    if (count !== null) {
-        upgrade.itemCount = parseInt(count); // Save the value to itemCount
-    }
-
-    // Load saved upgrade price
-    const upgradePrice = localStorage.getItem(upgrade.saveName + "price");
-    if (upgradePrice !== null){
-        upgrade.price = parseInt(upgradePrice);
-    }
-
-    upgrade.updateUpgradeStats(); // Refresh the UI
-});
     
+        // Load upgrade counts and update UI
+        upgradeList.forEach((upgrade, index) => {
+            let count = localStorage.getItem(upgrade.saveName);
+            if (count !== null) {
+                upgrade.itemCount = parseInt(count); // Save the value to itemCount
+            }
+    
+            // Load saved upgrade price
+            const upgradePrice = localStorage.getItem(upgrade.saveName + "price");
+            if (upgradePrice !== null) {
+                upgrade.price = parseInt(upgradePrice);
+            }
+    
+            upgrade.updateUpgradeStats(); // Refresh the UI
+        });
+        
         // Update the upgrades stats after loading game data
         if (localStorage.getItem('goldenMouse','stroopwaffle', 'superOven', 'electricFactory', 'bigCargoPlane')) {
-            upgradeList[0].itemCount = parseInt(goldenMouseCount);
-            upgradeList[1].itemCount = parseInt(StroopwafelCount);
-            upgradeList[2].itemCount = parseInt(SuperOvensCount);
-            upgradeList[3].itemCount = parseInt(electricFactoryCount);
-            upgradeList[4].itemCount = parseInt(bigCargoPlaneCount);
-            document.getElementById("goldenMouseStat").textContent = `Golden Mouse: ${goldenMouseCount}`;
-            document.getElementById("stroopwafelStat").textContent = `Stroopwafel:  ${StroopwafelCount}`;
-            document.getElementById("superOvenStat").textContent = `Super Ovens:    ${SuperOvensCount}`;
-            document.getElementById("electricFactoryStat").textContent = `Electric Factories:    ${electricFactoryCount}`;
-            document.getElementById("bigCargoPlaneStat").textContent = `Big Cargo Plane:    ${bigCargoPlaneCount}`;
+            upgradeList[0].itemCount = parseInt(localStorage.getItem('goldenMouse'));
+            upgradeList[1].itemCount = parseInt(localStorage.getItem('stroopwaffle'));
+            upgradeList[2].itemCount = parseInt(localStorage.getItem('superOven'));
+            upgradeList[3].itemCount = parseInt(localStorage.getItem('electricFactory'));
+            upgradeList[4].itemCount = parseInt(localStorage.getItem('bigCargoPlane'));
+    
+            // Update UI for upgrades
+            document.getElementById("goldenMouseStat").textContent = `Golden Mouse: ${localStorage.getItem('goldenMouse')}`;
+            document.getElementById("stroopwafelStat").textContent = `Stroopwafel:  ${localStorage.getItem('stroopwaffle')}`;
+            document.getElementById("superOvenStat").textContent = `Super Ovens:    ${localStorage.getItem('superOven')}`;
+            document.getElementById("electricFactoryStat").textContent = `Electric Factories:    ${localStorage.getItem('electricFactory')}`;
+            document.getElementById("bigCargoPlaneStat").textContent = `Big Cargo Plane:    ${localStorage.getItem('bigCargoPlane')}`;
         }
     }
     

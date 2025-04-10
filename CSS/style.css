@@ -371,3 +371,46 @@ h3{
     display: flex;
     position: absolute;
 }
+
+.shop-item {
+    position: relative;
+    cursor: pointer;
+}
+
+.shop-item::before {
+    content: attr(data-description);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.25em;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+    font-family:Verdana, Geneva, Tahoma, sans-serif
+}
+
+.shop-item::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #333;
+    margin-bottom: -12px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 9;
+}
+
+.shop-item:hover::before,
+.shop-item:hover::after {
+    opacity: 1;
+}

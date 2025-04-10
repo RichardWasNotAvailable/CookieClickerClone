@@ -66,13 +66,14 @@ class ItemUpgrades extends Shop {
     
             // Update UI and save progress
             if (this.itemCount === 1 && this.targetShop){
-                this.targetShop.value *= 1.5;
-                console.log(`Upgraded ${this.targetShop.saveName} value to ${this.value}`);
+                this.targetShop.value *= 2;
+
+                Game.saveGame(this.saveName + "count", this.itemCount);
+
+                console.log("saving " + this.saveName + "count");
 
                 Game.saveGame(this.targetShop.saveName + "value", this.targetShop.value); // saving the increased value
                 Game.saveGame(this.saveName + "price", this.price); // saving the upgrade price
-
-                console.log("saving " + this.price);
             }
 
             Game.updateUI();
@@ -85,8 +86,8 @@ class ItemUpgrades extends Shop {
         // Update only the specific upgrade stat, not all
         if (this.saveName === "goldenMouse") {
             document.getElementById("goldenMouseStat").textContent = `Golden Mouse: ${this.itemCount}`;
-        } else if (this.saveName === "stroopwafel") {
-            document.getElementById("stroopwafelStat").textContent = `Stroopwafel:  ${this.itemCount}`;
+        } else if (this.saveName === "diamondCookie") {
+            document.getElementById("diamondCookieStat").textContent = `diamondCookies:  ${this.itemCount}`;
         } else if (this.saveName === "superOven") {
             document.getElementById("superOvenStat").textContent = `Super Oven:  ${this.itemCount}`;
         } else if (this.saveName === "electricFactory") {
@@ -107,7 +108,7 @@ let shopList = [
 
 let upgradeList = [
     new ItemUpgrades(500, 0, "IMG/GoudenMuis.png", 150000, "autoclickerDisplay", "goldenMouse", 2, shopList[0]),
-    new ItemUpgrades(2500, 1, "IMG/stroopwafel.png", 150000, "multiplierDisplay", "stroopwaffle", 2.5, shopList[1]),
+    new ItemUpgrades(2500, 1, "IMG/diamondCookie.png", 150000, "multiplierDisplay", "stroopwaffle", 2.5, shopList[1]),
     new ItemUpgrades(20000, 0, "IMG/SupercookieBaker.png", 150000, "ovenDisplay", "superOven", 2.5, shopList[2]),
     new ItemUpgrades(100000, 0, "IMG/Electricfactory.png", 150000,"factoryDisplay", "electricFactory", 2.5, shopList[3]),
     new ItemUpgrades(150000, 0, "IMG/BiggerCargoAirplane.png", 150000, "planeDisplay", "bigCargoPlane", 5, shopList[4]),
@@ -161,34 +162,25 @@ class game{
 
         // loading the upgradePrices
        // Load upgrade counts and update UI
-upgradeList.forEach((upgrade, index) => {
-    let count = localStorage.getItem(upgrade.saveName);
-    if (count !== null) {
-        upgrade.itemCount = parseInt(count); // Save the value to itemCount
-    }
-
-    // Load saved upgrade price
-    const upgradePrice = localStorage.getItem(upgrade.saveName + "price");
-    if (upgradePrice !== null){
-        upgrade.price = parseInt(upgradePrice);
-    }
-
-    upgrade.updateUpgradeStats(); // Refresh the UI
-});
+        upgradeList.forEach((upgrade) => {
+            let count = localStorage.getItem(upgrade.saveName + "count");
+            if (count !== null) {
+                upgrade.itemCount = parseInt(count); // Save the value to itemCount
+                console.log("loading" + upgrade.saveName + "count");
+                console.log("loading " + upgrade.itemCount);
+            }
+        
+            // Load saved upgrade price
+            const upgradePrice = localStorage.getItem(upgrade.saveName + "price");
+            if (upgradePrice !== null){
+                upgrade.price = parseInt(upgradePrice);
+            }
+            upgrade.updateUpgradeStats(); // Refresh the UI
+        });
     
         // Update the upgrades stats after loading game data
-        if (localStorage.getItem('goldenMouse','stroopwaffle', 'superOven', 'electricFactory', 'bigCargoPlane')) {
-            upgradeList[0].itemCount = parseInt(goldenMouseCount);
-            upgradeList[1].itemCount = parseInt(StroopwafelCount);
-            upgradeList[2].itemCount = parseInt(SuperOvensCount);
-            upgradeList[3].itemCount = parseInt(electricFactoryCount);
-            upgradeList[4].itemCount = parseInt(bigCargoPlaneCount);
-            document.getElementById("goldenMouseStat").textContent = `Golden Mouse: ${goldenMouseCount}`;
-            document.getElementById("stroopwafelStat").textContent = `Stroopwafel:  ${StroopwafelCount}`;
-            document.getElementById("superOvenStat").textContent = `Super Ovens:    ${SuperOvensCount}`;
-            document.getElementById("electricFactoryStat").textContent = `Electric Factories:    ${electricFactoryCount}`;
-            document.getElementById("bigCargoPlaneStat").textContent = `Big Cargo Plane:    ${bigCargoPlaneCount}`;
-        }
+
+
     }
     
 
@@ -203,7 +195,7 @@ upgradeList.forEach((upgrade, index) => {
 
         // Shops Prices
         document.getElementById("goldenMousePrice").innerHTML = "Price: " + formatNumber(upgradeList[0].price);
-        document.getElementById("StroopwafflePrice").innerHTML = "Price: " + formatNumber(upgradeList[1].price);
+        document.getElementById("diamondCookiePrice").innerHTML = "Price: " + formatNumber(upgradeList[1].price);
         document.getElementById("SuperOvenPrice").innerHTML = "Price: " + formatNumber(upgradeList[2].price);
         document.getElementById("ElectricFactoryPrice").innerHTML = "Price: " + formatNumber(upgradeList[3].price);
         document.getElementById("BigcargoPlanePrice").innerHTML = "Price: " + formatNumber(upgradeList[4].price);
@@ -228,23 +220,12 @@ upgradeList.forEach((upgrade, index) => {
         this.makeCookieFall(); // makes a falling cookie
     }
 
-    updateImage(displayId, newImageUrl){ // method that replaces all images in an display, 
-        // displayId is the ID of the parent of the images
-        // newImageUrl is the Url of the Image you want to replace the old ones with
-        let imageDisplay = document.getElementById(displayId);
-        let displayChildren = imageDisplay.childNodes;
-
-        for (let i=0; i < displayChildren.length; i++){ // looping through each image
-            displayChildren[i].setAttribute('src', newImageUrl);
-        }
-    }
-
     makeCookieFall(){ // method that makes a small falling cookie if you click on the big cookie
         let fallingCookie = document.createElement("img");
         fallingCookie.src = "IMG/Cookie.png";
         fallingCookie.classList.add("falling-cookie");
 
-        // Position the cookie at the mouse click location
+        // Position the cookie at users mouse locataion
         fallingCookie.style.left = `${event.clientX - 25}px`;
         fallingCookie.style.top = `${event.clientY - 25}px`;
         document.body.appendChild(fallingCookie);
@@ -318,7 +299,6 @@ function formatNumber(num){
 
 // Auto cookie generation every 2 seconds
 setInterval(() => {
-
     shopList.forEach(item => {
         Game.cookieCount += item.itemCount * item.value;
     })

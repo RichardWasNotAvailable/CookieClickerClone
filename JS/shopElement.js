@@ -87,8 +87,8 @@ class ItemUpgrades extends Shop {
         // Update only the specific upgrade stat, not all
         if (this.saveName === "goldenMouse") {
             document.getElementById("goldenMouseStat").textContent = `Golden Mouse: ${this.itemCount}`;
-        } else if (this.saveName === "stroopwafel") {
-            document.getElementById("stroopwafelStat").textContent = `Stroopwafel:  ${this.itemCount}`;
+        } else if (this.saveName === "diamondCookie") {
+            document.getElementById("diamondCookieStat").textContent = `Diamond Cookies:  ${this.itemCount}`;
         } else if (this.saveName === "superOven") {
             document.getElementById("superOvenStat").textContent = `Super Oven:  ${this.itemCount}`;
         } else if (this.saveName === "electricFactory") {
@@ -109,7 +109,7 @@ let shopList = [
 
 let upgradeList = [
     new ItemUpgrades(500, 0, "IMG/GoudenMuis.png", 150000, "autoclickerDisplay", "goldenMouse", 2, shopList[0]),
-    new ItemUpgrades(2500, 1, "IMG/stroopwafel.png", 150000, "multiplierDisplay", "stroopwaffle", 2.5, shopList[1]),
+    new ItemUpgrades(2500, 1, "IMG/diamondCookie.png", 150000, "multiplierDisplay", "diamondCookie", 2.5, shopList[1]),
     new ItemUpgrades(20000, 0, "IMG/SupercookieBaker.png", 150000, "ovenDisplay", "superOven", 2.5, shopList[2]),
     new ItemUpgrades(100000, 0, "IMG/Electricfactory.png", 150000,"factoryDisplay", "electricFactory", 2.5, shopList[3]),
     new ItemUpgrades(150000, 0, "IMG/BiggerCargoAirplane.png", 150000, "planeDisplay", "bigCargoPlane", 5, shopList[4]),
@@ -179,7 +179,7 @@ class game{
         // Update the upgrades stats after loading game data
         const upgradeKeys = [
             { key: 'goldenMouse', label: 'Golden Mouse', elementId: 'goldenMouseStat' },
-            { key: 'stroopwaffle', label: 'Stroopwafel', elementId: 'stroopwafelStat' },
+            { key: 'diamondCookie', label: 'diamondCookie', elementId: 'diamondCookieStat' },
             { key: 'superOven', label: 'Super Ovens', elementId: 'superOvenStat' },
             { key: 'electricFactory', label: 'Electric Factories', elementId: 'electricFactoryStat' },
             { key: 'bigCargoPlane', label: 'Big Cargo Plane', elementId: 'bigCargoPlaneStat' },
@@ -208,7 +208,7 @@ class game{
 
         // Shops Prices
         document.getElementById("goldenMousePrice").innerHTML = "Price: " + formatNumber(upgradeList[0].price);
-        document.getElementById("StroopwafflePrice").innerHTML = "Price: " + formatNumber(upgradeList[1].price);
+        document.getElementById("diamondCookiePrice").innerHTML = "Price: " + formatNumber(upgradeList[1].price);
         document.getElementById("SuperOvenPrice").innerHTML = "Price: " + formatNumber(upgradeList[2].price);
         document.getElementById("ElectricFactoryPrice").innerHTML = "Price: " + formatNumber(upgradeList[3].price);
         document.getElementById("BigcargoPlanePrice").innerHTML = "Price: " + formatNumber(upgradeList[4].price);

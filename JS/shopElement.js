@@ -177,20 +177,23 @@ class game{
         });
         
         // Update the upgrades stats after loading game data
-        if (localStorage.getItem('goldenMouse','stroopwaffle', 'superOven', 'electricFactory', 'bigCargoPlane')) {
-            upgradeList[0].itemCount = parseInt(localStorage.getItem('goldenMouse'));
-            upgradeList[1].itemCount = parseInt(localStorage.getItem('stroopwaffle'));
-            upgradeList[2].itemCount = parseInt(localStorage.getItem('superOven'));
-            upgradeList[3].itemCount = parseInt(localStorage.getItem('electricFactory'));
-            upgradeList[4].itemCount = parseInt(localStorage.getItem('bigCargoPlane'));
-    
-            // Update UI for upgrades
-            document.getElementById("goldenMouseStat").textContent = `Golden Mouse: ${localStorage.getItem('goldenMouse')}`;
-            document.getElementById("stroopwafelStat").textContent = `Stroopwafel:  ${localStorage.getItem('stroopwaffle')}`;
-            document.getElementById("superOvenStat").textContent = `Super Ovens:    ${localStorage.getItem('superOven')}`;
-            document.getElementById("electricFactoryStat").textContent = `Electric Factories:    ${localStorage.getItem('electricFactory')}`;
-            document.getElementById("bigCargoPlaneStat").textContent = `Big Cargo Plane:    ${localStorage.getItem('bigCargoPlane')}`;
-        }
+        const upgradeKeys = [
+            { key: 'goldenMouse', label: 'Golden Mouse', elementId: 'goldenMouseStat' },
+            { key: 'stroopwaffle', label: 'Stroopwafel', elementId: 'stroopwafelStat' },
+            { key: 'superOven', label: 'Super Ovens', elementId: 'superOvenStat' },
+            { key: 'electricFactory', label: 'Electric Factories', elementId: 'electricFactoryStat' },
+            { key: 'bigCargoPlane', label: 'Big Cargo Plane', elementId: 'bigCargoPlaneStat' },
+        ];
+        
+        let allItemsExist = upgradeKeys.every(u => localStorage.getItem(u.key) !== null);
+        
+        if (allItemsExist) {
+            upgradeKeys.forEach((u, index) => {
+                const value = parseInt(localStorage.getItem(u.key));
+                upgradeList[index].itemCount = value;
+                document.getElementById(u.elementId).textContent = `${u.label}: ${value}`;
+            });
+        }      
     }
     
 

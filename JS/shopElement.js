@@ -7,7 +7,6 @@ class Shop{
     upgradeTier;
     upgradedIMG;
 
-
     constructor(price, itemCount, imgurl, priceFactor, displayParentId, saveName,value, upgradeTier, upgradedIMG){
         this.price = price;
         this.itemCount = itemCount;
@@ -133,6 +132,7 @@ class game{
         let loadedCookies = localStorage.getItem("cookies");
         if (loadedCookies != null) {
             this.cookieCount = parseInt(loadedCookies);
+            this.updateUI();
         } else {
             this.cookieCount = 0;
         }
@@ -274,7 +274,7 @@ upgradeList.forEach((upgrade, index) => {
     }
 
     activateGoldenCookie(){
-        this.cookieCount *= 1.5;0
+        this.cookieCount *= 1.5
         Math.floor(this.cookieCount); // rounding the cookiecount to a whole number
         this.updateUI;
     }
@@ -318,10 +318,10 @@ function formatNumber(num){
 
 // Auto cookie generation every 2 seconds
 setInterval(() => {
-    Game.cookieCount += shopList[0].itemCount * shopList[0].value; // AutoClickers
-    Game.cookieCount += shopList[2].itemCount * shopList[2].value; // Ovens
-    Game.cookieCount += shopList[3].itemCount * shopList[3].value; // Cookie Factories
-    Game.cookieCount += shopList[4].itemCount * shopList[4].value; // Cargo Planes
+
+    shopList.forEach(item => {
+        Game.cookieCount += item.itemCount * item.value;
+    })
 
     Game.saveGame('cookies', Game.cookieCount);
     Game.updateUI();

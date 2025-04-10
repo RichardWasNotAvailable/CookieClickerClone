@@ -387,8 +387,10 @@ h3{
     color: #fff;
     padding: 8px 12px;
     border-radius: 6px;
-    font-size: 0.25em;
-    white-space: nowrap;
+    font-size: 0.65em;
+    white-space: normal;
+max-width: 200px;
+word-wrap: break-word;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s ease;

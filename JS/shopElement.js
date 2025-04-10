@@ -236,42 +236,50 @@ class game{
             goldenCookie.style.top = Math.floor(Math.random() * 100) + 1 + '%';
             document.body.appendChild(goldenCookie);
 
-            // adding cookies if the user clicks on the golden cookie
-
             goldenCookie.onclick = () => {
                 this.activateGoldenCookie(); // this = your main game object
+
+                this.cookieCount *= 1.5
+                Math.floor(this.cookieCount); // rounding the cookiecount to a whole number
+                this.updateUI;
+
                 goldenCookie.remove(); // remove it right after click
             };
 
             setTimeout(() => goldenCookie.remove(), 3000);
         }
     }
-
-    activateGoldenCookie(){
-        this.cookieCount *= 1.5
-        Math.floor(this.cookieCount); // rounding the cookiecount to a whole number
-        this.updateUI;
-    }
 }
 
-class menu{
-    constructor(menuId){
+class menu {
+    static currentlyOpenMenu = null; // static variable to track the open menu
+
+    constructor(menuId) {
         this.menuId = menuId;
         this.menuItem = document.getElementById(this.menuId);
         this.menuIsOpen = false;
     }
 
-    openShopMenu(){// opens and closes the menu depending on menuIsOpen
-        
-        if (this.menuIsOpen == false){
-            this.menuItem.style.width = "20%"; // opening the menu
-            document.getElementById("itemDisplayNav").style.width = "80%";
-
-        }else{
-            this.menuItem.style.width = "0"; // closing the menu
-            document.getElementById("itemDisplayNav").style.width = "100%";
+    openShopMenu() {
+        // If another menu is open and it's not this one, close it
+        if (menu.currentlyOpenMenu && menu.currentlyOpenMenu !== this) {
+            menu.currentlyOpenMenu.closeMenu();
         }
-        this.menuIsOpen = !this.menuIsOpen; // switching menu to open or closed
+
+        if (!this.menuIsOpen) { // if the menu is closed, open it
+            this.menuItem.style.width = "20%";
+            document.getElementById("itemDisplayNav").style.width = "80%";
+            this.menuIsOpen = true;
+            menu.currentlyOpenMenu = this;
+        } else { // close the menu
+            this.closeMenu();
+        }
+    }
+
+    closeMenu() {
+        this.menuItem.style.width = "0";
+        document.getElementById("itemDisplayNav").style.width = "100%";
+        this.menuIsOpen = false;
     }
 }
 let Game = new game(0);

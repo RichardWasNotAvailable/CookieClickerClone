@@ -147,6 +147,7 @@ z-index: 100;
     background-color: firebrick;
     white-space: nowrap;
 
+    z-index: 15;
     display: block; /* Let items stack naturally */
     transition: .5s;
 }

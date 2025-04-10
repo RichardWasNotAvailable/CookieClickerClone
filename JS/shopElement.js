@@ -63,16 +63,18 @@ class ItemUpgrades extends Shop {
     
             // Update the stats display for this specific upgrade
             this.updateUpgradeStats();
+
+
     
             // Update UI and save progress
-            if (this.itemCount === 1 && this.targetShop){
+            if (this.targetShop){
                 this.targetShop.value *= 2;
 
-                Game.saveGame(this.saveName + "count", this.itemCount);
-
                 console.log("saving " + this.saveName + "count");
+                console.log("value " + this.itemCount);
 
-                Game.saveGame(this.targetShop.saveName + "value", this.targetShop.value); // saving the increased value
+                Game.saveGame(this.saveName + "count", this.itemCount);// saving the upgrade count
+                Game.saveGame(this.targetShop.saveName + "value", this.targetShop.value); // saving the upgrade value
                 Game.saveGame(this.saveName + "price", this.price); // saving the upgrade price
             }
 
@@ -100,7 +102,7 @@ class ItemUpgrades extends Shop {
 
 let shopList = [
     new Shop(10, 0, "IMG/Muis.png",1.5, "autoclickerDisplay", 'autoclickers',1,0), // autoclickers
-    new Shop(50, 1, "IMG/Cookie.png",1.5, "multiplierDisplay", 'multiplier',1,0), // cookie_multiplier
+    new Shop(50, 0, "IMG/Cookie.png",1.5, "multiplierDisplay", 'multiplier',1,0), // cookie_multiplier
     new Shop(100, 0, "IMG/cookieBaker.png",1.5, "ovenDisplay", 'ovens',5,0), // ovens
     new Shop(1000, 0, "IMG/factory.png",1.5, "factoryDisplay", 'factories',100,0), // factories
     new Shop(100000, 0, "IMG/Airplane.png",1.5, "planeDisplay", 'airplanes',250,0), // airplanes
@@ -108,7 +110,7 @@ let shopList = [
 
 let upgradeList = [
     new ItemUpgrades(500, 0, "IMG/GoudenMuis.png", 150000, "autoclickerDisplay", "goldenMouse", 2, shopList[0]),
-    new ItemUpgrades(2500, 1, "IMG/diamondCookie.png", 150000, "multiplierDisplay", "stroopwaffle", 2.5, shopList[1]),
+    new ItemUpgrades(2500, 0, "IMG/diamondCookie.png", 150000, "multiplierDisplay", "diamondCookie", 2.5, shopList[1]),
     new ItemUpgrades(20000, 0, "IMG/SupercookieBaker.png", 150000, "ovenDisplay", "superOven", 2.5, shopList[2]),
     new ItemUpgrades(100000, 0, "IMG/Electricfactory.png", 150000,"factoryDisplay", "electricFactory", 2.5, shopList[3]),
     new ItemUpgrades(150000, 0, "IMG/BiggerCargoAirplane.png", 150000, "planeDisplay", "bigCargoPlane", 5, shopList[4]),
@@ -177,23 +179,20 @@ class game{
             }
             upgrade.updateUpgradeStats(); // Refresh the UI
         });
-    
-        // Update the upgrades stats after loading game data
-
-
     }
     
 
     updateUI() {
         cookieCountDisplay.textContent = "Cookies: " + formatNumber(Game.cookieCount);
         // Shop Prices
+
         document.getElementById("autoClickerPrice").innerHTML = "Price: " + formatNumber(shopList[0].price);
         document.getElementById("cookieMultiplierPrice").innerHTML = "Price: " + formatNumber(shopList[1].price);
         document.getElementById("ovenPrice").innerHTML = "Price: " + formatNumber(shopList[2].price);
         document.getElementById("cookieFactoryPrice").innerHTML = "Price: " + formatNumber(shopList[3].price);
         document.getElementById("cargoPlanePrice").innerHTML = "Price: " + formatNumber(shopList[4].price);
 
-        // Shops Prices
+        // upgrades
         document.getElementById("goldenMousePrice").innerHTML = "Price: " + formatNumber(upgradeList[0].price);
         document.getElementById("diamondCookiePrice").innerHTML = "Price: " + formatNumber(upgradeList[1].price);
         document.getElementById("SuperOvenPrice").innerHTML = "Price: " + formatNumber(upgradeList[2].price);
@@ -206,16 +205,10 @@ class game{
         items.forEach(item => {
             item.style.width = `${displayNavWidth}px`; // Set each item's width to match
         });
-
-        let CPSCounter = 0;
-        shopList.forEach(itemType => {
-            CPSCounter += itemType.itemCount * itemType.value; // calculating the CPS
-        })
-        document.getElementById('CPSCounter').innerHTML = "per second: " + formatNumber(CPSCounter);// updating the CPSCounter
     }
 
     addACookie() { // if the user clicked on a cookie manually
-        this.cookieCount += shopList[1].itemCount;
+        this.cookieCount += shopList[1].itemCount * shopList[1].value + 1;
         this.updateUI();
         this.makeCookieFall(); // makes a falling cookie
     }
@@ -299,11 +292,18 @@ function formatNumber(num){
 
 // Auto cookie generation every 2 seconds
 setInterval(() => {
+    let CPSCounter = 0; // updating the CPS counter
     shopList.forEach(item => {
-        Game.cookieCount += item.itemCount * item.value;
+        if (item.saveName != "multiplier"){ // since multipliers shouldn't give cookies, it's filterd here
+            Game.cookieCount += item.itemCount * item.value;
+
+            CPSCounter += item.itemCount * item.value; // calculating the CPS
+            console.log(CPSCounter);
+            document.getElementById('CPSCounter').innerHTML = "per second: " + formatNumber(CPSCounter);// updating the CPSCounter
+        }
     })
 
-    Game.saveGame('cookies', Game.cookieCount);
+    Game.saveGame('cookies', Game.cookieCount); // saving the cookieCount
     Game.updateUI();
     Game.spawnGoldenCookie();
 }, 2000);

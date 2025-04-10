@@ -160,20 +160,29 @@ class game{
         });
 
         // loading the upgradePrices
-        upgradeList.forEach((upgrade,index) => {
-            console.log("searching " + upgrade.saveName + "price" );
+       // Load upgrade counts and update UI
+upgradeList.forEach((upgrade, index) => {
+    let count = localStorage.getItem(upgrade.saveName);
+    if (count !== null) {
+        upgrade.itemCount = parseInt(count); // Save the value to itemCount
+    }
 
-            const upgradePrice = localStorage.getItem(upgrade.saveName + "price");
-            if (upgradePrice !== null){
-                console.log("loading " + upgradePrice );
-                upgrade.price = upgradePrice;
-            }
-        })
+    // Load saved upgrade price
+    const upgradePrice = localStorage.getItem(upgrade.saveName + "price");
+    if (upgradePrice !== null){
+        upgrade.price = parseInt(upgradePrice);
+    }
+
+    upgrade.updateUpgradeStats(); // Refresh the UI
+});
     
         // Update the upgrades stats after loading game data
         if (localStorage.getItem('goldenMouse','stroopwaffle', 'superOven', 'electricFactory', 'bigCargoPlane')) {
-            let goldenMouseCount = localStorage.getItem('goldenMouse');
-            let StroopwafelCount = localStorage.getItem('stroopwaffle')
+            upgradeList[0].itemCount = parseInt(goldenMouseCount);
+            upgradeList[1].itemCount = parseInt(StroopwafelCount);
+            upgradeList[2].itemCount = parseInt(SuperOvensCount);
+            upgradeList[3].itemCount = parseInt(electricFactoryCount);
+            upgradeList[4].itemCount = parseInt(bigCargoPlaneCount);
             document.getElementById("goldenMouseStat").textContent = `Golden Mouse: ${goldenMouseCount}`;
             document.getElementById("stroopwafelStat").textContent = `Stroopwafel:  ${StroopwafelCount}`;
             document.getElementById("superOvenStat").textContent = `Super Ovens:    ${SuperOvensCount}`;

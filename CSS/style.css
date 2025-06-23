@@ -319,12 +319,6 @@ h3{
     cursor: pointer;
 }
 
-#boughtUpgradesButton{
-    position: static;
-    width: 8%;
-    cursor: pointer;
-}
-
 @media screen and (max-width: 800px) {
     .upgradeName {
       width: 100%;
@@ -410,6 +404,17 @@ word-wrap: break-word;
     opacity: 0;
     transition: opacity 0.2s ease;
     z-index: 9;
+}
+
+.githubLink{
+    color: yellow;
+    text-decoration: none;
+
+}
+
+.githubLink:hover{
+    color: skyblue;
+
 }
 
 .shop-item:hover::before,

@@ -63,8 +63,6 @@ class ItemUpgrades extends Shop {
     
             // Update the stats display for this specific upgrade
             this.updateUpgradeStats();
-
-
     
             // Update UI and save progress
             if (this.targetShop){
@@ -109,11 +107,11 @@ let shopList = [
 ]
 
 let upgradeList = [
-    new ItemUpgrades(500, 0, "IMG/GoudenMuis.png", 150000, "autoclickerDisplay", "goldenMouse", 2, shopList[0]),
-    new ItemUpgrades(2500, 0, "IMG/diamondCookie.png", 150000, "multiplierDisplay", "diamondCookie", 2.5, shopList[1]),
-    new ItemUpgrades(20000, 0, "IMG/SupercookieBaker.png", 150000, "ovenDisplay", "superOven", 2.5, shopList[2]),
-    new ItemUpgrades(100000, 0, "IMG/Electricfactory.png", 150000,"factoryDisplay", "electricFactory", 2.5, shopList[3]),
-    new ItemUpgrades(150000, 0, "IMG/BiggerCargoAirplane.png", 150000, "planeDisplay", "bigCargoPlane", 5, shopList[4]),
+    new ItemUpgrades(500, 0, "IMG/GoudenMuis.png", 15, "autoclickerDisplay", "goldenMouse", 2, shopList[0]),
+    new ItemUpgrades(2500, 0, "IMG/diamondCookie.png", 15, "multiplierDisplay", "diamondCookie", 2.5, shopList[1]),
+    new ItemUpgrades(20000, 0, "IMG/SupercookieBaker.png", 15, "ovenDisplay", "superOven", 2.5, shopList[2]),
+    new ItemUpgrades(100000, 0, "IMG/Electricfactory.png", 15,"factoryDisplay", "electricFactory", 2.5, shopList[3]),
+    new ItemUpgrades(150000, 0, "IMG/BiggerCargoAirplane.png", 15, "planeDisplay", "bigCargoPlane", 5, shopList[4]),
 ];
 
 
@@ -131,14 +129,13 @@ class game{
     }
 
     loadGame() {
-        // loading the cookies
         let loadedCookies = localStorage.getItem("cookies");
-        if (loadedCookies != null) {
+        if (loadedCookies !== null && !isNaN(parseInt(loadedCookies))) {
             this.cookieCount = parseInt(loadedCookies);
-            this.updateUI();
         } else {
             this.cookieCount = 0;
         }
+        this.updateUI();
     
         shopList.forEach((itemType, index) => {
             const item = shopList[index];
@@ -205,6 +202,17 @@ class game{
         items.forEach(item => {
             item.style.width = `${displayNavWidth}px`; // Set each item's width to match
         });
+
+        let CPSCounter = 0; // updating the CPS counter
+        shopList.forEach(item => { // looping each shop item
+            if (item.saveName != "multiplier"){ // since multipliers shouldn't give cookies, it's filterd here
+                Game.cookieCount += item.itemCount * item.value;
+    
+                CPSCounter += item.itemCount * item.value; // calculating the CPS
+                console.log(CPSCounter);
+                document.getElementById('CPSCounter').innerHTML = "per second: " + formatNumber(CPSCounter);// updating the CPSCounter
+            }
+        })
     }
 
     addACookie() { // if the user clicked on a cookie manually
@@ -227,8 +235,8 @@ class game{
     }
 
     spawnGoldenCookie(){ // method that makes golden cookies  spawn
-        let randomNumber = Math.floor(Math.random() * 50) + 1; // random number from 1 to 100
-        if (randomNumber == 2){ // 43 is just a random number I selected. If the random number is 2 it spawn a a golden cookie
+        let randomNumber = Math.floor(Math.random() * 2) + 1; // random number from 1 to 100
+        if (randomNumber != 1){ // 43 is just a random number I selected. If the random number is 42 it spawns a a golden cookie
             let goldenCookie = document.createElement("img");
             goldenCookie.classList.add("goldenCookie");
             goldenCookie.src = "IMG/GoldenCookie.png";
@@ -237,8 +245,6 @@ class game{
             document.body.appendChild(goldenCookie);
 
             goldenCookie.onclick = () => {
-                this.activateGoldenCookie(); // this = your main game object
-
                 this.cookieCount *= 1.5
                 Math.floor(this.cookieCount); // rounding the cookiecount to a whole number
                 this.updateUI;
@@ -300,17 +306,6 @@ function formatNumber(num){
 
 // Auto cookie generation every 2 seconds
 setInterval(() => {
-    let CPSCounter = 0; // updating the CPS counter
-    shopList.forEach(item => {
-        if (item.saveName != "multiplier"){ // since multipliers shouldn't give cookies, it's filterd here
-            Game.cookieCount += item.itemCount * item.value;
-
-            CPSCounter += item.itemCount * item.value; // calculating the CPS
-            console.log(CPSCounter);
-            document.getElementById('CPSCounter').innerHTML = "per second: " + formatNumber(CPSCounter);// updating the CPSCounter
-        }
-    })
-
     Game.saveGame('cookies', Game.cookieCount); // saving the cookieCount
     Game.updateUI();
     Game.spawnGoldenCookie();
